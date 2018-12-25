@@ -1,0 +1,34 @@
+# import * from './generated/prisma.graphql'
+
+type SuccessMessage {
+    message: String
+}
+
+type Mutation {
+    createOwStrategy(data: OwStrategyCreateInput!): OwStrategy!
+    createUser(data: UserCreateInput!): User!
+    signup(email: String!, password: String!, name: String!): User!
+    signin(email: String!, password: String!): User!
+    signout: SuccessMessage
+    requestReset(email: String!): SuccessMessage
+    resetPassword(
+        resetToken: String!
+        password: String!
+        confirmPassword: String!
+    ): User!
+    updatePermissions(permissions: [Permission], userId: ID!): User
+}
+
+type Query {
+    owStrategies(
+        where: OwStrategyWhereInput
+        orderBy: OwStrategyOrderByInput
+        skip: Int
+        after: String
+        before: String
+        first: Int
+        last: Int
+    ): [OwStrategy]!
+    me: User
+    users: [User]!
+}

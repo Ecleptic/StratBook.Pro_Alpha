@@ -1,0 +1,1399 @@
+# source: https://us1.prisma.sh/cameron-green-fec414/stratbook/dev
+# timestamp: Wed Dec 05 2018 19:21:57 GMT-0600 (Central Standard Time)
+
+type AggregateOwHeroType {
+  count: Int!
+}
+
+type AggregateOwMapType {
+  count: Int!
+}
+
+type AggregateOwStrategy {
+  count: Int!
+}
+
+type AggregateUser {
+  count: Int!
+}
+
+type BatchPayload {
+  """The number of nodes that have been affected by the Batch operation."""
+  count: Long!
+}
+
+scalar DateTime
+
+"""
+The `Long` scalar type represents non-fractional signed whole numeric values.
+Long can represent values between -(2^63) and 2^63 - 1.
+"""
+scalar Long
+
+type Mutation {
+  createOwMapType(data: OwMapTypeCreateInput!): OwMapType!
+  createOwHeroType(data: OwHeroTypeCreateInput!): OwHeroType!
+  createOwStrategy(data: OwStrategyCreateInput!): OwStrategy!
+  createUser(data: UserCreateInput!): User!
+  updateOwStrategy(data: OwStrategyUpdateInput!, where: OwStrategyWhereUniqueInput!): OwStrategy
+  updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
+  deleteOwStrategy(where: OwStrategyWhereUniqueInput!): OwStrategy
+  deleteUser(where: UserWhereUniqueInput!): User
+  upsertOwStrategy(where: OwStrategyWhereUniqueInput!, create: OwStrategyCreateInput!, update: OwStrategyUpdateInput!): OwStrategy!
+  upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
+  updateManyOwMapTypes(data: OwMapTypeUpdateManyMutationInput!, where: OwMapTypeWhereInput): BatchPayload!
+  updateManyOwHeroTypes(data: OwHeroTypeUpdateManyMutationInput!, where: OwHeroTypeWhereInput): BatchPayload!
+  updateManyOwStrategies(data: OwStrategyUpdateManyMutationInput!, where: OwStrategyWhereInput): BatchPayload!
+  updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
+  deleteManyOwMapTypes(where: OwMapTypeWhereInput): BatchPayload!
+  deleteManyOwHeroTypes(where: OwHeroTypeWhereInput): BatchPayload!
+  deleteManyOwStrategies(where: OwStrategyWhereInput): BatchPayload!
+  deleteManyUsers(where: UserWhereInput): BatchPayload!
+}
+
+enum MutationType {
+  CREATED
+  UPDATED
+  DELETED
+}
+
+"""An object with an ID"""
+interface Node {
+  """The id of the object."""
+  id: ID!
+}
+
+enum OwControlSubMap {
+  Lighthouse
+  Ruins
+  Well
+  Village
+  Shrine
+  Sanctum
+  Night_Market
+  Garden
+  Control_Center
+  City_Center
+  Gardens
+  University
+  Downtown
+  Sanctuary
+  MEKA_Base
+}
+
+enum OwHero {
+  Ana
+  Ashe
+  Bastion
+  Brigitte
+  Doomfist
+  Dva
+  Genji
+  Hanzo
+  Junkrat
+  Lucio
+  McCree
+  Mei
+  Mercy
+  Moira
+  Orisa
+  Pharah
+  Reaper
+  Reinhardt
+  Roadhog
+  Soldier_76
+  Sombra
+  Symmetra
+  Torbjorn
+  Tracer
+  Widowmaker
+  Winston
+  Wrecking_Ball
+  Zarya
+  Zenyatta
+}
+
+enum OwHeroPosition {
+  Damage
+  Support
+  Tank
+}
+
+type OwHeroType {
+  heroName: OwHero!
+  position: OwHeroPosition!
+  pixelImageUrl: String
+  iconImageUrl: String
+}
+
+"""A connection to a list of items."""
+type OwHeroTypeConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [OwHeroTypeEdge]!
+  aggregate: AggregateOwHeroType!
+}
+
+input OwHeroTypeCreateInput {
+  heroName: OwHero!
+  position: OwHeroPosition!
+  pixelImageUrl: String
+  iconImageUrl: String
+}
+
+"""An edge in a connection."""
+type OwHeroTypeEdge {
+  """The item at the end of the edge."""
+  node: OwHeroType!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum OwHeroTypeOrderByInput {
+  heroName_ASC
+  heroName_DESC
+  position_ASC
+  position_DESC
+  pixelImageUrl_ASC
+  pixelImageUrl_DESC
+  iconImageUrl_ASC
+  iconImageUrl_DESC
+  id_ASC
+  id_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type OwHeroTypePreviousValues {
+  heroName: OwHero!
+  position: OwHeroPosition!
+  pixelImageUrl: String
+  iconImageUrl: String
+}
+
+type OwHeroTypeSubscriptionPayload {
+  mutation: MutationType!
+  node: OwHeroType
+  updatedFields: [String!]
+  previousValues: OwHeroTypePreviousValues
+}
+
+input OwHeroTypeSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [OwHeroTypeSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [OwHeroTypeSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [OwHeroTypeSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: OwHeroTypeWhereInput
+}
+
+input OwHeroTypeUpdateManyMutationInput {
+  heroName: OwHero
+  position: OwHeroPosition
+  pixelImageUrl: String
+  iconImageUrl: String
+}
+
+input OwHeroTypeWhereInput {
+  """Logical AND on all given filters."""
+  AND: [OwHeroTypeWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [OwHeroTypeWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [OwHeroTypeWhereInput!]
+  heroName: OwHero
+
+  """All values that are not equal to given value."""
+  heroName_not: OwHero
+
+  """All values that are contained in given list."""
+  heroName_in: [OwHero!]
+
+  """All values that are not contained in given list."""
+  heroName_not_in: [OwHero!]
+  position: OwHeroPosition
+
+  """All values that are not equal to given value."""
+  position_not: OwHeroPosition
+
+  """All values that are contained in given list."""
+  position_in: [OwHeroPosition!]
+
+  """All values that are not contained in given list."""
+  position_not_in: [OwHeroPosition!]
+  pixelImageUrl: String
+
+  """All values that are not equal to given value."""
+  pixelImageUrl_not: String
+
+  """All values that are contained in given list."""
+  pixelImageUrl_in: [String!]
+
+  """All values that are not contained in given list."""
+  pixelImageUrl_not_in: [String!]
+
+  """All values less than the given value."""
+  pixelImageUrl_lt: String
+
+  """All values less than or equal the given value."""
+  pixelImageUrl_lte: String
+
+  """All values greater than the given value."""
+  pixelImageUrl_gt: String
+
+  """All values greater than or equal the given value."""
+  pixelImageUrl_gte: String
+
+  """All values containing the given string."""
+  pixelImageUrl_contains: String
+
+  """All values not containing the given string."""
+  pixelImageUrl_not_contains: String
+
+  """All values starting with the given string."""
+  pixelImageUrl_starts_with: String
+
+  """All values not starting with the given string."""
+  pixelImageUrl_not_starts_with: String
+
+  """All values ending with the given string."""
+  pixelImageUrl_ends_with: String
+
+  """All values not ending with the given string."""
+  pixelImageUrl_not_ends_with: String
+  iconImageUrl: String
+
+  """All values that are not equal to given value."""
+  iconImageUrl_not: String
+
+  """All values that are contained in given list."""
+  iconImageUrl_in: [String!]
+
+  """All values that are not contained in given list."""
+  iconImageUrl_not_in: [String!]
+
+  """All values less than the given value."""
+  iconImageUrl_lt: String
+
+  """All values less than or equal the given value."""
+  iconImageUrl_lte: String
+
+  """All values greater than the given value."""
+  iconImageUrl_gt: String
+
+  """All values greater than or equal the given value."""
+  iconImageUrl_gte: String
+
+  """All values containing the given string."""
+  iconImageUrl_contains: String
+
+  """All values not containing the given string."""
+  iconImageUrl_not_contains: String
+
+  """All values starting with the given string."""
+  iconImageUrl_starts_with: String
+
+  """All values not starting with the given string."""
+  iconImageUrl_not_starts_with: String
+
+  """All values ending with the given string."""
+  iconImageUrl_ends_with: String
+
+  """All values not ending with the given string."""
+  iconImageUrl_not_ends_with: String
+}
+
+enum OwMap {
+  Ayutthaya
+  Black_Forest
+  Blizzard_World
+  Busan
+  Castillo
+  Chateau_Guillard
+  Dorado
+  Ecopoint_Antarctica
+  Eichenwalde
+  Hanamura
+  Hollywood
+  Horizon_Lunar_Colony
+  Ilios
+  Junkertown
+  Kings_Row
+  Lijiang_Tower
+  Necropolis
+  Nepal
+  Numbani
+  Oasis
+  Rialto
+  Route_66
+  Temple_of_Anubis
+  Volskaya_Industries
+  Watchpoint_Gibraltar
+}
+
+enum OwMapMode {
+  Assault
+  Control
+  Hybrid
+  Escort
+}
+
+type OwMapType {
+  mapName: OwMap!
+  mapType: OwMapMode!
+  subMaps: [OwControlSubMap!]!
+}
+
+"""A connection to a list of items."""
+type OwMapTypeConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [OwMapTypeEdge]!
+  aggregate: AggregateOwMapType!
+}
+
+input OwMapTypeCreateInput {
+  mapName: OwMap!
+  mapType: OwMapMode!
+  subMaps: OwMapTypeCreatesubMapsInput
+}
+
+input OwMapTypeCreatesubMapsInput {
+  set: [OwControlSubMap!]
+}
+
+"""An edge in a connection."""
+type OwMapTypeEdge {
+  """The item at the end of the edge."""
+  node: OwMapType!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum OwMapTypeOrderByInput {
+  mapName_ASC
+  mapName_DESC
+  mapType_ASC
+  mapType_DESC
+  id_ASC
+  id_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type OwMapTypePreviousValues {
+  mapName: OwMap!
+  mapType: OwMapMode!
+  subMaps: [OwControlSubMap!]!
+}
+
+type OwMapTypeSubscriptionPayload {
+  mutation: MutationType!
+  node: OwMapType
+  updatedFields: [String!]
+  previousValues: OwMapTypePreviousValues
+}
+
+input OwMapTypeSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [OwMapTypeSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [OwMapTypeSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [OwMapTypeSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: OwMapTypeWhereInput
+}
+
+input OwMapTypeUpdateManyMutationInput {
+  mapName: OwMap
+  mapType: OwMapMode
+  subMaps: OwMapTypeUpdatesubMapsInput
+}
+
+input OwMapTypeUpdatesubMapsInput {
+  set: [OwControlSubMap!]
+}
+
+input OwMapTypeWhereInput {
+  """Logical AND on all given filters."""
+  AND: [OwMapTypeWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [OwMapTypeWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [OwMapTypeWhereInput!]
+  mapName: OwMap
+
+  """All values that are not equal to given value."""
+  mapName_not: OwMap
+
+  """All values that are contained in given list."""
+  mapName_in: [OwMap!]
+
+  """All values that are not contained in given list."""
+  mapName_not_in: [OwMap!]
+  mapType: OwMapMode
+
+  """All values that are not equal to given value."""
+  mapType_not: OwMapMode
+
+  """All values that are contained in given list."""
+  mapType_in: [OwMapMode!]
+
+  """All values that are not contained in given list."""
+  mapType_not_in: [OwMapMode!]
+}
+
+enum OwRank {
+  Bronze
+  Silver
+  Gold
+  Platinum
+  Diamond
+  Master
+  Grand_Master
+  Top_500
+}
+
+type OwStrategy implements Node {
+  id: ID!
+  mapName: OwMap!
+  mapMode: OwMapMode!
+  defenseStrats: String
+  defenseHeroes: [OwHero!]!
+  offenseStrats: String!
+  offenseHeroes: [OwHero!]!
+  creatorName: User!
+  strategyName: String!
+  expectedRank: OwRank
+  subMap: OwControlSubMap
+}
+
+"""A connection to a list of items."""
+type OwStrategyConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [OwStrategyEdge]!
+  aggregate: AggregateOwStrategy!
+}
+
+input OwStrategyCreatedefenseHeroesInput {
+  set: [OwHero!]
+}
+
+input OwStrategyCreateInput {
+  mapName: OwMap!
+  mapMode: OwMapMode!
+  defenseStrats: String
+  offenseStrats: String!
+  strategyName: String!
+  expectedRank: OwRank
+  subMap: OwControlSubMap
+  defenseHeroes: OwStrategyCreatedefenseHeroesInput
+  offenseHeroes: OwStrategyCreateoffenseHeroesInput
+  creatorName: UserCreateOneInput!
+}
+
+input OwStrategyCreateoffenseHeroesInput {
+  set: [OwHero!]
+}
+
+"""An edge in a connection."""
+type OwStrategyEdge {
+  """The item at the end of the edge."""
+  node: OwStrategy!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum OwStrategyOrderByInput {
+  id_ASC
+  id_DESC
+  mapName_ASC
+  mapName_DESC
+  mapMode_ASC
+  mapMode_DESC
+  defenseStrats_ASC
+  defenseStrats_DESC
+  offenseStrats_ASC
+  offenseStrats_DESC
+  strategyName_ASC
+  strategyName_DESC
+  expectedRank_ASC
+  expectedRank_DESC
+  subMap_ASC
+  subMap_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type OwStrategyPreviousValues {
+  id: ID!
+  mapName: OwMap!
+  mapMode: OwMapMode!
+  defenseStrats: String
+  defenseHeroes: [OwHero!]!
+  offenseStrats: String!
+  offenseHeroes: [OwHero!]!
+  strategyName: String!
+  expectedRank: OwRank
+  subMap: OwControlSubMap
+}
+
+type OwStrategySubscriptionPayload {
+  mutation: MutationType!
+  node: OwStrategy
+  updatedFields: [String!]
+  previousValues: OwStrategyPreviousValues
+}
+
+input OwStrategySubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [OwStrategySubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [OwStrategySubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [OwStrategySubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: OwStrategyWhereInput
+}
+
+input OwStrategyUpdatedefenseHeroesInput {
+  set: [OwHero!]
+}
+
+input OwStrategyUpdateInput {
+  mapName: OwMap
+  mapMode: OwMapMode
+  defenseStrats: String
+  offenseStrats: String
+  strategyName: String
+  expectedRank: OwRank
+  subMap: OwControlSubMap
+  defenseHeroes: OwStrategyUpdatedefenseHeroesInput
+  offenseHeroes: OwStrategyUpdateoffenseHeroesInput
+  creatorName: UserUpdateOneRequiredInput
+}
+
+input OwStrategyUpdateManyMutationInput {
+  mapName: OwMap
+  mapMode: OwMapMode
+  defenseStrats: String
+  offenseStrats: String
+  strategyName: String
+  expectedRank: OwRank
+  subMap: OwControlSubMap
+  defenseHeroes: OwStrategyUpdatedefenseHeroesInput
+  offenseHeroes: OwStrategyUpdateoffenseHeroesInput
+}
+
+input OwStrategyUpdateoffenseHeroesInput {
+  set: [OwHero!]
+}
+
+input OwStrategyWhereInput {
+  """Logical AND on all given filters."""
+  AND: [OwStrategyWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [OwStrategyWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [OwStrategyWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  mapName: OwMap
+
+  """All values that are not equal to given value."""
+  mapName_not: OwMap
+
+  """All values that are contained in given list."""
+  mapName_in: [OwMap!]
+
+  """All values that are not contained in given list."""
+  mapName_not_in: [OwMap!]
+  mapMode: OwMapMode
+
+  """All values that are not equal to given value."""
+  mapMode_not: OwMapMode
+
+  """All values that are contained in given list."""
+  mapMode_in: [OwMapMode!]
+
+  """All values that are not contained in given list."""
+  mapMode_not_in: [OwMapMode!]
+  defenseStrats: String
+
+  """All values that are not equal to given value."""
+  defenseStrats_not: String
+
+  """All values that are contained in given list."""
+  defenseStrats_in: [String!]
+
+  """All values that are not contained in given list."""
+  defenseStrats_not_in: [String!]
+
+  """All values less than the given value."""
+  defenseStrats_lt: String
+
+  """All values less than or equal the given value."""
+  defenseStrats_lte: String
+
+  """All values greater than the given value."""
+  defenseStrats_gt: String
+
+  """All values greater than or equal the given value."""
+  defenseStrats_gte: String
+
+  """All values containing the given string."""
+  defenseStrats_contains: String
+
+  """All values not containing the given string."""
+  defenseStrats_not_contains: String
+
+  """All values starting with the given string."""
+  defenseStrats_starts_with: String
+
+  """All values not starting with the given string."""
+  defenseStrats_not_starts_with: String
+
+  """All values ending with the given string."""
+  defenseStrats_ends_with: String
+
+  """All values not ending with the given string."""
+  defenseStrats_not_ends_with: String
+  offenseStrats: String
+
+  """All values that are not equal to given value."""
+  offenseStrats_not: String
+
+  """All values that are contained in given list."""
+  offenseStrats_in: [String!]
+
+  """All values that are not contained in given list."""
+  offenseStrats_not_in: [String!]
+
+  """All values less than the given value."""
+  offenseStrats_lt: String
+
+  """All values less than or equal the given value."""
+  offenseStrats_lte: String
+
+  """All values greater than the given value."""
+  offenseStrats_gt: String
+
+  """All values greater than or equal the given value."""
+  offenseStrats_gte: String
+
+  """All values containing the given string."""
+  offenseStrats_contains: String
+
+  """All values not containing the given string."""
+  offenseStrats_not_contains: String
+
+  """All values starting with the given string."""
+  offenseStrats_starts_with: String
+
+  """All values not starting with the given string."""
+  offenseStrats_not_starts_with: String
+
+  """All values ending with the given string."""
+  offenseStrats_ends_with: String
+
+  """All values not ending with the given string."""
+  offenseStrats_not_ends_with: String
+  strategyName: String
+
+  """All values that are not equal to given value."""
+  strategyName_not: String
+
+  """All values that are contained in given list."""
+  strategyName_in: [String!]
+
+  """All values that are not contained in given list."""
+  strategyName_not_in: [String!]
+
+  """All values less than the given value."""
+  strategyName_lt: String
+
+  """All values less than or equal the given value."""
+  strategyName_lte: String
+
+  """All values greater than the given value."""
+  strategyName_gt: String
+
+  """All values greater than or equal the given value."""
+  strategyName_gte: String
+
+  """All values containing the given string."""
+  strategyName_contains: String
+
+  """All values not containing the given string."""
+  strategyName_not_contains: String
+
+  """All values starting with the given string."""
+  strategyName_starts_with: String
+
+  """All values not starting with the given string."""
+  strategyName_not_starts_with: String
+
+  """All values ending with the given string."""
+  strategyName_ends_with: String
+
+  """All values not ending with the given string."""
+  strategyName_not_ends_with: String
+  expectedRank: OwRank
+
+  """All values that are not equal to given value."""
+  expectedRank_not: OwRank
+
+  """All values that are contained in given list."""
+  expectedRank_in: [OwRank!]
+
+  """All values that are not contained in given list."""
+  expectedRank_not_in: [OwRank!]
+  subMap: OwControlSubMap
+
+  """All values that are not equal to given value."""
+  subMap_not: OwControlSubMap
+
+  """All values that are contained in given list."""
+  subMap_in: [OwControlSubMap!]
+
+  """All values that are not contained in given list."""
+  subMap_not_in: [OwControlSubMap!]
+  creatorName: UserWhereInput
+}
+
+input OwStrategyWhereUniqueInput {
+  id: ID
+}
+
+"""Information about pagination in a connection."""
+type PageInfo {
+  """When paginating forwards, are there more items?"""
+  hasNextPage: Boolean!
+
+  """When paginating backwards, are there more items?"""
+  hasPreviousPage: Boolean!
+
+  """When paginating backwards, the cursor to continue."""
+  startCursor: String
+
+  """When paginating forwards, the cursor to continue."""
+  endCursor: String
+}
+
+enum Permission {
+  ADMIN
+  USER
+  ITEMCREATE
+  ITEMUPDATE
+  ITEMDELETE
+  PERMISSIONUPDATE
+}
+
+type Query {
+  owMapTypes(where: OwMapTypeWhereInput, orderBy: OwMapTypeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [OwMapType]!
+  owHeroTypes(where: OwHeroTypeWhereInput, orderBy: OwHeroTypeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [OwHeroType]!
+  owStrategies(where: OwStrategyWhereInput, orderBy: OwStrategyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [OwStrategy]!
+  users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
+  owStrategy(where: OwStrategyWhereUniqueInput!): OwStrategy
+  user(where: UserWhereUniqueInput!): User
+  owMapTypesConnection(where: OwMapTypeWhereInput, orderBy: OwMapTypeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): OwMapTypeConnection!
+  owHeroTypesConnection(where: OwHeroTypeWhereInput, orderBy: OwHeroTypeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): OwHeroTypeConnection!
+  owStrategiesConnection(where: OwStrategyWhereInput, orderBy: OwStrategyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): OwStrategyConnection!
+  usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
+
+  """Fetches an object given its ID"""
+  node(
+    """The ID of an object"""
+    id: ID!
+  ): Node
+}
+
+type Subscription {
+  owMapType(where: OwMapTypeSubscriptionWhereInput): OwMapTypeSubscriptionPayload
+  owHeroType(where: OwHeroTypeSubscriptionWhereInput): OwHeroTypeSubscriptionPayload
+  owStrategy(where: OwStrategySubscriptionWhereInput): OwStrategySubscriptionPayload
+  user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
+}
+
+type User implements Node {
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  id: ID!
+  name: String!
+  email: String
+  password: String!
+  resetToken: String
+  resetTokenExpiry: Float
+  permissions: [Permission!]!
+  isPro: Boolean!
+}
+
+"""A connection to a list of items."""
+type UserConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [UserEdge]!
+  aggregate: AggregateUser!
+}
+
+input UserCreateInput {
+  name: String!
+  email: String
+  password: String!
+  resetToken: String
+  resetTokenExpiry: Float
+  isPro: Boolean
+  permissions: UserCreatepermissionsInput
+}
+
+input UserCreateOneInput {
+  create: UserCreateInput
+  connect: UserWhereUniqueInput
+}
+
+input UserCreatepermissionsInput {
+  set: [Permission!]
+}
+
+"""An edge in a connection."""
+type UserEdge {
+  """The item at the end of the edge."""
+  node: User!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum UserOrderByInput {
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  email_ASC
+  email_DESC
+  password_ASC
+  password_DESC
+  resetToken_ASC
+  resetToken_DESC
+  resetTokenExpiry_ASC
+  resetTokenExpiry_DESC
+  isPro_ASC
+  isPro_DESC
+}
+
+type UserPreviousValues {
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  id: ID!
+  name: String!
+  email: String
+  password: String!
+  resetToken: String
+  resetTokenExpiry: Float
+  permissions: [Permission!]!
+  isPro: Boolean!
+}
+
+type UserSubscriptionPayload {
+  mutation: MutationType!
+  node: User
+  updatedFields: [String!]
+  previousValues: UserPreviousValues
+}
+
+input UserSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [UserSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [UserSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [UserSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: UserWhereInput
+}
+
+input UserUpdateDataInput {
+  name: String
+  email: String
+  password: String
+  resetToken: String
+  resetTokenExpiry: Float
+  isPro: Boolean
+  permissions: UserUpdatepermissionsInput
+}
+
+input UserUpdateInput {
+  name: String
+  email: String
+  password: String
+  resetToken: String
+  resetTokenExpiry: Float
+  isPro: Boolean
+  permissions: UserUpdatepermissionsInput
+}
+
+input UserUpdateManyMutationInput {
+  name: String
+  email: String
+  password: String
+  resetToken: String
+  resetTokenExpiry: Float
+  isPro: Boolean
+  permissions: UserUpdatepermissionsInput
+}
+
+input UserUpdateOneRequiredInput {
+  create: UserCreateInput
+  connect: UserWhereUniqueInput
+  update: UserUpdateDataInput
+  upsert: UserUpsertNestedInput
+}
+
+input UserUpdatepermissionsInput {
+  set: [Permission!]
+}
+
+input UserUpsertNestedInput {
+  update: UserUpdateDataInput!
+  create: UserCreateInput!
+}
+
+input UserWhereInput {
+  """Logical AND on all given filters."""
+  AND: [UserWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [UserWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [UserWhereInput!]
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+  email: String
+
+  """All values that are not equal to given value."""
+  email_not: String
+
+  """All values that are contained in given list."""
+  email_in: [String!]
+
+  """All values that are not contained in given list."""
+  email_not_in: [String!]
+
+  """All values less than the given value."""
+  email_lt: String
+
+  """All values less than or equal the given value."""
+  email_lte: String
+
+  """All values greater than the given value."""
+  email_gt: String
+
+  """All values greater than or equal the given value."""
+  email_gte: String
+
+  """All values containing the given string."""
+  email_contains: String
+
+  """All values not containing the given string."""
+  email_not_contains: String
+
+  """All values starting with the given string."""
+  email_starts_with: String
+
+  """All values not starting with the given string."""
+  email_not_starts_with: String
+
+  """All values ending with the given string."""
+  email_ends_with: String
+
+  """All values not ending with the given string."""
+  email_not_ends_with: String
+  password: String
+
+  """All values that are not equal to given value."""
+  password_not: String
+
+  """All values that are contained in given list."""
+  password_in: [String!]
+
+  """All values that are not contained in given list."""
+  password_not_in: [String!]
+
+  """All values less than the given value."""
+  password_lt: String
+
+  """All values less than or equal the given value."""
+  password_lte: String
+
+  """All values greater than the given value."""
+  password_gt: String
+
+  """All values greater than or equal the given value."""
+  password_gte: String
+
+  """All values containing the given string."""
+  password_contains: String
+
+  """All values not containing the given string."""
+  password_not_contains: String
+
+  """All values starting with the given string."""
+  password_starts_with: String
+
+  """All values not starting with the given string."""
+  password_not_starts_with: String
+
+  """All values ending with the given string."""
+  password_ends_with: String
+
+  """All values not ending with the given string."""
+  password_not_ends_with: String
+  resetToken: String
+
+  """All values that are not equal to given value."""
+  resetToken_not: String
+
+  """All values that are contained in given list."""
+  resetToken_in: [String!]
+
+  """All values that are not contained in given list."""
+  resetToken_not_in: [String!]
+
+  """All values less than the given value."""
+  resetToken_lt: String
+
+  """All values less than or equal the given value."""
+  resetToken_lte: String
+
+  """All values greater than the given value."""
+  resetToken_gt: String
+
+  """All values greater than or equal the given value."""
+  resetToken_gte: String
+
+  """All values containing the given string."""
+  resetToken_contains: String
+
+  """All values not containing the given string."""
+  resetToken_not_contains: String
+
+  """All values starting with the given string."""
+  resetToken_starts_with: String
+
+  """All values not starting with the given string."""
+  resetToken_not_starts_with: String
+
+  """All values ending with the given string."""
+  resetToken_ends_with: String
+
+  """All values not ending with the given string."""
+  resetToken_not_ends_with: String
+  resetTokenExpiry: Float
+
+  """All values that are not equal to given value."""
+  resetTokenExpiry_not: Float
+
+  """All values that are contained in given list."""
+  resetTokenExpiry_in: [Float!]
+
+  """All values that are not contained in given list."""
+  resetTokenExpiry_not_in: [Float!]
+
+  """All values less than the given value."""
+  resetTokenExpiry_lt: Float
+
+  """All values less than or equal the given value."""
+  resetTokenExpiry_lte: Float
+
+  """All values greater than the given value."""
+  resetTokenExpiry_gt: Float
+
+  """All values greater than or equal the given value."""
+  resetTokenExpiry_gte: Float
+  isPro: Boolean
+
+  """All values that are not equal to given value."""
+  isPro_not: Boolean
+}
+
+input UserWhereUniqueInput {
+  id: ID
+  name: String
+  email: String
+}

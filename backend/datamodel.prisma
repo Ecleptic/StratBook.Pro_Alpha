@@ -1,0 +1,157 @@
+enum Permission {
+    ADMIN
+    USER
+    ITEMCREATE
+    ITEMUPDATE
+    ITEMDELETE
+    PERMISSIONUPDATE
+}
+
+type User {
+    createdAt: DateTime!
+    updatedAt: DateTime!
+    id: ID! @unique
+    name: String! @unique
+    email: String @unique
+    password: String!
+    resetToken: String
+    resetTokenExpiry: Float
+    permissions: [Permission]
+    isPro: Boolean! @default(value: "false")
+}
+
+type OwMapType {
+    mapName: OwMap!
+    mapType: OwMapMode!
+    subMaps: [OwControlSubMap!]
+}
+
+type OwHeroType {
+    heroName: OwHero!
+    position: OwHeroPosition!
+    pixelImageUrl: String
+    iconImageUrl: String
+}
+
+type OwStrategy @model {
+    id: ID! @unique
+
+    mapName: OwMap!
+    mapMode: OwMapMode!
+
+    defenseStrats: String
+    defenseHeroes: [OwHero!]
+
+    offenseStrats: String!
+    offenseHeroes: [OwHero!]!
+
+    creatorName: User!
+
+    strategyName: String!
+
+    expectedRank: OwRank
+
+    subMap: OwControlSubMap
+}
+
+enum OwMap {
+    Ayutthaya
+    Black_Forest
+    Blizzard_World
+    Busan
+    Castillo
+    Chateau_Guillard
+    Dorado
+    Ecopoint_Antarctica
+    Eichenwalde
+    Hanamura
+    Hollywood
+    Horizon_Lunar_Colony
+    Ilios
+    Junkertown
+    Kings_Row
+    Lijiang_Tower
+    Necropolis
+    Nepal
+    Numbani
+    Oasis
+    Rialto
+    Route_66
+    Temple_of_Anubis
+    Volskaya_Industries
+    Watchpoint_Gibraltar
+}
+
+enum OwControlSubMap {
+    Lighthouse
+    Ruins
+    Well
+    Village
+    Shrine
+    Sanctum
+    Night_Market
+    Garden
+    Control_Center
+    City_Center
+    Gardens
+    University
+    Downtown
+    Sanctuary
+    MEKA_Base
+}
+
+enum OwHero {
+    Ana
+    Ashe
+    Bastion
+    Brigitte
+    Doomfist
+    Dva
+    Genji
+    Hanzo
+    Junkrat
+    Lucio
+    McCree
+    Mei
+    Mercy
+    Moira
+    Orisa
+    Pharah
+    Reaper
+    Reinhardt
+    Roadhog
+    Soldier_76
+    Sombra
+    Symmetra
+    Torbjorn
+    Tracer
+    Widowmaker
+    Winston
+    Wrecking_Ball
+    Zarya
+    Zenyatta
+}
+
+enum OwRank {
+    Bronze
+    Silver
+    Gold
+    Platinum
+    Diamond
+    Master
+    Grand_Master
+    Top_500
+}
+
+enum OwMapMode {
+    Assault
+    Control
+    Hybrid
+    Escort
+}
+
+enum OwHeroPosition {
+    Damage
+    Support
+    Tank
+}
