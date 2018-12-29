@@ -3,9 +3,21 @@
 Strategy handbook manager for Overwatch and other esports
 
 ### Setup
-Termainal 1:
+Terminal 1:
 ```
 cd backend
+touch .env
+```
+In .env:
+```
+FRONTEND_URL="http://localhost:YourFrontendPort"
+PRISMA_ENDPOINT="YourPrisma(GraphQL)Endpoint"
+PRISMA_SECRET="YourPrismaSecret"
+APP_SECRET="YourJavascriptWebtokenSecret"
+PORT=YourBackendPort
+```
+Back in Terminal 1:
+```
 npm install
 npm run dev
 ```
@@ -16,5 +28,3 @@ cd frontend
 npm install
 npm run dev
 ```
-
-Currently runs on localhost:42069
