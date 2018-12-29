@@ -16,6 +16,7 @@ PRISMA_SECRET="YourPrismaSecret"
 APP_SECRET="YourJavascriptWebtokenSecret"
 PORT=YourBackendPort
 ```
+### Run
 Back in Terminal 1:
 ```
 npm install
