@@ -5,6 +5,8 @@ import gql from 'graphql-tag'
 import Error from '../ErrorMessage'
 import Form from '../WYSIWYG/Form'
 
+import TextEditor from './textEditor'
+
 import {
     OwHeroes,
     OwMaps,
@@ -222,7 +224,8 @@ class StratEdit extends Component {
                                 </ul>
                             </label>
 
-                            <Form updateMD={this.updateMD} isDefense={false} />
+                            {/*<Form updateMD={this.updateMD} isDefense={false} />*/}
+                            <TextEditor/>
 
                             <label htmlFor="defenseHeroes">
                                 defenseHeroes
@@ -252,7 +255,7 @@ class StratEdit extends Component {
                                 </ul>
                             </label>
 
-                            <Form updateMD={this.updateMD} isDefense={true} />
+                            {/*<Form updateMD={this.updateMD} isDefense={true} />*/}
 
                             <button type="submit">Submit</button>
                         </fieldset>
