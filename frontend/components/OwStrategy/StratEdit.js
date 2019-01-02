@@ -106,7 +106,7 @@ class StratEdit extends Component {
     }
 
     updateMD = (isDefense, md) => {
-        // console.log(md)
+        console.log(isDefense, md)
         if (isDefense) {
             this.setState({ defenseStrats: md })
         } else {
@@ -224,8 +224,7 @@ class StratEdit extends Component {
                                 </ul>
                             </label>
 
-                            {/*<Form updateMD={this.updateMD} isDefense={false} />*/}
-                            <TextEditor/>
+                            <TextEditor updateMD={this.updateMD} isDefense={false}/>
 
                             <label htmlFor="defenseHeroes">
                                 defenseHeroes
@@ -255,7 +254,7 @@ class StratEdit extends Component {
                                 </ul>
                             </label>
 
-                            {/*<Form updateMD={this.updateMD} isDefense={true} />*/}
+                            <TextEditor updateMD={this.updateMD} isDefense={true}/>
 
                             <button type="submit">Submit</button>
                         </fieldset>

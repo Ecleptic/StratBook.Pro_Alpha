@@ -2,6 +2,11 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 
 class TextEditor extends Component { 
+	state = {
+		defenseStrats: '',
+		offenseStrats: ''
+	}
+
 	render(){
 
 		const Editor = styled.div`
@@ -43,40 +48,41 @@ class TextEditor extends Component {
 		    background-color: #6b5e5e;
 		}
 		`
-
-		let isShift = false;
-
-		/*var btn = document.querySelector(".sai");
-		var getText = document.querySelector(".getText");
-		var content = document.querySelector(".getcontent");
-		var editorContent = document.querySelector(".editor");
-
-		btn.addEventListener("click", function() {
-		  var s = editorContent.innerHTML;
-		  content.style.display = "block";
-		  content.textContent = s;
-		});
-
-		getText.addEventListener("click", function() {
-		  const old = editorContent.textContent;
-		  content.style.display = "block";
-		  content.textContent = old;
-		});
-
-		function link() {
-		  var url = prompt("Enter the URL");
-		  document.execCommand("createLink", false, url);
+		// Handle tabs
+		let handleChange = (e) => {
+			if (e.shiftKey && e.key === 'Tab'){
+				e.preventDefault()
+				document.execCommand('outdent',false,'')
+			}
+			else if(e.key === 'Tab'){
+				e.preventDefault()
+				document.execCommand('indent',false,'')
+			}
 		}
 
-		function copy() {
-		  document.execCommand("copy", false, "");
-		}
+		let updateDB = (htmlObj) => {
 
-		function changeColor() {
-		  var color = prompt("Enter your color in hex ex:#f1f233");
-		  document.execCommand("foreColor", false, color);
+			// Doesn't work
+			if (this.props.isDefense){
+				this.setState({defenseStrats: htmlObj.innerHTML})
+				this.props.updateMD(this.props.isDefense, htmlObj.innerHTML)
+				htmlObj.innerHTML = this.state.defenseStrats
+			}
+			else {
+				this.setState({offenseStrats: htmlObj.innerHTML})
+				this.props.updateMD(this.props.isDefense, htmlObj.innerHTML)
+				htmlObj.innerHTML = this.state.offenseStrats
+
+			}
+
+			// Doesn't work
+			/*
+			let temp = htmlObj.innerHTML
+			this.props.updateMD(this.props.isDefense, htmlObj.innerHTML)
+			htmlObj.innerHTML = temp
+			*/
+			
 		}
-		}*/
 
 
 		return (
@@ -102,23 +108,12 @@ class TextEditor extends Component {
 				</Toolbar>
 
 				<div className="center">
-					<Editor className="editor" contentEditable onKeyDown={(e)=>{
-						//console.log(isShift, e.key)
-						if (e.shiftKey && e.key === 'Tab'){
-							e.preventDefault()
-							document.execCommand('outdent',false,'')
-						}
-						else if(e.key === 'Tab'){
-							e.preventDefault()
-							document.execCommand('indent',false,'')
-						}
-					}}>
+					<Editor className="editor" contentEditable onKeyDown={(e)=>{handleChange(e)}}>
 					</Editor>
 				</div>
 
 				<div className="center">
-					<button type="button" className="sai btn">GetHtml</button>
-					<button type="button" className="getText btn">GetText</button>
+					<button type="button" onClick={() => updateDB(document.querySelector(".editor")) } className="sai btn">Save</button>
 				</div>
 
 
