@@ -2,10 +2,13 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 
 class TextEditor extends Component { 
-	state = {
-		defenseStrats: '',
-		offenseStrats: ''
+	constructor(props){
+		super(props)
+		this.state = {
+			textContents: ''
+		}
 	}
+	
 
 	render(){
 
@@ -24,32 +27,37 @@ class TextEditor extends Component {
 		`
 
 		const Toolbar = styled.div`
-		.toolbar{
-		    display:grid;
-		    grid-template-columns: repeat(auto-fit,minmax(20px,40px));
-		    background-color: rgb(231, 231, 231);
-		    color: rgb(0, 0, 0);
-		    grid-gap: 1rem;
-		    padding: 1rem;
-		    justify-content: center;
-		    align-items:center;
-		}
+			.toolbar{
+			    display:grid;
+			    grid-template-columns: repeat(auto-fit,minmax(20px,40px));
+			    background-color: rgb(231, 231, 231);
+			    color: rgb(0, 0, 0);
+			    grid-gap: 1rem;
+			    padding: 1rem;
+			    justify-content: center;
+			    align-items:center;
+			}
 
-		.tool-items{
-		    background-color: rgb(27, 26, 26);
-		     padding-top: .6rem;
-		     padding-bottom:.6rem;
-		    cursor: pointer;
-		    color: #ffff;
-		}
+			.tool-items{
+			    background-color: rgb(27, 26, 26);
+			     padding-top: .6rem;
+			     padding-bottom:.6rem;
+			    cursor: pointer;
+			    color: #ffff;
+			}
 
-		.tool-items:hover{
-		    box-shadow: none;
-		    background-color: #6b5e5e;
-		}
+			.tool-items:hover{
+			    box-shadow: none;
+			    background-color: #6b5e5e;
+			}
 		`
+		// Update text
+		const handleChange = (e) => {
+			this.setState({textContents: e.target.value})
+		}
+
 		// Handle tabs
-		let handleChange = (e) => {
+		const handleKey = (e) => {
 			if (e.shiftKey && e.key === 'Tab'){
 				e.preventDefault()
 				document.execCommand('outdent',false,'')
@@ -60,28 +68,8 @@ class TextEditor extends Component {
 			}
 		}
 
-		let updateDB = (htmlObj) => {
-
-			// Doesn't work
-			if (this.props.isDefense){
-				this.setState({defenseStrats: htmlObj.innerHTML})
-				this.props.updateMD(this.props.isDefense, htmlObj.innerHTML)
-				htmlObj.innerHTML = this.state.defenseStrats
-			}
-			else {
-				this.setState({offenseStrats: htmlObj.innerHTML})
-				this.props.updateMD(this.props.isDefense, htmlObj.innerHTML)
-				htmlObj.innerHTML = this.state.offenseStrats
-
-			}
-
-			// Doesn't work
-			/*
-			let temp = htmlObj.innerHTML
-			this.props.updateMD(this.props.isDefense, htmlObj.innerHTML)
-			htmlObj.innerHTML = temp
-			*/
-			
+		const testerino = () => {
+			this.setState({textContents: '???'})
 		}
 
 
@@ -108,14 +96,9 @@ class TextEditor extends Component {
 				</Toolbar>
 
 				<div className="center">
-					<Editor className="editor" contentEditable onKeyDown={(e)=>{handleChange(e)}}>
-					</Editor>
+					<ContentEditable html={this.state.textContents} onChange={handleChange} />
 				</div>
-
-				<div className="center">
-					<button type="button" onClick={() => updateDB(document.querySelector(".editor")) } className="sai btn">Save</button>
-				</div>
-
+				<button type="button" onClick={testerino}/>
 
 				<div className="center">
 					<section className="getcontent">
@@ -129,3 +112,48 @@ class TextEditor extends Component {
 }
 
 export default TextEditor
+
+// Doesn't work, outdated?
+class ContentEditable extends Component { 
+	constructor(props){
+		super(props)
+	}
+
+	render(){
+
+		const shouldComponentUpdate = (nextProps) => {
+			return nextProps.html !== this.getDomNode().innerHTML
+		}
+
+		const componentDidUpdate = () => {
+			if (this.props.textContents !== this.getDOMNode().innerHTML) {
+				this.getDOMNode().innerHTML = this.props.textContents
+			}
+		}
+
+		const emitChange = () => {
+			let html = this.getDomNode().innerHTML
+			console.log(html)
+			if (this.props.onChange && html !== this.lastHtml) {
+				this.props.onChange({ target: {value: html} })
+			}
+			this.lastHtml = html;
+			console.log("textcontents", this.props.textContents)
+		}
+
+		return (
+			<div
+				onInput={this.emitChange}
+				onBlur={this.emitChange}
+				contentEditable
+				dangerouslySetInnerHTML={{__html: this.props.textContents}}>
+			</div>
+		)
+
+	}
+}
+
+/*
+<Editor className="editor" value={this.state.textContents} contentEditable onChange={handleChange} onKeyDown={handleKey}>
+					</Editor>
+*/
