@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import { Mutation } from 'react-apollo'
 import gql from 'graphql-tag'
 import Error from '../ErrorMessage'
-import Form from '../WYSIWYG/Form'
+// import Form from '../WYSIWYG/Form'
 
 import TextEditor from './textEditor'
 
@@ -45,33 +45,45 @@ const CREATE_OW_STRATEGY_MUTATION = gql`
 `
 
 class StratEdit extends Component {
+    // state = {
+    //     mapName: this.props.mapName || '',
+    //     defenseStrats:
+    //         '"# Counter Dive\n1. Winston dives first, targets the primary squish support first (zen, ana, etc.)\n2. DVA follows closely behind and matrixes the winston on dive.\n3. Genji Dives with the tanks.\n4. Lucio might follow...\n5. Sombra, Ana, & Lucio deal with the counterdive.\n  1. Kill the main diver (probably winston)\n  2. Follow up with the rest of the counter dive.\n6. **WIN**\n',
+    //     defenseHeroes: [
+    //         'Zenyatta',
+    //         'Mei',
+    //         'Reinhardt',
+    //         'Ana',
+    //         'Dva',
+    //         'Widowmaker'
+    //     ],
+    //     offenseStrats:
+    //         '"# Counter Dive\n1. Winston dives first, targets the primary squish support first (zen, ana, etc.)\n2. DVA follows closely behind and matrixes the winston on dive.\n3. Genji Dives with the tanks.\n4. Lucio might follow...\n5. Sombra, Ana, & Lucio deal with the counterdive.\n  1. Kill the main diver (probably winston)\n  2. Follow up with the rest of the counter dive.\n6. **WIN**\n',
+    //     offenseHeroes: [
+    //         'Zenyatta',
+    //         'Mei',
+    //         'Reinhardt',
+    //         'Ana',
+    //         'Dva',
+    //         'Widowmaker'
+    //     ],
+    //     mapMode: '',
+    //     strategyName: 'Divess',
+    //     expectedRank: '', //TODO: might give an error later
+    //     // subMap: this.props.subMap || '',
+    //     creatorName: 'ecleptic'
+    // }
     state = {
         mapName: this.props.mapName || '',
-        defenseStrats:
-            '"# Counter Dive\n1. Winston dives first, targets the primary squish support first (zen, ana, etc.)\n2. DVA follows closely behind and matrixes the winston on dive.\n3. Genji Dives with the tanks.\n4. Lucio might follow...\n5. Sombra, Ana, & Lucio deal with the counterdive.\n  1. Kill the main diver (probably winston)\n  2. Follow up with the rest of the counter dive.\n6. **WIN**\n',
-        defenseHeroes: [
-            'Zenyatta',
-            'Mei',
-            'Reinhardt',
-            'Ana',
-            'Dva',
-            'Widowmaker'
-        ],
-        offenseStrats:
-            '"# Counter Dive\n1. Winston dives first, targets the primary squish support first (zen, ana, etc.)\n2. DVA follows closely behind and matrixes the winston on dive.\n3. Genji Dives with the tanks.\n4. Lucio might follow...\n5. Sombra, Ana, & Lucio deal with the counterdive.\n  1. Kill the main diver (probably winston)\n  2. Follow up with the rest of the counter dive.\n6. **WIN**\n',
-        offenseHeroes: [
-            'Zenyatta',
-            'Mei',
-            'Reinhardt',
-            'Ana',
-            'Dva',
-            'Widowmaker'
-        ],
+        defenseStrats: '',
+        defenseHeroes: [],
+        offenseStrats: '',
+        offenseHeroes: [],
         mapMode: '',
-        strategyName: 'Divess',
+        strategyName: '',
         expectedRank: '', //TODO: might give an error later
-        // subMap: this.props.subMap || '',
-        creatorName: 'ecleptic'
+        subMap: this.props.subMap || '',
+        creatorName: ''
     }
 
     componentDidMount = () => {
@@ -224,7 +236,10 @@ class StratEdit extends Component {
                                 </ul>
                             </label>
 
-                            <TextEditor updateMD={this.updateMD} isDefense={false}/>
+                            <TextEditor
+                                updateMD={this.updateMD}
+                                isDefense={false}
+                            />
 
                             <label htmlFor="defenseHeroes">
                                 defenseHeroes
@@ -254,7 +269,10 @@ class StratEdit extends Component {
                                 </ul>
                             </label>
 
-                            <TextEditor updateMD={this.updateMD} isDefense={true}/>
+                            <TextEditor
+                                updateMD={this.updateMD}
+                                isDefense={true}
+                            />
 
                             <button type="submit">Submit</button>
                         </fieldset>
