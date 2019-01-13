@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
+import estyled from '@emotion/styled' // half the size of styled components
 
 class TextEditor extends Component {
     constructor(props) {
@@ -13,7 +14,7 @@ class TextEditor extends Component {
 
     render() {
         // TODO: styled components don't work yet.
-        const Editor = styled.div`
+        const Editor = estyled.div`
             @font-face {
                 font-family: 'Roboto', sans-serif;
                 src: url('https://fonts.googleapis.com/css?family=Roboto');

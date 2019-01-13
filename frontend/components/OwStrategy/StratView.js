@@ -1,4 +1,4 @@
-const ReactMarkdown = require('react-markdown')
+// const ReactMarkdown = require('react-markdown')
 import { Query } from 'react-apollo'
 import gql from 'graphql-tag'
 import PropTypes from 'prop-types'
@@ -88,7 +88,7 @@ class StratView extends Component {
                                     <li key={hero}>{hero}</li>
                                 ))}
                             </ul>
-                            <ReactMarkdown source={offenseStrats} />
+                            {/* <ReactMarkdown source={offenseStrats} /> */}
                         </>
                     )
                 }}

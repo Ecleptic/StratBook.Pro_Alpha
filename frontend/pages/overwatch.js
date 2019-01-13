@@ -3,13 +3,36 @@ import Strat from '../components/OwStrategy/Strat'
 import StratEdit from '../components/OwStrategy/StratEdit'
 import { OwUrlToMap, OwIsMap } from '../configs/Overwatch/OwData'
 import Router, { withRouter } from 'next/router'
+import Signup from '../components/Signup_Portal'
+import User from '../components/User'
+import gql from 'graphql-tag'
+import { Query } from 'react-apollo'
+import Error from '../components/ErrorMessage'
 
+const GET_MAP_STRATEGY_QUERY = gql`
+    query GET_MAP_STRATEGY_QUERY($userName: String!, $mapName: OwMap!) {
+        owStrategies(
+            where: {
+                AND: [
+                    { creatorName: { name: $userName } }
+                    { mapName: $mapName }
+                ]
+            }
+        ) {
+            id
+            mapName
+            creatorName {
+                name
+            }
+        }
+    }
+`
 class Overwatch extends React.Component {
     static async getInitialProps({ asPath, req, res, query }) {
         if (query.map && !query.stratNumber) {
+            console.log({ asPath })
             // res.redirect(`${asPath}/1`)
         }
-
         if (asPath[asPath.length - 1] === '/') {
             res.redirect(asPath.slice(0, -1))
         }
@@ -21,9 +44,10 @@ class Overwatch extends React.Component {
 
     render() {
         const url = this.props.router
+        const { user, map: mapName } = url.query
         return (
             <div>
-                {/* <h1>Game: Overwatch</h1> */}
+                <h1>Game: Overwatch</h1>
                 {url.query.user && <p> User URL: {url.query.user}</p>}
                 {url.query.stratNumber && (
                     <p> stratNumber: {url.query.stratNumber}</p>
@@ -32,16 +56,140 @@ class Overwatch extends React.Component {
                 {!url.query.map ? (
                     <MapsList teamName={url.query.user} url={url} />
                 ) : (
-                    <>
-                        {/* <StratEdit
-                            mapName={OwUrlToMap(url.query.map)}
-                            userName={url.query.user}
-                        /> */}
-                        <Strat
-                            mapName={OwUrlToMap(url.query.map)}
-                            userName={url.query.user}
-                        />
-                    </>
+                    <User>
+                        {({ data: { me } }) => {
+                            /* <StratEdit
+                             mapName={OwUrlToMap(url.query.map)}
+                             userName={url.query.user}
+                         /> */
+
+                            if (me) {
+                                return (
+                                    <Query
+                                        query={GET_MAP_STRATEGY_QUERY}
+                                        variables={{
+                                            userName: me.name,
+                                            mapName: OwUrlToMap(url.query.map)
+                                        }}
+                                    >
+                                        {({
+                                            data,
+                                            loading,
+                                            error,
+                                            userName
+                                        }) => {
+                                            if (loading) return 'Loading'
+                                            if (error)
+                                                return <Error error={error} />
+
+                                            // If user is logged in and they don't have any previous strats, change url to include their username (do we need to change url?) and show edit...
+                                            //  TODO: query to show strat...
+                                            // if user is logged in and they already have a strat, show strat
+
+                                            // 4. if logged in but they're on a username, show that strat.
+                                            ////// 4.1 compare usernames, if the same, give an option to edit
+                                            if (url.query.user) {
+                                                return (
+                                                    <Strat
+                                                        mapName={OwUrlToMap(
+                                                            url.query.map
+                                                        )}
+                                                        userName={
+                                                            url.query.user
+                                                        }
+                                                    />
+                                                )
+                                            } else {
+                                                // 3. if logged in and no user
+                                                ////// 3.1 check if strat exists
+                                                ////// 3.2 show or edit depending on the result.
+
+                                                // no user
+                                                if (data.owStrategies.length)
+                                                    //there are strats
+                                                    return (
+                                                        <Strat
+                                                            mapName={OwUrlToMap(
+                                                                url.query.map
+                                                            )}
+                                                            userName={
+                                                                url.query.user
+                                                            }
+                                                        />
+                                                    )
+                                            }
+                                            if (!data.owStrategies.length) {
+                                                return <h3>No Data</h3>
+                                            } else {
+                                                return (
+                                                    <Strat
+                                                        mapName={OwUrlToMap(
+                                                            url.query.map
+                                                        )}
+                                                        userName={
+                                                            url.query.user
+                                                        }
+                                                    />
+                                                )
+                                            }
+                                        }}
+                                    </Query>
+                                )
+                            } else {
+                                // 2.  if the user is not logged in and they are on a username try to show that strat if available
+                                if (url.query.user) {
+                                    console.log(`On user: ${url.query.user}`)
+                                    return (
+                                        <div>
+                                            <h2>
+                                                TODO: {'\n'}
+                                                2. if the user is not logged in
+                                                and they are on a username try
+                                                to show that strat if available
+                                            </h2>
+                                            <h3>
+                                                Should be a strat view for the
+                                                user
+                                            </h3>
+                                            <ul>
+                                                <li>
+                                                    Map:
+                                                    {OwUrlToMap(url.query.map)}
+                                                </li>
+                                                <li>
+                                                    Player: {url.query.user}
+                                                </li>
+                                            </ul>
+                                            <Strat
+                                                mapName={OwUrlToMap(
+                                                    url.query.map
+                                                )}
+                                                userName={url.query.user}
+                                            />
+                                        </div>
+                                    )
+                                } else {
+                                    // 1. if the user is not logged in and they are not on a username ask them to log in first. Then we'll need to reload page after login. TODO:
+                                    return (
+                                        <div>
+                                            <h2>
+                                                TODO: {'\n'}
+                                                1. if the user is not logged in
+                                                and they are not on a username
+                                                ask them to log in first. Then
+                                                we'll need to reload page after
+                                                login.
+                                            </h2>
+                                            <h3>
+                                                Please sign in or sign up first
+                                            </h3>
+                                            <Signup />
+                                        </div>
+                                    )
+                                }
+                            }
+                        }}
+                    </User>
                 )}
             </div>
         )

@@ -2,10 +2,12 @@ import React, { Component } from 'react'
 // import marked from 'marked'
 import { Mutation } from 'react-apollo'
 import gql from 'graphql-tag'
-import Error from '../ErrorMessage'
-// import Form from '../WYSIWYG/Form'
 
+// import Form from '../WYSIWYG/Form'
+import Error from '../ErrorMessage'
+import Signup from '../Signup_Portal'
 import TextEditor from './textEditor'
+import User from '../User'
 
 import {
     OwHeroes,
@@ -130,155 +132,214 @@ class StratEdit extends Component {
         const { mapName, userName } = this.props
         const mapType = OwMapTypes[mapName]
         return (
-            <Mutation
-                mutation={CREATE_OW_STRATEGY_MUTATION}
-                variables={this.state}
-            >
-                {(createOwStrategy, { loading, error }) => (
-                    <form
-                        data-test="form"
-                        onSubmit={async e => {
-                            // 1. Stop the form from submitting
-                            e.preventDefault()
-                            console.log('SUBMITTING FORM:', this.state)
-                            // 2. call the mutation
-                            try {
-                                const res = await createOwStrategy().then(
-                                    response => {
-                                        console.log(response)
-                                    }
-                                )
-                                console.log('SUCCESS', res)
-                            } catch (error) {
-                                console.error('dang it broke:', error)
-                            }
-                            // 3. change the page the view
-                        }}
-                    >
-                        <Error error={error} />
-                        <fieldset disabled={loading} aria-busy={loading}>
-                            <label htmlFor="creatorName">
-                                creatorName
-                                <br />
-                                <textarea
-                                    id="creatorName"
-                                    name="creatorName"
-                                    placeholder="Enter a creator Name"
-                                    required
-                                    value={this.state.creatorName}
-                                    onChange={this.handleChange}
-                                />
-                            </label>
-                            <br />
-                            <label htmlFor="strategyName">
-                                Strategy Name
-                                {/* <br /> */}
-                                <input
-                                    id="strategyName"
-                                    name="strategyName"
-                                    placeholder="Name your Strategy"
-                                    required
-                                    type="text"
-                                    value={this.state.strategyName}
-                                    onChange={this.handleChange}
-                                />
-                            </label>
-                            <br />
-                            <label htmlFor="ExpectedRankSelect">
-                                <select
-                                    name="expectedRankSelect"
-                                    id="expectedRankSelect"
-                                    onChange={this.handleChange}
-                                >
-                                    <option />
-                                    {[
-                                        'Bronze',
-                                        'Silver',
-                                        'Gold',
-                                        'Platinum',
-                                        'Diamond',
-                                        'Master',
-                                        'Grand Master',
-                                        'Top 500'
-                                    ].map(rank => (
-                                        <option key={rank}>{rank}</option>
-                                    ))}
-                                </select>
-                            </label>
-
-                            <br />
-
-                            <label htmlFor="offenseHeroes">
-                                offenseHeroes
-                                <ul>
-                                    {[0, 1, 2, 3, 4, 5].map(index => {
-                                        return (
-                                            <li key={index}>
-                                                <select
-                                                    name={`offenseHeroes`}
-                                                    id={`offenseHeroes${index}`}
-                                                    data-index={index}
-                                                    // selected={index}
-                                                    onChange={
-                                                        this.handleSelectChange
+            <User>
+                {({ data: { me } }) => {
+                    console.log({ me })
+                    if (!me) {
+                        return (
+                            <div>
+                                <h3>Please sign in or sign up first</h3>
+                                <Signup />
+                            </div>
+                        )
+                    } else {
+                        return (
+                            <Mutation
+                                mutation={CREATE_OW_STRATEGY_MUTATION}
+                                variables={this.state}
+                            >
+                                {(createOwStrategy, { loading, error }) => (
+                                    <form
+                                        data-test="form"
+                                        onSubmit={async e => {
+                                            // 1. Stop the form from submitting
+                                            e.preventDefault()
+                                            console.log(
+                                                'SUBMITTING FORM:',
+                                                this.state
+                                            )
+                                            // 2. call the mutation
+                                            try {
+                                                const res = await createOwStrategy().then(
+                                                    response => {
+                                                        console.log(response)
                                                     }
+                                                )
+                                                console.log('SUCCESS', res)
+                                            } catch (error) {
+                                                console.error(
+                                                    'dang it broke:',
+                                                    error
+                                                )
+                                            }
+                                            // 3. change the page the view
+                                        }}
+                                    >
+                                        <Error error={error} />
+                                        <fieldset
+                                            disabled={loading}
+                                            aria-busy={loading}
+                                        >
+                                            <label htmlFor="creatorName">
+                                                creatorName
+                                                <br />
+                                                <textarea
+                                                    id="creatorName"
+                                                    name="creatorName"
+                                                    placeholder="Enter a creator Name"
+                                                    required
+                                                    value={
+                                                        this.state.creatorName
+                                                    }
+                                                    onChange={this.handleChange}
+                                                />
+                                            </label>
+                                            <br />
+                                            <label htmlFor="strategyName">
+                                                Strategy Name
+                                                {/* <br /> */}
+                                                <input
+                                                    id="strategyName"
+                                                    name="strategyName"
+                                                    placeholder="Name your Strategy"
+                                                    required
+                                                    type="text"
+                                                    value={
+                                                        this.state.strategyName
+                                                    }
+                                                    onChange={this.handleChange}
+                                                />
+                                            </label>
+                                            <br />
+                                            <label htmlFor="ExpectedRankSelect">
+                                                <select
+                                                    name="expectedRankSelect"
+                                                    id="expectedRankSelect"
+                                                    onChange={this.handleChange}
                                                 >
                                                     <option />
-                                                    {OwHeroes.map(hero => (
-                                                        <option key={hero}>
-                                                            {hero}
+                                                    {[
+                                                        'Bronze',
+                                                        'Silver',
+                                                        'Gold',
+                                                        'Platinum',
+                                                        'Diamond',
+                                                        'Master',
+                                                        'Grand Master',
+                                                        'Top 500'
+                                                    ].map(rank => (
+                                                        <option key={rank}>
+                                                            {rank}
                                                         </option>
                                                     ))}
                                                 </select>
-                                            </li>
-                                        )
-                                    })}
-                                </ul>
-                            </label>
+                                            </label>
 
-                            <TextEditor
-                                updateMD={this.updateMD}
-                                isDefense={false}
-                            />
+                                            <br />
 
-                            <label htmlFor="defenseHeroes">
-                                defenseHeroes
-                                <ul>
-                                    {[0, 1, 2, 3, 4, 5].map(index => {
-                                        return (
-                                            <li key={index}>
-                                                <select
-                                                    name={`defenseHeroes`}
-                                                    id={`defenseHeroes${index}`}
-                                                    data-index={index}
-                                                    onChange={
-                                                        this.handleSelectChange
-                                                    }
-                                                    // selected={index}
-                                                >
-                                                    <option />
-                                                    {OwHeroes.map(hero => (
-                                                        <option key={hero}>
-                                                            {hero}
-                                                        </option>
-                                                    ))}
-                                                </select>
-                                            </li>
-                                        )
-                                    })}
-                                </ul>
-                            </label>
+                                            <label htmlFor="offenseHeroes">
+                                                offenseHeroes
+                                                <ul>
+                                                    {[0, 1, 2, 3, 4, 5].map(
+                                                        index => {
+                                                            return (
+                                                                <li key={index}>
+                                                                    <select
+                                                                        name={`offenseHeroes`}
+                                                                        id={`offenseHeroes${index}`}
+                                                                        data-index={
+                                                                            index
+                                                                        }
+                                                                        // selected={index}
+                                                                        onChange={
+                                                                            this
+                                                                                .handleSelectChange
+                                                                        }
+                                                                    >
+                                                                        <option />
+                                                                        {OwHeroes.map(
+                                                                            hero => (
+                                                                                <option
+                                                                                    key={
+                                                                                        hero
+                                                                                    }
+                                                                                >
+                                                                                    {
+                                                                                        hero
+                                                                                    }
+                                                                                </option>
+                                                                            )
+                                                                        )}
+                                                                    </select>
+                                                                </li>
+                                                            )
+                                                        }
+                                                    )}
+                                                </ul>
+                                            </label>
 
-                            <TextEditor
-                                updateMD={this.updateMD}
-                                isDefense={true}
-                            />
+                                            <TextEditor
+                                                updateMD={this.updateMD}
+                                                isDefense={false}
+                                            />
 
-                            <button type="submit">Submit</button>
-                        </fieldset>
-                    </form>
-                )}
-            </Mutation>
+                                            <label htmlFor="defenseHeroes">
+                                                defenseHeroes
+                                                <ul>
+                                                    {[0, 1, 2, 3, 4, 5].map(
+                                                        index => {
+                                                            return (
+                                                                <li key={index}>
+                                                                    <select
+                                                                        name={`defenseHeroes`}
+                                                                        id={`defenseHeroes${index}`}
+                                                                        data-index={
+                                                                            index
+                                                                        }
+                                                                        onChange={
+                                                                            this
+                                                                                .handleSelectChange
+                                                                        }
+                                                                        // selected={index}
+                                                                    >
+                                                                        <option />
+                                                                        {OwHeroes.map(
+                                                                            hero => (
+                                                                                <option
+                                                                                    key={
+                                                                                        hero
+                                                                                    }
+                                                                                >
+                                                                                    {
+                                                                                        hero
+                                                                                    }
+                                                                                </option>
+                                                                            )
+                                                                        )}
+                                                                    </select>
+                                                                </li>
+                                                            )
+                                                        }
+                                                    )}
+                                                </ul>
+                                            </label>
+
+                                            <TextEditor
+                                                updateMD={this.updateMD}
+                                                isDefense={true}
+                                            />
+
+                                            <button type="submit">
+                                                Submit
+                                            </button>
+                                        </fieldset>
+                                    </form>
+                                )}
+                            </Mutation>
+                        )
+                    }
+                }}
+            </User>
         )
     }
 }

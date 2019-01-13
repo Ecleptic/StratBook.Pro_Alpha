@@ -1,4 +1,4 @@
-const ReactMarkdown = require('react-markdown')
+// const ReactMarkdown = require('react-markdown')
 import { Query } from 'react-apollo'
 import gql from 'graphql-tag'
 import PropTypes from 'prop-types'
@@ -19,6 +19,10 @@ class Strat extends Component {
         mapName: this.props.mapName || ''
     }
 
+    componentDidMount = () => {
+        console.log('Mounted Strat.js')
+    }
+
     handleChange = e => {
         const { name, type, value, checked } = e.target
         const val =
@@ -35,7 +39,7 @@ class Strat extends Component {
             return (
                 <>
                     <label htmlFor="editBool">
-                        Edit
+                        Edit Box (In Strat.js)
                         <input
                             type="checkbox"
                             name="editBool"
@@ -44,7 +48,13 @@ class Strat extends Component {
                             onChange={this.handleChange}
                         />
                     </label>
+                    <ul>
+                        <li>Edit Boolean: {this.state.editBool?"True":"False"}</li>
+                        <li>Username Prop: {this.props.userName}</li>
+                    </ul>
+
                     {this.state.editBool || !this.props.userName ? (
+                        // TODO: Almost everything should end up here.
                         <StratEdit {...this.props} />
                     ) : (
                         <StratView {...this.props} />
@@ -52,6 +62,7 @@ class Strat extends Component {
                 </>
             )
         } else {
+            // TODO: if not a known map, it's  probably a username. maybe have a user profile listing all their games and maps?
             return <h2>Sorry this map is not a known Overwatch Map</h2>
         }
     }

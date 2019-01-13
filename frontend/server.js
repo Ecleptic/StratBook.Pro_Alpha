@@ -13,7 +13,7 @@ app.prepare().then(() => {
     const server = express()
     // Custom Next.js URLs
 
-    Router.forEachPattern((page, pattern, defaultParams) => {
+    Router.forEachPrettyPattern((page, pattern, defaultParams) => {
         // console.log({ page, pattern, defaultParams })
         server.get(pattern, (req, res) => {
             app.render(
