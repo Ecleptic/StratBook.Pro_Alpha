@@ -86,6 +86,11 @@ class Overwatch extends React.Component {
                                             //  TODO: query to show strat...
                                             // if user is logged in and they already have a strat, show strat
 
+                                            // 1. if the user is not logged in and they are not on a username ask them to log in first. Then we'll need to reload page after login. TODO:
+                                            // 2.  if the user is not logged in and they are on a username try to show that strat if available
+                                            // 3. if logged in and no user
+                                            ////// 3.1 check if strat exists
+                                            ////// 3.2 show or edit depending on the result.
                                             // 4. if logged in but they're on a username, show that strat.
                                             ////// 4.1 compare usernames, if the same, give an option to edit
                                             if (url.query.user) {
@@ -109,6 +114,7 @@ class Overwatch extends React.Component {
                                                     //there are strats
                                                     return (
                                                         <Strat
+                                                            me={me}
                                                             mapName={OwUrlToMap(
                                                                 url.query.map
                                                             )}
@@ -123,6 +129,7 @@ class Overwatch extends React.Component {
                                             } else {
                                                 return (
                                                     <Strat
+                                                        me={me}
                                                         mapName={OwUrlToMap(
                                                             url.query.map
                                                         )}
@@ -141,12 +148,6 @@ class Overwatch extends React.Component {
                                     console.log(`On user: ${url.query.user}`)
                                     return (
                                         <div>
-                                            <h2>
-                                                TODO: {'\n'}
-                                                2. if the user is not logged in
-                                                and they are on a username try
-                                                to show that strat if available
-                                            </h2>
                                             <h3>
                                                 Should be a strat view for the
                                                 user
@@ -172,14 +173,6 @@ class Overwatch extends React.Component {
                                     // 1. if the user is not logged in and they are not on a username ask them to log in first. Then we'll need to reload page after login. TODO:
                                     return (
                                         <div>
-                                            <h2>
-                                                TODO: {'\n'}
-                                                1. if the user is not logged in
-                                                and they are not on a username
-                                                ask them to log in first. Then
-                                                we'll need to reload page after
-                                                login.
-                                            </h2>
                                             <h3>
                                                 Please sign in or sign up first
                                             </h3>

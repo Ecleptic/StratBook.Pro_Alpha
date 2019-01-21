@@ -211,6 +211,8 @@ class StratEdit extends Component {
                                                 />
                                             </label>
                                             <br />
+                                            {/*TODO: we probably want react-select for images https://jedwatson.github.io/react-select/
+                                            https://github.com/JedWatson/react-select/issues/2553*/}
                                             <label htmlFor="ExpectedRankSelect">
                                                 <select
                                                     name="expectedRankSelect"

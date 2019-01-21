@@ -6,7 +6,7 @@ import React, { Component } from 'react'
 import Router, { withRouter } from 'next/router'
 
 // import GetStrategyQuery from './GetStrategyQuery'
-// import HeroImage from './HeroImage'
+import HeroImage from './HeroImage'
 import { OwHeroes, OwUrlToMap } from '../../configs/Overwatch/OwData'
 
 const GET_STRATEGIES_QUERY = gql`
@@ -36,9 +36,18 @@ const GET_STRATEGIES_QUERY = gql`
         }
     }
 `
+
 class StratView extends Component {
     render() {
-        const { mapName, userName } = this.props
+        console.log('Mounted StratView.js')
+        const {
+            mapName,
+            userName: propUser,
+            me: { name: meUser }
+        } = this.props
+
+        const userName = propUser ? propUser : meUser // should be... if there's a prop user, show that, otherwise, show meUser
+
         return (
             <Query
                 query={GET_STRATEGIES_QUERY}
@@ -63,31 +72,35 @@ class StratView extends Component {
 
                     return (
                         <>
-                            {/* {!userName && (
-                        <label htmlFor="creatorName">
-                            creatorName
-                            <textarea
-                                id="creatorName"
-                                name="creatorName"
-                                placeholder="Enter a creator Name"
-                                required
-                                // value={this.state.creatorName}
-                                // onChange={this.handleChange}
-                            />
-                        </label>
-                    )} */}
                             <h2>{mapName}</h2>
                             {expectedRank && <h3>Rank: {expectedRank}</h3>}
                             <p>
-                                {subMap}, {mapMode}
+                                Submap: {subMap}, mapMode{mapMode}
                             </p>
                             <p>{`${creatorName.name}'s`}</p>
                             <h3>{strategyName}</h3>
-                            <ul>
-                                {offenseHeroes.map(hero => (
-                                    <li key={hero}>{hero}</li>
-                                ))}
-                            </ul>
+                            <label htmlFor="offenseHeroesList">
+                                offenseHeroes
+                                <ul id="offenseHeroesList">
+                                    {offenseHeroes.map(hero => (
+                                        <li key={hero}>
+                                            <HeroImage hero={hero} />
+                                        </li>
+                                    ))}
+                                </ul>
+                            </label>
+                            <p>defenseStrats: {defenseStrats}</p>
+                            <p>offenseStrats: {offenseStrats}</p>
+                            <label htmlFor="defenseHeroesList">
+                                defenseHeroes
+                                <ul id="defenseHeroesList">
+                                    {defenseHeroes.map(hero => (
+                                        <li key={hero}>
+                                            <HeroImage hero={hero} />
+                                        </li>
+                                    ))}
+                                </ul>
+                            </label>
                             {/* <ReactMarkdown source={offenseStrats} /> */}
                         </>
                     )

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import styled from 'styled-components'
-import estyled from '@emotion/styled' // half the size of styled components
+// import estyled from '@emotion/styled' // half the size of styled components
 
 class TextEditor extends Component {
     constructor(props) {

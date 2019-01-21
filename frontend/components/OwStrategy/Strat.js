@@ -38,6 +38,8 @@ class Strat extends Component {
         if (OwIsMap(this.props.mapName)) {
             return (
                 <>
+                    {/*
+                    // TODO: Only show this
                     <label htmlFor="editBool">
                         Edit Box (In Strat.js)
                         <input
@@ -47,13 +49,18 @@ class Strat extends Component {
                             value={this.state.editBool}
                             onChange={this.handleChange}
                         />
-                    </label>
+                    </label> */}
                     <ul>
-                        <li>Edit Boolean: {this.state.editBool?"True":"False"}</li>
+                        <li>
+                            Edit Boolean:{' '}
+                            {this.state.editBool ? 'True' : 'False'}
+                        </li>
                         <li>Username Prop: {this.props.userName}</li>
+                        <li>Username Me: {this.props.me.name}</li>
                     </ul>
 
-                    {this.state.editBool || !this.props.userName ? (
+                    {this.state.editBool ||
+                    (!this.props.me && !this.props.userName) ? (
                         // TODO: Almost everything should end up here.
                         <StratEdit {...this.props} />
                     ) : (
