@@ -9,10 +9,9 @@ export default () => (
         <h3>What game do you want to play?</h3>
         {/* <Signup /> */}
         {/* <Trix /> */}
-        <DraftEditor />
         <ul>
             <li>
-                <Link href="Overwatch">
+                <Link href="overwatch">
                     <a>Overwatch</a>
                 </Link>
             </li>

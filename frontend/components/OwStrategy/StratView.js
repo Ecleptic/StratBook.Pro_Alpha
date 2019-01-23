@@ -1,4 +1,4 @@
-// const ReactMarkdown = require('react-markdown')
+const ReactMarkdown = require('react-markdown')
 import { Query } from 'react-apollo'
 import gql from 'graphql-tag'
 import PropTypes from 'prop-types'
@@ -7,7 +7,11 @@ import Router, { withRouter } from 'next/router'
 
 // import GetStrategyQuery from './GetStrategyQuery'
 import HeroImage from './HeroImage'
-import { OwHeroes, OwUrlToMap } from '../../configs/Overwatch/OwData'
+import {
+    OwHeroes,
+    OwUrlToMap,
+    OwMapToEnum
+} from '../../configs/Overwatch/OwData'
 
 const GET_STRATEGIES_QUERY = gql`
     query GET_STRATEGIES_QUERY($userName: String!, $mapName: OwMap!) {
@@ -51,7 +55,7 @@ class StratView extends Component {
         return (
             <Query
                 query={GET_STRATEGIES_QUERY}
-                variables={{ userName, mapName }}
+                variables={{ userName, mapName: OwMapToEnum(mapName) }}
             >
                 {({ data, loading, error, userName }) => {
                     if (loading) return 'Loading'
@@ -89,8 +93,16 @@ class StratView extends Component {
                                     ))}
                                 </ul>
                             </label>
-                            <p>defenseStrats: {defenseStrats}</p>
-                            <p>offenseStrats: {offenseStrats}</p>
+                            <p>
+                                OffenseStrats:
+                                {/* {offenseStrats} */}
+                            </p>
+                                <ReactMarkdown source={offenseStrats} />
+                            <p>
+                                defenseStrats:
+                                {/* {defenseStrats} */}
+                            </p>
+                                <ReactMarkdown source={defenseStrats} />
                             <label htmlFor="defenseHeroesList">
                                 defenseHeroes
                                 <ul id="defenseHeroesList">
@@ -101,7 +113,6 @@ class StratView extends Component {
                                     ))}
                                 </ul>
                             </label>
-                            {/* <ReactMarkdown source={offenseStrats} /> */}
                         </>
                     )
                 }}

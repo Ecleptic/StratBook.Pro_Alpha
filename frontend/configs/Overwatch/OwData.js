@@ -102,11 +102,15 @@ export const OwMapTypes = {
     'Watchpoint: Gibraltar': 'Escort'
 }
 export const OwMapToEnum = map => {
-    return map
-    // remove apostrophes, & colons with no space
-    .replace(/'|:/, '')
-    // replace whitespace (like spaces) with an underscore
-    .replace(/\s/, '_')
+    return (
+        map
+            // remove apostrophes & colons
+            .replace(/'|:/, '')
+            // replace dashes with underscore
+            .replace(/'-'/, '_')
+            // replace whitespace (like spaces) with an underscore
+            .replace(/\s/g, '_')
+    )
 }
 export const OwUrlToMap = url => {
     const mapIndex = OwMaps.map(map => slugify(map)).indexOf(url)

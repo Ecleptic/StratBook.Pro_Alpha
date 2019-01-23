@@ -14,7 +14,7 @@ import { OwHeroes, OwIsMap } from '../../configs/Overwatch/OwData'
 
 class Strat extends Component {
     state = {
-        editBool: false,
+        editBool: this.props.editBool || false,
         userName: this.props.userName || '',
         mapName: this.props.mapName || ''
     }
@@ -70,6 +70,7 @@ class Strat extends Component {
             )
         } else {
             // TODO: if not a known map, it's  probably a username. maybe have a user profile listing all their games and maps?
+            //  NO. I want that to be stratbook.pro/user/{username}
             return <h2>Sorry this map is not a known Overwatch Map</h2>
         }
     }

@@ -1,7 +1,7 @@
 import MapsList from '../components/OwStrategy/MapsList'
 import Strat from '../components/OwStrategy/Strat'
 import StratEdit from '../components/OwStrategy/StratEdit'
-import { OwUrlToMap, OwIsMap } from '../configs/Overwatch/OwData'
+import { OwUrlToMap, OwIsMap, OwMapToEnum } from '../configs/Overwatch/OwData'
 import Router, { withRouter } from 'next/router'
 import Signup from '../components/Signup_Portal'
 import User from '../components/User'
@@ -30,7 +30,7 @@ const GET_MAP_STRATEGY_QUERY = gql`
 class Overwatch extends React.Component {
     static async getInitialProps({ asPath, req, res, query }) {
         if (query.map && !query.stratNumber) {
-            console.log({ asPath })
+            // console.log({ asPath })
             // res.redirect(`${asPath}/1`)
         }
         if (asPath[asPath.length - 1] === '/') {
@@ -44,7 +44,7 @@ class Overwatch extends React.Component {
 
     render() {
         const url = this.props.router
-        const { user, map: mapName } = url.query
+        const { user, map } = url.query
         return (
             <div>
                 <h1>Game: Overwatch</h1>
@@ -69,7 +69,9 @@ class Overwatch extends React.Component {
                                         query={GET_MAP_STRATEGY_QUERY}
                                         variables={{
                                             userName: me.name,
-                                            mapName: OwUrlToMap(url.query.map)
+                                            mapName: OwMapToEnum(
+                                                OwUrlToMap(url.query.map)
+                                            )
                                         }}
                                     >
                                         {({
@@ -94,6 +96,7 @@ class Overwatch extends React.Component {
                                             // 4. if logged in but they're on a username, show that strat.
                                             ////// 4.1 compare usernames, if the same, give an option to edit
                                             if (url.query.user) {
+                                                console.log('user in query')
                                                 return (
                                                     <Strat
                                                         mapName={OwUrlToMap(
@@ -105,12 +108,16 @@ class Overwatch extends React.Component {
                                                     />
                                                 )
                                             } else {
+                                                console.log('user not in query')
                                                 // 3. if logged in and no user
                                                 ////// 3.1 check if strat exists
                                                 ////// 3.2 show or edit depending on the result.
 
                                                 // no user
-                                                if (data.owStrategies.length)
+                                                if (data.owStrategies.length) {
+                                                    console.log(
+                                                        'there are strats'
+                                                    )
                                                     //there are strats
                                                     return (
                                                         <Strat
@@ -123,21 +130,24 @@ class Overwatch extends React.Component {
                                                             }
                                                         />
                                                     )
-                                            }
-                                            if (!data.owStrategies.length) {
-                                                return <h3>No Data</h3>
-                                            } else {
-                                                return (
-                                                    <Strat
-                                                        me={me}
-                                                        mapName={OwUrlToMap(
-                                                            url.query.map
-                                                        )}
-                                                        userName={
-                                                            url.query.user
-                                                        }
-                                                    />
-                                                )
+                                                } else {
+                                                    console.log(
+                                                        'there are no strats, but we are logged in'
+                                                    )
+                                                    // return <h3>No Data</h3>
+                                                    return (
+                                                        <Strat
+                                                            editBool={true}
+                                                            me={me}
+                                                            mapName={OwUrlToMap(
+                                                                url.query.map
+                                                            )}
+                                                            userName={
+                                                                url.query.user
+                                                            }
+                                                        />
+                                                    )
+                                                }
                                             }
                                         }}
                                     </Query>

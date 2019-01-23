@@ -17,8 +17,8 @@ const MapsList = ({ url, teamName, setMapName, setStrats, setActiveStrat }) => (
                         <Link
                             href={
                                 url.asPath[url.asPath.length - 1] === '/'
-                                    ? `${url.asPath}${slug(map)}`
-                                    : `${url.asPath}/${slug(map)}`
+                                    ? `${url.asPath}${(slug(map)).toLocaleLowerCase()}`
+                                    : `${url.asPath}/${(slug(map)).toLocaleLowerCase()}`
                             }
                         >
                             <a>{map.toLocaleUpperCase()}</a>

@@ -86,6 +86,10 @@ export default class DraftEditor extends Component {
                 'content state',
                 draftjsToMd(convertToRaw(contentState))
             )
+            this.props.updateMD(
+                this.props.isDefense,
+                draftjsToMd(convertToRaw(contentState))
+            )
             this.setState({ editorState })
         }
 
@@ -223,7 +227,7 @@ class StyleButton extends React.Component {
 }
 
 const BLOCK_TYPES = [
-    { label: 'HOne', style: 'header-one' },
+    // { label: 'HOne', style: 'header-one' },
     { label: 'H2', style: 'header-two' },
     { label: 'H3', style: 'header-three' },
     { label: 'H4', style: 'header-four' },

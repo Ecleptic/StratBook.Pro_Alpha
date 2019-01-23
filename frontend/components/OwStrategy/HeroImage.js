@@ -201,6 +201,8 @@ export default HeroImage
 const AnaPixel = 'https://res.cloudinary.com/ecleptic/image/upload/c_scale,f_auto,w_100/v1543466363/OW_Hero_Pixel_Spray/Spray_Ana_Pixel.png'
 const AshePixel = 'https://res.cloudinary.com/ecleptic/image/upload/c_scale,f_auto,w_100/v1543466351/OW_Hero_Pixel_Spray/Spray_Ashe_Pixel.png'
 const BastionPixel = 'https://res.cloudinary.com/ecleptic/image/upload/c_scale,f_auto,w_100/v1543466363/OW_Hero_Pixel_Spray/Spray_Bastion_Pixel.png'
+const BrigittePixel = 'https://res.cloudinary.com/ecleptic/image/upload/c_scale,f_auto,w_100/v1543466363/OW_Hero_Pixel_Spray/Spray_Brigitte_Pixel.png'
+const DoomfistPixel = 'https://res.cloudinary.com/ecleptic/image/upload/c_scale,f_auto,w_100/v1543466363/OW_Hero_Pixel_Spray/Spray_Doomfist_Pixel.png'
 const DvaPixel = 'https://res.cloudinary.com/ecleptic/image/upload/c_scale,f_auto,w_100/v1543466363/OW_Hero_Pixel_Spray/Spray_Dva_Pixel.png'
 const GenjiPixel = 'https://res.cloudinary.com/ecleptic/image/upload/c_scale,f_auto,w_100/v1543466363/OW_Hero_Pixel_Spray/Spray_Genji_Pixel.png'
 const HanzoPixel = 'https://res.cloudinary.com/ecleptic/image/upload/c_scale,f_auto,w_100/v1543466363/OW_Hero_Pixel_Spray/Spray_Hanzo_Pixel.png'

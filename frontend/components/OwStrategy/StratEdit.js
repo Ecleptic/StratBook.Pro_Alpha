@@ -4,9 +4,10 @@ import { Mutation } from 'react-apollo'
 import gql from 'graphql-tag'
 
 // import Form from '../WYSIWYG/Form'
+import DraftEditor from '../Draft'
 import Error from '../ErrorMessage'
 import Signup from '../Signup_Portal'
-import TextEditor from './textEditor'
+// import TextEditor from './textEditor'
 import User from '../User'
 
 import {
@@ -23,6 +24,7 @@ const CREATE_OW_STRATEGY_MUTATION = gql`
         $mapMode: OwMapMode!
         $offenseStrats: String!
         $offenseHeroes: [OwHero!]!
+        $defenseHeroes: [OwHero!]!
         $creatorName: String!
         $strategyName: String! # $subMap: OwControlSubMap
     ) {
@@ -30,10 +32,12 @@ const CREATE_OW_STRATEGY_MUTATION = gql`
             data: {
                 mapName: $mapName
                 mapMode: $mapMode
-                offenseStrats: $offenseStrats
                 strategyName: $strategyName
                 creatorName: { connect: { name: $creatorName } }
+                offenseStrats: $offenseStrats
                 offenseHeroes: { set: $offenseHeroes }
+                defenseStrats: $defenseStrats
+                defenseHeroes: { set: $defenseHeroes }
                 # subMap: $subMap
             }
         ) {
@@ -76,7 +80,7 @@ class StratEdit extends Component {
     //     creatorName: 'ecleptic'
     // }
     state = {
-        mapName: this.props.mapName || '',
+        mapName: '',
         defenseStrats: '',
         defenseHeroes: [],
         offenseStrats: '',
@@ -85,11 +89,19 @@ class StratEdit extends Component {
         strategyName: '',
         expectedRank: '', //TODO: might give an error later
         subMap: this.props.subMap || '',
-        creatorName: ''
+        creatorName: this.props.me.name || this.props.username || ''
     }
 
+    componentWillMount = () => {
+        this.setState({
+            mapName: OwMapToEnum(this.props.mapName)
+        })
+    }
     componentDidMount = () => {
-        this.setState({ mapMode: OwMapToEnum(OwMapTypes[this.state.mapName]) })
+        console.log('mounted stratEdit.js')
+        // this.setState({
+        //     mapMode: OwMapToEnum(OwMapTypes[this.state.mapName])
+        // })
     }
 
     handleChange = e => {
@@ -134,7 +146,7 @@ class StratEdit extends Component {
         return (
             <User>
                 {({ data: { me } }) => {
-                    console.log({ me })
+                    // console.log({ me })
                     if (!me) {
                         return (
                             <div>
@@ -215,7 +227,7 @@ class StratEdit extends Component {
                                             https://github.com/JedWatson/react-select/issues/2553*/}
                                             <label htmlFor="ExpectedRankSelect">
                                                 <select
-                                                    name="expectedRankSelect"
+                                                    name="expectedRank"
                                                     id="expectedRankSelect"
                                                     onChange={this.handleChange}
                                                 >
@@ -279,11 +291,15 @@ class StratEdit extends Component {
                                                     )}
                                                 </ul>
                                             </label>
-
-                                            <TextEditor
+                                            <DraftEditor
                                                 updateMD={this.updateMD}
                                                 isDefense={false}
                                             />
+                                            {/*
+                                            <TextEditor
+                                                updateMD={this.updateMD}
+                                                isDefense={false}
+                                            /> */}
 
                                             <label htmlFor="defenseHeroes">
                                                 defenseHeroes
@@ -326,7 +342,11 @@ class StratEdit extends Component {
                                                 </ul>
                                             </label>
 
-                                            <TextEditor
+                                            {/* <TextEditor
+                                                updateMD={this.updateMD}
+                                                isDefense={true}
+                                            /> */}
+                                            <DraftEditor
                                                 updateMD={this.updateMD}
                                                 isDefense={true}
                                             />
