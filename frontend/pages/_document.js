@@ -15,9 +15,7 @@ export default class MyDocument extends Document {
         return (
             <html className="notranslate translated-ltr">
                 <Head>{this.props.styleTags}</Head>
-                <body
-                    style={{ background: 'rgb(36, 36, 36)', color: '#ffffff' }}
-                >
+                <body>
                     <Main />
                     <NextScript />
                 </body>

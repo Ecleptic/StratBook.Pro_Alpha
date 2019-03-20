@@ -11,359 +11,412 @@ import Signup from '../Signup_Portal'
 import User from '../User'
 
 import {
-    OwHeroes,
-    OwMaps,
-    OwControlMapsData,
-    OwMapTypes,
-    OwMapToEnum
+	OwHeroes,
+	OwMaps,
+	OwControlMapsData,
+	OwMapTypes,
+	OwMapToEnum
 } from '../../configs/Overwatch/OwData'
 
 const CREATE_OW_STRATEGY_MUTATION = gql`
-    mutation CREATE_OW_STRATEGY_MUTATION(
-        $mapName: OwMap!
-        $mapMode: OwMapMode!
-        $offenseStrats: String!
-        $offenseHeroes: [OwHero!]!
-        $defenseHeroes: [OwHero!]!
-        $creatorName: String!
-        $strategyName: String! # $subMap: OwControlSubMap
-    ) {
-        createOwStrategy(
-            data: {
-                mapName: $mapName
-                mapMode: $mapMode
-                strategyName: $strategyName
-                creatorName: { connect: { name: $creatorName } }
-                offenseStrats: $offenseStrats
-                offenseHeroes: { set: $offenseHeroes }
-                defenseStrats: $defenseStrats
-                defenseHeroes: { set: $defenseHeroes }
-                # subMap: $subMap
-            }
-        ) {
-            id
-            creatorName {
-                name
-            }
-            mapName
-        }
-    }
+	mutation CREATE_OW_STRATEGY_MUTATION(
+		$mapName: OwMap!
+		$mapMode: OwMapMode!
+		$offenseStrats: String!
+		$offenseHeroes: [OwHero!]!
+		$defenseHeroes: [OwHero!]!
+		$creatorName: String!
+		$strategyName: String! # $subMap: OwControlSubMap
+	) {
+		createOwStrategy(
+			data: {
+				mapName: $mapName
+				mapMode: $mapMode
+				strategyName: $strategyName
+				creatorName: { connect: { name: $creatorName } }
+				offenseStrats: $offenseStrats
+				offenseHeroes: { set: $offenseHeroes }
+				defenseStrats: $defenseStrats
+				defenseHeroes: { set: $defenseHeroes }
+				# subMap: $subMap
+			}
+		) {
+			id
+			creatorName {
+				name
+			}
+			mapName
+		}
+	}
+`
+const GET_STRATEGIES_QUERY = gql`
+	query GET_STRATEGIES_QUERY($userName: String!, $mapName: OwMap!) {
+		owStrategies(
+			where: {
+				AND: [
+					{ creatorName: { name: $userName } }
+					{ mapName: $mapName }
+				]
+			}
+		) {
+			id
+			mapName
+			defenseStrats
+			defenseHeroes
+			offenseStrats
+			offenseHeroes
+			mapMode
+			strategyName
+			expectedRank
+			subMap
+			creatorName {
+				name
+			}
+			offenseStrats
+		}
+	}
 `
 
 class StratEdit extends Component {
-    // state = {
-    //     mapName: this.props.mapName || '',
-    //     defenseStrats:
-    //         '"# Counter Dive\n1. Winston dives first, targets the primary squish support first (zen, ana, etc.)\n2. DVA follows closely behind and matrixes the winston on dive.\n3. Genji Dives with the tanks.\n4. Lucio might follow...\n5. Sombra, Ana, & Lucio deal with the counterdive.\n  1. Kill the main diver (probably winston)\n  2. Follow up with the rest of the counter dive.\n6. **WIN**\n',
-    //     defenseHeroes: [
-    //         'Zenyatta',
-    //         'Mei',
-    //         'Reinhardt',
-    //         'Ana',
-    //         'Dva',
-    //         'Widowmaker'
-    //     ],
-    //     offenseStrats:
-    //         '"# Counter Dive\n1. Winston dives first, targets the primary squish support first (zen, ana, etc.)\n2. DVA follows closely behind and matrixes the winston on dive.\n3. Genji Dives with the tanks.\n4. Lucio might follow...\n5. Sombra, Ana, & Lucio deal with the counterdive.\n  1. Kill the main diver (probably winston)\n  2. Follow up with the rest of the counter dive.\n6. **WIN**\n',
-    //     offenseHeroes: [
-    //         'Zenyatta',
-    //         'Mei',
-    //         'Reinhardt',
-    //         'Ana',
-    //         'Dva',
-    //         'Widowmaker'
-    //     ],
-    //     mapMode: '',
-    //     strategyName: 'Divess',
-    //     expectedRank: '', //TODO: might give an error later
-    //     // subMap: this.props.subMap || '',
-    //     creatorName: 'ecleptic'
-    // }
-    state = {
-        mapName: '',
-        defenseStrats: '',
-        defenseHeroes: [],
-        offenseStrats: '',
-        offenseHeroes: [],
-        mapMode: '',
-        strategyName: '',
-        expectedRank: '', //TODO: might give an error later
-        subMap: this.props.subMap || '',
-        creatorName: this.props.me.name || this.props.username || ''
-    }
+	// state = {
+	//     mapName: this.props.mapName || '',
+	//     defenseStrats:
+	//         '"# Counter Dive\n1. Winston dives first, targets the primary squish support first (zen, ana, etc.)\n2. DVA follows closely behind and matrixes the winston on dive.\n3. Genji Dives with the tanks.\n4. Lucio might follow...\n5. Sombra, Ana, & Lucio deal with the counterdive.\n  1. Kill the main diver (probably winston)\n  2. Follow up with the rest of the counter dive.\n6. **WIN**\n',
+	//     defenseHeroes: [
+	//         'Zenyatta',
+	//         'Mei',
+	//         'Reinhardt',
+	//         'Ana',
+	//         'Dva',
+	//         'Widowmaker'
+	//     ],
+	//     offenseStrats:
+	//         '"# Counter Dive\n1. Winston dives first, targets the primary squish support first (zen, ana, etc.)\n2. DVA follows closely behind and matrixes the winston on dive.\n3. Genji Dives with the tanks.\n4. Lucio might follow...\n5. Sombra, Ana, & Lucio deal with the counterdive.\n  1. Kill the main diver (probably winston)\n  2. Follow up with the rest of the counter dive.\n6. **WIN**\n',
+	//     offenseHeroes: [
+	//         'Zenyatta',
+	//         'Mei',
+	//         'Reinhardt',
+	//         'Ana',
+	//         'Dva',
+	//         'Widowmaker'
+	//     ],
+	//     mapMode: '',
+	//     strategyName: 'Divess',
+	//     expectedRank: '', //TODO: might give an error later
+	//     // subMap: this.props.subMap || '',
+	//     creatorName: 'ecleptic'
+	// }
+	state = {
+		mapName: '',
+		defenseStrats: '',
+		defenseHeroes: [],
+		offenseStrats: '',
+		offenseHeroes: [],
+		mapMode: '',
+		strategyName: '',
+		expectedRank: '', //TODO: might give an error later
+		subMap: this.props.subMap || '',
+		creatorName: this.props.me.name || this.props.username || ''
+	}
 
-    componentWillMount = () => {
-        this.setState({
-            mapName: OwMapToEnum(this.props.mapName)
-        })
-    }
-    componentDidMount = () => {
-        console.log('mounted stratEdit.js')
-        // this.setState({
-        //     mapMode: OwMapToEnum(OwMapTypes[this.state.mapName])
-        // })
-    }
+	componentWillMount = () => {
+		this.setState({
+			mapName: OwMapToEnum(this.props.mapName)
+		})
+	}
+	componentDidMount = () => {
+		console.log('mounted stratEdit.js')
 
-    handleChange = e => {
-        const {
-            name,
-            type,
-            value,
-            dataset: { index }
-        } = e.target
+		this.setState({
+			mapMode: OwMapToEnum(OwMapTypes[this.props.mapName])
+		})
+	}
 
-        const val = type === 'number' ? parseFloat(value) : value
-        this.setState({ [name]: val })
-    }
+	handleChange = e => {
+		const {
+			name,
+			type,
+			value,
+			dataset: { index }
+		} = e.target
 
-    handleSelectChange = e => {
-        const {
-            name,
-            type,
-            value,
-            dataset: { index }
-        } = e.target
-        if (type === 'select-one') {
-            let val = [...this.state[name]]
-            // console.log(val)
-            val[index] = value
-            this.setState({ [name]: val })
-        }
-    }
+		const val = type === 'number' ? parseFloat(value) : value
+		this.setState({ [name]: val })
+	}
 
-    updateMD = (isDefense, md) => {
-        console.log(isDefense, md)
-        if (isDefense) {
-            this.setState({ defenseStrats: md })
-        } else {
-            this.setState({ offenseStrats: md })
-        }
-    }
+	handleSelectChange = e => {
+		const {
+			name,
+			type,
+			value,
+			dataset: { index }
+		} = e.target
+		if (type === 'select-one') {
+			let val = [...this.state[name]]
+			// console.log(val)
+			val[index] = value
+			this.setState({ [name]: val })
+		}
+	}
 
-    render() {
-        const { mapName, userName } = this.props
-        const mapType = OwMapTypes[mapName]
-        return (
-            <User>
-                {({ data: { me } }) => {
-                    // console.log({ me })
-                    if (!me) {
-                        return (
-                            <div>
-                                <h3>Please sign in or sign up first</h3>
-                                <Signup />
-                            </div>
-                        )
-                    } else {
-                        return (
-                            <Mutation
-                                mutation={CREATE_OW_STRATEGY_MUTATION}
-                                variables={this.state}
+	updateMD = (isDefense, md) => {
+		console.log(isDefense, md)
+		if (isDefense) {
+			this.setState({ defenseStrats: md })
+		} else {
+			this.setState({ offenseStrats: md })
+		}
+	}
+
+	render() {
+		const { mapName, userName } = this.props
+		const mapType = OwMapTypes[mapName]
+		return (
+			<User>
+				{({ data: { me } }) => {
+					// console.log({ me })
+					if (!me) {
+						return (
+							<div>
+								<h3>Please sign in or sign up first</h3>
+								<Signup />
+							</div>
+						)
+					} else {
+						return (
+                            <Query
+                                query={GET_STRATEGIES_QUERY}
+                                variables={{ userName, mapName: OwMapToEnum(mapName) }}
                             >
-                                {(createOwStrategy, { loading, error }) => (
-                                    <form
-                                        data-test="form"
-                                        onSubmit={async e => {
-                                            // 1. Stop the form from submitting
-                                            e.preventDefault()
-                                            console.log(
-                                                'SUBMITTING FORM:',
-                                                this.state
-                                            )
-                                            // 2. call the mutation
-                                            try {
-                                                const res = await createOwStrategy().then(
-                                                    response => {
-                                                        console.log(response)
-                                                    }
-                                                )
-                                                console.log('SUCCESS', res)
-                                            } catch (error) {
-                                                console.error(
-                                                    'dang it broke:',
-                                                    error
-                                                )
-                                            }
-                                            // 3. change the page the view
-                                        }}
-                                    >
-                                        <Error error={error} />
-                                        <fieldset
-                                            disabled={loading}
-                                            aria-busy={loading}
-                                        >
-                                            <label htmlFor="creatorName">
-                                                creatorName
-                                                <br />
-                                                <textarea
-                                                    id="creatorName"
-                                                    name="creatorName"
-                                                    placeholder="Enter a creator Name"
-                                                    required
-                                                    value={
-                                                        this.state.creatorName
-                                                    }
-                                                    onChange={this.handleChange}
-                                                />
-                                            </label>
-                                            <br />
-                                            <label htmlFor="strategyName">
-                                                Strategy Name
-                                                {/* <br /> */}
-                                                <input
-                                                    id="strategyName"
-                                                    name="strategyName"
-                                                    placeholder="Name your Strategy"
-                                                    required
-                                                    type="text"
-                                                    value={
-                                                        this.state.strategyName
-                                                    }
-                                                    onChange={this.handleChange}
-                                                />
-                                            </label>
-                                            <br />
-                                            {/*TODO: we probably want react-select for images https://jedwatson.github.io/react-select/
+                                {({ data, loading, error, userName }) => {
+                                    if (loading) return 'Loading'
+                                    if (error) return <p>Error: {`${error}`}</p>
+                                    const {
+                                        id,
+                                        // mapName,
+                                        defenseStrats,
+                                        defenseHeroes,
+                                        offenseStrats,
+                                        offenseHeroes,
+                                        mapMode,
+                                        strategyName,
+                                        expectedRank,
+                                        subMap,
+                                        creatorName
+                                    } = data.owStrategies[0]
+
+                                    return (
+							<Mutation
+								mutation={CREATE_OW_STRATEGY_MUTATION}
+								variables={this.state}
+							>
+								{(createOwStrategy, { loading, error }) => (
+									<form
+										data-test="form"
+										onSubmit={async e => {
+											// 1. Stop the form from submitting
+											e.preventDefault()
+											console.log(
+												'SUBMITTING FORM:',
+												this.state
+											)
+											// 2. call the mutation
+											try {
+												const res = await createOwStrategy().then(
+													response => {
+														console.log(response)
+													}
+												)
+												console.log('SUCCESS', res)
+											} catch (error) {
+												console.error(
+													'dang it broke:',
+													error
+												)
+											}
+											// 3. change the page the view
+										}}
+									>
+										<Error error={error} />
+										<fieldset
+											disabled={loading}
+											aria-busy={loading}
+										>
+											<label htmlFor="creatorName">
+												creatorName
+												<br />
+												<textarea
+													id="creatorName"
+													name="creatorName"
+													placeholder="Enter a creator Name"
+													required
+													value={
+														this.state.creatorName
+													}
+													onChange={this.handleChange}
+												/>
+											</label>
+											<br />
+											<label htmlFor="strategyName">
+												Strategy Name
+												{/* <br /> */}
+												<input
+													id="strategyName"
+													name="strategyName"
+													placeholder="Name your Strategy"
+													required
+													type="text"
+													value={
+														this.state.strategyName
+													}
+													onChange={this.handleChange}
+												/>
+											</label>
+											<br />
+											{/*TODO: we probably want react-select for images https://jedwatson.github.io/react-select/
                                             https://github.com/JedWatson/react-select/issues/2553*/}
-                                            <label htmlFor="ExpectedRankSelect">
-                                                <select
-                                                    name="expectedRank"
-                                                    id="expectedRankSelect"
-                                                    onChange={this.handleChange}
-                                                >
-                                                    <option />
-                                                    {[
-                                                        'Bronze',
-                                                        'Silver',
-                                                        'Gold',
-                                                        'Platinum',
-                                                        'Diamond',
-                                                        'Master',
-                                                        'Grand Master',
-                                                        'Top 500'
-                                                    ].map(rank => (
-                                                        <option key={rank}>
-                                                            {rank}
-                                                        </option>
-                                                    ))}
-                                                </select>
-                                            </label>
+											<label htmlFor="ExpectedRankSelect">
+												<select
+													name="expectedRank"
+													id="expectedRankSelect"
+													onChange={this.handleChange}
+												>
+													<option />
+													{[
+														'Bronze',
+														'Silver',
+														'Gold',
+														'Platinum',
+														'Diamond',
+														'Master',
+														'Grand Master',
+														'Top 500'
+													].map(rank => (
+														<option key={rank}>
+															{rank}
+														</option>
+													))}
+												</select>
+											</label>
 
-                                            <br />
+											<br />
 
-                                            <label htmlFor="offenseHeroes">
-                                                offenseHeroes
-                                                <ul>
-                                                    {[0, 1, 2, 3, 4, 5].map(
-                                                        index => {
-                                                            return (
-                                                                <li key={index}>
-                                                                    <select
-                                                                        name={`offenseHeroes`}
-                                                                        id={`offenseHeroes${index}`}
-                                                                        data-index={
-                                                                            index
-                                                                        }
-                                                                        // selected={index}
-                                                                        onChange={
-                                                                            this
-                                                                                .handleSelectChange
-                                                                        }
-                                                                    >
-                                                                        <option />
-                                                                        {OwHeroes.map(
-                                                                            hero => (
-                                                                                <option
-                                                                                    key={
-                                                                                        hero
-                                                                                    }
-                                                                                >
-                                                                                    {
-                                                                                        hero
-                                                                                    }
-                                                                                </option>
-                                                                            )
-                                                                        )}
-                                                                    </select>
-                                                                </li>
-                                                            )
-                                                        }
-                                                    )}
-                                                </ul>
-                                            </label>
-                                            <DraftEditor
-                                                updateMD={this.updateMD}
-                                                isDefense={false}
-                                            />
-                                            {/*
+											<label htmlFor="offenseHeroes">
+												offenseHeroes
+												<ul>
+													{[0, 1, 2, 3, 4, 5].map(
+														index => {
+															return (
+																<li key={index}>
+																	<select
+																		name={`offenseHeroes`}
+																		id={`offenseHeroes${index}`}
+																		data-index={
+																			index
+																		}
+																		// selected={index}
+																		onChange={
+																			this
+																				.handleSelectChange
+																		}
+																	>
+																		<option />
+																		{OwHeroes.map(
+																			hero => (
+																				<option
+																					key={
+																						hero
+																					}
+																				>
+																					{
+																						hero
+																					}
+																				</option>
+																			)
+																		)}
+																	</select>
+																</li>
+															)
+														}
+													)}
+												</ul>
+											</label>
+											<DraftEditor
+												updateMD={this.updateMD}
+												isDefense={false}
+											/>
+											{/*
                                             <TextEditor
                                                 updateMD={this.updateMD}
                                                 isDefense={false}
                                             /> */}
 
-                                            <label htmlFor="defenseHeroes">
-                                                defenseHeroes
-                                                <ul>
-                                                    {[0, 1, 2, 3, 4, 5].map(
-                                                        index => {
-                                                            return (
-                                                                <li key={index}>
-                                                                    <select
-                                                                        name={`defenseHeroes`}
-                                                                        id={`defenseHeroes${index}`}
-                                                                        data-index={
-                                                                            index
-                                                                        }
-                                                                        onChange={
-                                                                            this
-                                                                                .handleSelectChange
-                                                                        }
-                                                                        // selected={index}
-                                                                    >
-                                                                        <option />
-                                                                        {OwHeroes.map(
-                                                                            hero => (
-                                                                                <option
-                                                                                    key={
-                                                                                        hero
-                                                                                    }
-                                                                                >
-                                                                                    {
-                                                                                        hero
-                                                                                    }
-                                                                                </option>
-                                                                            )
-                                                                        )}
-                                                                    </select>
-                                                                </li>
-                                                            )
-                                                        }
-                                                    )}
-                                                </ul>
-                                            </label>
+											<label htmlFor="defenseHeroes">
+												defenseHeroes
+												<ul>
+													{[0, 1, 2, 3, 4, 5].map(
+														index => {
+															return (
+																<li key={index}>
+																	<select
+																		name={`defenseHeroes`}
+																		id={`defenseHeroes${index}`}
+																		data-index={
+																			index
+																		}
+																		onChange={
+																			this
+																				.handleSelectChange
+																		}
+																		// selected={index}
+																	>
+																		<option />
+																		{OwHeroes.map(
+																			hero => (
+																				<option
+																					key={
+																						hero
+																					}
+																				>
+																					{
+																						hero
+																					}
+																				</option>
+																			)
+																		)}
+																	</select>
+																</li>
+															)
+														}
+													)}
+												</ul>
+											</label>
 
-                                            {/* <TextEditor
+											{/* <TextEditor
                                                 updateMD={this.updateMD}
                                                 isDefense={true}
                                             /> */}
-                                            <DraftEditor
-                                                updateMD={this.updateMD}
-                                                isDefense={true}
-                                            />
+											<DraftEditor
+												updateMD={this.updateMD}
+												isDefense={true}
+											/>
 
-                                            <button type="submit">
-                                                Submit
-                                            </button>
-                                        </fieldset>
-                                    </form>
-                                )}
-                            </Mutation>
-                        )
-                    }
-                }}
-            </User>
-        )
-    }
+											<button type="submit">
+												Submit
+											</button>
+										</fieldset>
+									</form>
+								)}
+							</Mutation>
+                                    )
+                                }}
+                            </Query>
+						)
+					}
+				}}
+			</User>
+		)
+	}
 }
 
 export default StratEdit

@@ -47,11 +47,11 @@ class Overwatch extends React.Component {
         const { user, map } = url.query
         return (
             <div>
-                <h1>Game: Overwatch</h1>
-                {url.query.user && <p> User URL: {url.query.user}</p>}
-                {url.query.stratNumber && (
+                {/* <h1>Game: Overwatch</h1> */}
+                {/* {url.query.user && <p> User URL: {url.query.user}</p>} */}
+                {/* {url.query.stratNumber && (
                     <p> stratNumber: {url.query.stratNumber}</p>
-                )}
+                )} */}
 
                 {!url.query.map ? (
                     <MapsList teamName={url.query.user} url={url} />

@@ -4,24 +4,28 @@ import Header from './Header'
 import Meta from './Meta'
 
 const theme = {
-    red: '#FF0000',
-    black: '#393939',
-    grey: '#3A3A3A',
-    lightgrey: '#E1E1E1',
-    offWhite: '#EDEDED',
-    maxWidth: '1000px',
-    bs: '0 12px 24px 0 rgba(0, 0, 0, 0.09)'
+	black: '#393939',
+	bs: '0 12px 24px 0 rgba(0, 0, 0, 0.09)',
+	darkgrey: '#242424',
+	grey: '#3A3A3A',
+	white: '#ffffff',
+	lightgrey: '#E1E1E1',
+	maxWidth: '1000px',
+	offWhite: '#EDEDED',
+	red: '#FF0000',
+	borderColor: '#E1E1E1'
 }
+// style = {{ background: 'rgb(36, 36, 36)', color: '#ffffff' }}
 
 const StyledPage = styled.div`
-    background: white;
-    color: ${props => props.theme.black};
+	background: ${theme.darkgrey};
+	color: ${theme.lightgrey};
 `
 
 const Inner = styled.div`
-    max-width: ${props => props.theme.maxWidth};
-    margin: 0 auto;
-    padding: 2rem;
+	max-width: ${props => props.theme.maxWidth};
+	margin: 0 auto;
+	padding: 2rem;
 `
 
 injectGlobal`
@@ -42,27 +46,29 @@ injectGlobal`
     padding: 0;
     margin: 0;
     font-size: 1.5rem;
-    line-height: 2;
+    line-height: 1.5;
     font-family: 'radnika_next';
+	background: ${theme.darkgrey};
+    /* height: 100vh; */
   }
   a {
     text-decoration: none;
-    color: ${theme.black};
+    color: ${theme.lightgrey};
   }
 `
 
 class Page extends Component {
-    render() {
-        return (
-            <ThemeProvider theme={theme}>
-                <StyledPage>
-                    <Meta />
-                    <Header />
-                    <Inner>{this.props.children}</Inner>
-                </StyledPage>
-            </ThemeProvider>
-        )
-    }
+	render() {
+		return (
+			<ThemeProvider theme={theme}>
+				<StyledPage>
+					<Meta />
+					<Header />
+					<Inner>{this.props.children}</Inner>
+				</StyledPage>
+			</ThemeProvider>
+		)
+	}
 }
 
 export default Page

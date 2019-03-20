@@ -9,9 +9,9 @@ import { OwHeroes } from '../../configs/Overwatch/OwData'
 
 
 const StratView = props => (
-    <Query {...props} query={GET_STRATEGIES_QUERY}>
-        {payload => props.children(payload)}
-    </Query>
+	<Query {...props} query={GET_STRATEGIES_QUERY}>
+		{payload => props.children(payload)}
+	</Query>
 )
 
 StratView.propTypes = {}

@@ -3,6 +3,7 @@ import NavStyles from './styles/NavStyles'
 import User from './User'
 import Signout from '../components/Signout'
 import Signin from './Signin'
+
 const Nav = () => (
     <NavStyles>
         <Link href="/Overwatch">
