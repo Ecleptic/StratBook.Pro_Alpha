@@ -8,11 +8,7 @@ import Router, { withRouter } from 'next/router'
 
 // import GetStrategyQuery from './GetStrategyQuery'
 import HeroImage from './HeroImage'
-import {
-	OwHeroes,
-	OwUrlToMap,
-	OwMapToEnum
-} from '../../configs/Overwatch/OwData'
+import { OwHeroes, OwUrlToMap, OwMapToEnum } from '../../configs/Overwatch/OwData'
 
 const HeroList = styled.ul`
 	margin: 0;
@@ -45,14 +41,7 @@ const MapNameHeader = styled.h2`
 
 const GET_STRATEGIES_QUERY = gql`
 	query GET_STRATEGIES_QUERY($userName: String!, $mapName: OwMap!) {
-		owStrategies(
-			where: {
-				AND: [
-					{ creatorName: { name: $userName } }
-					{ mapName: $mapName }
-				]
-			}
-		) {
+		owStrategies(where: { AND: [{ creatorName: { name: $userName } }, { mapName: $mapName }] }) {
 			id
 			mapName
 			defenseStrats
@@ -80,10 +69,7 @@ class StratView extends Component {
 		const userName = propUser ? propUser : meUser // should be... if there's a prop user, show that, otherwise, show meUser
 
 		return (
-			<Query
-				query={GET_STRATEGIES_QUERY}
-				variables={{ userName, mapName: OwMapToEnum(mapName) }}
-			>
+			<Query query={GET_STRATEGIES_QUERY} variables={{ userName, mapName: OwMapToEnum(mapName) }}>
 				{({ data, loading, error, userName }) => {
 					if (loading) return 'Loading'
 					if (error) return <p>Error: {`${error}`}</p>
@@ -104,17 +90,10 @@ class StratView extends Component {
 					return (
 						<>
 							<StratViewHeader>
-								<MapNameHeader>
-									{mapName.toUpperCase()}
-								</MapNameHeader>
+								<MapNameHeader>{mapName.toUpperCase()}</MapNameHeader>
+								<div>{subMap && <h3>Submap: {subMap},</h3>}</div>
 								<div>
-									{subMap && <h3>Submap: {subMap},</h3>}
-								</div>
-								<div>
-									{mapMode && <h3>Map Mode: {mapMode}</h3>}{' '}
-									{expectedRank && (
-										<h3>Expected Rank: {expectedRank}</h3>
-									)}
+									{mapMode && <h3>Map Mode: {mapMode}</h3>} {expectedRank && <h3>Expected Rank: {expectedRank}</h3>}
 									{/* <h3>{`${creatorName.name.toUpperCase()}'S`}</h3> */}
 									<h4>{strategyName.toUpperCase()}</h4>
 								</div>
@@ -128,16 +107,19 @@ class StratView extends Component {
 								))}
 							</HeroList>
 							<MarkDownRendered source={offenseStrats} />
-							{ mapMode!== 'control'
-							<h2>Defense:</h2>
-							<HeroList id="defenseHeroesList">
-								{defenseHeroes.map(hero => (
-									<HeroListItem key={hero}>
-										<HeroImage hero={hero} />
-									</HeroListItem>
-								))}
-							</HeroList>
-							<MarkDownRendered source={defenseStrats} />}
+							{mapMode !== 'control' && (
+								<>
+									<h2>Defense:</h2>
+									<HeroList id="defenseHeroesList">
+										{defenseHeroes.map(hero => (
+											<HeroListItem key={hero}>
+												<HeroImage hero={hero} />
+											</HeroListItem>
+										))}
+									</HeroList>
+									<MarkDownRendered source={defenseStrats} />
+								</>
+							)}
 						</>
 					)
 				}}
