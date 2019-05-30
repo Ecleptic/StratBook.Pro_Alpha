@@ -11,13 +11,11 @@ import Signup from '../Signup_Portal'
 // import TextEditor from './textEditor'
 import User from '../User'
 
-import {
-	OwHeroes,
-	OwMaps,
-	OwControlMapsData,
-	OwMapTypes,
-	OwMapToEnum
-} from '../../configs/Overwatch/OwData'
+import { OwHeroes, OwMaps, OwControlMapsData, OwMapTypes, OwMapToEnum } from '../../configs/Overwatch/OwData'
+import EditCp from './stratEdit/EditCp'
+import EditHybrid from './stratEdit/EditHybrid'
+import EditControl from './stratEdit/EditControl'
+import EditPayload from './stratEdit/EditPayload'
 
 /**
  * Steps for strat edit.
@@ -169,10 +167,8 @@ class StratEdit extends Component {
 							>
 								{({ data, loading, error, userName }) => {
 									if (loading) return 'Loading'
-									if (error)
-										return <p>Errors: {`${error}`}</p>
-									if (data.owStrategies.length < 1)
-										return <p>No Data</p>
+									if (error) return <p>Errors: {`${error}`}</p>
+									if (data.owStrategies.length < 1) return <p>No Data</p>
 
 									const {
 										id,
@@ -189,254 +185,14 @@ class StratEdit extends Component {
 									} = data.owStrategies[0]
 
 									return (
-										<Mutation
-											mutation={
-												CREATE_OW_STRATEGY_MUTATION
-											}
-											variables={this.state}
-										>
-											{(
-												createOwStrategy,
-												{ loading, error }
-											) => (
-												// 	<form
-												// 		data-test="form"
-												// 		onSubmit={async e => {
-												// 			// 1. Stop the form from submitting
-												// 			e.preventDefault()
-												// 			console.log(
-												// 				'SUBMITTING FORM:',
-												// 				this.state
-												// 			)
-												// 			// 2. call the mutation
-												// 			try {
-												// 				const res = await createOwStrategy().then(
-												// 					response => {
-												// 						console.log(
-												// 							response
-												// 						)
-												// 					}
-												// 				)
-												// 				console.log(
-												// 					'SUCCESS',
-												// 					res
-												// 				)
-												// 			} catch (error) {
-												// 				console.error(
-												// 					'dang it broke:',
-												// 					error
-												// 				)
-												// 			}
-												// 			// 3. change the page the view
-												// 		}}
-												// 	>
-												// 		<Error error={error} />
-												// 		<fieldset
-												// 			disabled={loading}
-												// 			aria-busy={loading}
-												// 		>
-												// 			<label htmlFor="creatorName">
-												// 				creatorName
-												// 				<br />
-												// 				<textarea
-												// 					id="creatorName"
-												// 					name="creatorName"
-												// 					placeholder="Enter a creator Name"
-												// 					required
-												// 					value={
-												// 						this.state
-												// 							.creatorName
-												// 					}
-												// 					onChange={
-												// 						this
-												// 							.handleChange
-												// 					}
-												// 				/>
-												// 			</label>
-												// 			<br />
-												// 			<label htmlFor="strategyName">
-												// 				Strategy Name
-												// 				{/* <br /> */}
-												// 				<input
-												// 					id="strategyName"
-												// 					name="strategyName"
-												// 					placeholder="Name your Strategy"
-												// 					required
-												// 					type="text"
-												// 					value={
-												// 						this.state
-												// 							.strategyName
-												// 					}
-												// 					onChange={
-												// 						this
-												// 							.handleChange
-												// 					}
-												// 				/>
-												// 			</label>
-												// 			<br />
-												// 			{/*TODO: we probably want react-select for images https://jedwatson.github.io/react-select/
-												// https://github.com/JedWatson/react-select/issues/2553*/}
-												// 			<label htmlFor="ExpectedRankSelect">
-												// 				<select
-												// 					name="expectedRank"
-												// 					id="expectedRankSelect"
-												// 					onChange={
-												// 						this
-												// 							.handleChange
-												// 					}
-												// 				>
-												// 					<option />
-												// 					{[
-												// 						'Bronze',
-												// 						'Silver',
-												// 						'Gold',
-												// 						'Platinum',
-												// 						'Diamond',
-												// 						'Master',
-												// 						'Grand Master',
-												// 						'Top 500'
-												// 					].map(rank => (
-												// 						<option
-												// 							key={
-												// 								rank
-												// 							}
-												// 						>
-												// 							{rank}
-												// 						</option>
-												// 					))}
-												// 				</select>
-												// 			</label>
-
-												// 			<br />
-
-												// 			<label htmlFor="offenseHeroes">
-												// 				offenseHeroes
-												// 				<ul>
-												// 					{[
-												// 						0,
-												// 						1,
-												// 						2,
-												// 						3,
-												// 						4,
-												// 						5
-												// 					].map(index => {
-												// 						return (
-												// 							<li
-												// 								key={
-												// 									index
-												// 								}
-												// 							>
-												// 								<select
-												// 									name={`offenseHeroes`}
-												// 									id={`offenseHeroes${index}`}
-												// 									data-index={
-												// 										index
-												// 									}
-												// 									// selected={index}
-												// 									onChange={
-												// 										this
-												// 											.handleSelectChange
-												// 									}
-												// 								>
-												// 									<option />
-												// 									{OwHeroes.map(
-												// 										hero => (
-												// 											<option
-												// 												key={
-												// 													hero
-												// 												}
-												// 											>
-												// 												{
-												// 													hero
-												// 												}
-												// 											</option>
-												// 										)
-												// 									)}
-												// 								</select>
-												// 							</li>
-												// 						)
-												// 					})}
-												// 				</ul>
-												// 			</label>
-												// 			<DraftEditor
-												// 				updateMD={
-												// 					this.updateMD
-												// 				}
-												// 				isDefense={false}
-												// 			/>
-												// 			{/*
-												// <TextEditor
-												//     updateMD={this.updateMD}
-												//     isDefense={false}
-												// /> */}
-
-												// 			<label htmlFor="defenseHeroes">
-												// 				defenseHeroes
-												// 				<ul>
-												// 					{[
-												// 						0,
-												// 						1,
-												// 						2,
-												// 						3,
-												// 						4,
-												// 						5
-												// 					].map(index => {
-												// 						return (
-												// 							<li
-												// 								key={
-												// 									index
-												// 								}
-												// 							>
-												// 								<select
-												// 									name={`defenseHeroes`}
-												// 									id={`defenseHeroes${index}`}
-												// 									data-index={
-												// 										index
-												// 									}
-												// 									onChange={
-												// 										this
-												// 											.handleSelectChange
-												// 									}
-												// 									// selected={index}
-												// 								>
-												// 									<option />
-												// 									{OwHeroes.map(
-												// 										hero => (
-												// 											<option
-												// 												key={
-												// 													hero
-												// 												}
-												// 											>
-												// 												{
-												// 													hero
-												// 												}
-												// 											</option>
-												// 										)
-												// 									)}
-												// 								</select>
-												// 							</li>
-												// 						)
-												// 					})}
-												// 				</ul>
-												// 			</label>
-
-												// 			{/* <TextEditor
-												//     updateMD={this.updateMD}
-												//     isDefense={true}
-												// /> */}
-												// 			<DraftEditor
-												// 				updateMD={
-												// 					this.updateMD
-												// 				}
-												// 				isDefense={true}
-												// 			/>
-
-												// 			<button type="submit">
-												// 				Submit
-												// 			</button>
-												// 		</fieldset>
-												// 	</form>
-												<div>hi</div>
+										<Mutation mutation={CREATE_OW_STRATEGY_MUTATION} variables={this.state}>
+											{(createOwStrategy, { loading, error }) => (
+												<>
+													{/* <EditCP /> */}
+													{/* <EditHybrid /> */}
+													{/* <EditControl /> */}
+													{/* <EditPayload /> */}
+												</>
 											)}
 										</Mutation>
 									)

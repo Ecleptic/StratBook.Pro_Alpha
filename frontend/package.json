@@ -1,7 +1,7 @@
 {
 	"name": "strat-book-frontend",
 	"version": "1.0.0",
-	"description": "A StratBook for videogame pros",
+	"description": "A StratBook for video game pros",
 	"main": "index.js",
 	"scripts": {
 		"dev": "nodemon server.js",
@@ -27,6 +27,7 @@
 		"enzyme": "^3.9.0",
 		"enzyme-adapter-react-16": "^1.13.2",
 		"express": "^4.17.1",
+		"formik": "^1.5.7",
 		"graphql": "^14.3.1",
 		"graphql-tag": "^2.10.1",
 		"jodit-react": "^1.0.26",
@@ -64,7 +65,6 @@
 		"eslint-plugin-jsx-a11y": "^6.2.1",
 		"eslint-plugin-prettier": "^3.1.0",
 		"eslint-plugin-react": "^7.13.0",
-		"g": "^2.0.1",
 		"graphql-tools": "^4.0.4",
 		"jest": "^24.8.0",
 		"jest-transform-graphql": "^2.1.0",
