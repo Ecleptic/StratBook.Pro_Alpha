@@ -2,6 +2,13 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { OwHeroes } from '../../../configs/Overwatch/OwData'
 import DraftEditor from '../../Draft'
+import gql from 'graphql-tag'
+
+const GET_CONTROL_SUBMAPS_QUERY = gql`
+query GET_CONTROL_SUBMAPS_QUERY($subMap:string){
+
+}
+`
 
 const CREATE_OW_STRATEGY_CONTROL_MUTATION = gql`
 	mutation CREATE_OW_STRATEGY_CONTROL_MUTATION(
@@ -24,7 +31,7 @@ const CREATE_OW_STRATEGY_CONTROL_MUTATION = gql`
 				offenseHeroes: { set: $offenseHeroes }
 				defenseStrats: $defenseStrats
 				defenseHeroes: { set: $defenseHeroes }
-				# subMap: $subMap
+				subMap: $subMap
 			}
 		) {
 			id
@@ -40,6 +47,8 @@ const EditControl = props => {
 	console.log(props.data)
 	return (
 		<form>
+			<Point subMapName={'Sub-Map Name'} />
+			<Point subMapName={'Sub-Map Name'} />
 			<Point subMapName={'Sub-Map Name'} />
 		</form>
 	)

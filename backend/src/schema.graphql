@@ -31,4 +31,13 @@ type Query {
 	): [OwStrategy]!
 	me: User
 	users: [User]!
+	subMaps(
+		where: OwStrategyWhereInput
+		orderBy: OwStrategyOrderByInput
+		skip: Int
+		after: String
+		before: String
+		first: Int
+		last: Int
+	): OwControlSubMap
 }

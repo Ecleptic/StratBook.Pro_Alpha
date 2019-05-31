@@ -1,38 +1,39 @@
 const { forwardTo } = require('prisma-binding')
 
 const Query = {
-    owStrategies: forwardTo('db'),
-    //  Example:
-    // async owStrategies(parent, args, ctx, info) {
-    //     const strats = await ctx.db.query.owStrategies()
-    //     console.log(strats)
-    //     return strats
-    // }
-    me(parent, args, ctx, info) {
-        // check if there is a current user ID
-        if (!ctx.request.userId) {
-            return null
-        }
-        return ctx.db.query.user(
-            {
-                where: { id: ctx.request.userId }
-            },
-            info
-        )
-    },
-    async users(parent, args, ctx, info) {
-        // 1. Check if they are logged in
-        if (!ctx.request.userId) {
-            throw new Error('You must be logged in!')
-        }
-        console.log(ctx.request.userId)
-        // 2. Check if the user has the permissions to query all the users
-        hasPermission(ctx.request.user, ['ADMIN', 'PERMISSIONUPDATE'])
+	owStrategies: forwardTo('db'),
+	subMaps: forwardTo('db'),
 
-        // 2. if they do, query all the users!
-        return ctx.db.query.users({}, info)
-    },
+	//  Example:
+	// async owStrategies(parent, args, ctx, info) {
+	//     const strats = await ctx.db.query.owStrategies()
+	//     console.log(strats)
+	//     return strats
+	// }
+	me(parent, args, ctx, info) {
+		// check if there is a current user ID
+		if (!ctx.request.userId) {
+			return null
+		}
+		return ctx.db.query.user(
+			{
+				where: { id: ctx.request.userId }
+			},
+			info
+		)
+	},
+	async users(parent, args, ctx, info) {
+		// 1. Check if they are logged in
+		if (!ctx.request.userId) {
+			throw new Error('You must be logged in!')
+		}
+		console.log(ctx.request.userId)
+		// 2. Check if the user has the permissions to query all the users
+		hasPermission(ctx.request.user, ['ADMIN', 'PERMISSIONUPDATE'])
 
+		// 2. if they do, query all the users!
+		return ctx.db.query.users({}, info)
+	}
 }
 
 module.exports = Query
