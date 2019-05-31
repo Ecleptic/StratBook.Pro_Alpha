@@ -1,157 +1,167 @@
-enum Permission {
-    ADMIN
-    USER
-    ITEMCREATE
-    ITEMUPDATE
-    ITEMDELETE
-    PERMISSIONUPDATE
-}
-
 type User {
-    createdAt: DateTime!
-    updatedAt: DateTime!
-    id: ID! @unique
-    name: String! @unique
-    email: String @unique
-    password: String!
-    resetToken: String
-    resetTokenExpiry: Float
-    permissions: [Permission]
-    isPro: Boolean! @default(value: "false")
+	id: ID! @id
+	createdAt: DateTime! @createdAt
+	updatedAt: DateTime! @updatedAt
+	name: String! @unique
+	email: String @unique
+	password: String!
+	resetToken: String
+	resetTokenExpiry: Float
+	permissions: [Permission] @scalarList(strategy: RELATION)
+	isPro: Boolean!
 }
 
 type OwMapType {
-    mapName: OwMap!
-    mapType: OwMapMode!
-    subMaps: [OwControlSubMap!]
+	id: ID! @id
+	mapName: OwMap!
+	mapType: OwMapMode!
+	subMaps: [OwControlSubMap!] @scalarList(strategy: RELATION)
+
+	createdAt: DateTime! @createdAt
+	updatedAt: DateTime! @updatedAt
 }
 
 type OwHeroType {
-    heroName: OwHero!
-    position: OwHeroPosition!
-    pixelImageUrl: String
-    iconImageUrl: String
+	id: ID! @id
+	heroName: OwHero!
+	position: OwHeroPosition!
+	pixelImageUrl: String
+	iconImageUrl: String
+	createdAt: DateTime! @createdAt
+	updatedAt: DateTime! @updatedAt
 }
 
 type OwStrategy @model {
-    id: ID! @unique
+	id: ID! @id
 
-    mapName: OwMap!
-    mapMode: OwMapMode!
+	mapName: OwMap!
+	mapMode: OwMapMode!
 
-    defenseStrats: String
-    defenseHeroes: [OwHero!]
+	defenseStrats: String
+	defenseHeroes: [OwHero!] @scalarList(strategy: RELATION)
 
-    offenseStrats: String!
-    offenseHeroes: [OwHero!]!
+	offenseStrats: String!
+	offenseHeroes: [OwHero!]! @scalarList(strategy: RELATION)
 
-    creatorName: User!
+	creatorName: User!
 
-    strategyName: String!
+	strategyName: String!
 
-    expectedRank: OwRank
+	expectedRank: OwRank
 
-    subMap: OwControlSubMap
+	subMap: OwControlSubMap
+	createdAt: DateTime! @createdAt
+	updatedAt: DateTime! @updatedAt
 }
 
 enum OwMap {
-    Ayutthaya
-    Black_Forest
-    Blizzard_World
-    Busan
-    Castillo
-    Chateau_Guillard
-    Dorado
-    Ecopoint_Antarctica
-    Eichenwalde
-    Hanamura
-    Hollywood
-    Horizon_Lunar_Colony
-    Ilios
-    Junkertown
-    Kings_Row
-    Lijiang_Tower
-    Necropolis
-    Nepal
-    Numbani
-    Oasis
-    Rialto
-    Route_66
-    Temple_of_Anubis
-    Volskaya_Industries
-    Watchpoint_Gibraltar
+	Ayutthaya
+	Black_Forest
+	Blizzard_World
+	Busan
+	Castillo
+	Chateau_Guillard
+	Dorado
+	Ecopoint_Antarctica
+	Eichenwalde
+	Hanamura
+	Hollywood
+	Horizon_Lunar_Colony
+	Ilios
+	Junkertown
+	Kings_Row
+	Lijiang_Tower
+	Necropolis
+	Nepal
+	Numbani
+	Oasis
+	Rialto
+	Route_66
+	Temple_of_Anubis
+	Volskaya_Industries
+	Watchpoint_Gibraltar
 }
 
 enum OwControlSubMap {
-    Lighthouse
-    Ruins
-    Well
-    Village
-    Shrine
-    Sanctum
-    Night_Market
-    Garden
-    Control_Center
-    City_Center
-    Gardens
-    University
-    Downtown
-    Sanctuary
-    MEKA_Base
+	Lighthouse
+	Ruins
+	Well
+	Village
+	Shrine
+	Sanctum
+	Night_Market
+	Garden
+	Control_Center
+	City_Center
+	Gardens
+	University
+	Downtown
+	Sanctuary
+	MEKA_Base
 }
 
 enum OwHero {
-    Ana
-    Ashe
-    Bastion
-    Brigitte
-    Doomfist
-    Dva
-    Genji
-    Hanzo
-    Junkrat
-    Lucio
-    McCree
-    Mei
-    Mercy
-    Moira
-    Orisa
-    Pharah
-    Reaper
-    Reinhardt
-    Roadhog
-    Soldier_76
-    Sombra
-    Symmetra
-    Torbjorn
-    Tracer
-    Widowmaker
-    Winston
-    Wrecking_Ball
-    Zarya
-    Zenyatta
+	Ana
+	Ashe
+	Bastion
+	Baptiste
+	Brigitte
+	Doomfist
+	Dva
+	Genji
+	Hanzo
+	Junkrat
+	Lucio
+	McCree
+	Mei
+	Mercy
+	Moira
+	Orisa
+	Pharah
+	Reaper
+	Reinhardt
+	Roadhog
+	Soldier_76
+	Sombra
+	Symmetra
+	Torbjorn
+	Tracer
+	Widowmaker
+	Winston
+	Wrecking_Ball
+	Zarya
+	Zenyatta
 }
 
 enum OwRank {
-    Bronze
-    Silver
-    Gold
-    Platinum
-    Diamond
-    Master
-    Grand_Master
-    Top_500
+	Bronze
+	Silver
+	Gold
+	Platinum
+	Diamond
+	Master
+	Grand_Master
+	Top_500
 }
 
 enum OwMapMode {
-    Assault
-    Control
-    Hybrid
-    Escort
+	Assault
+	Control
+	Hybrid
+	Escort
 }
 
 enum OwHeroPosition {
-    Damage
-    Support
-    Tank
+	Damage
+	Support
+	Tank
+}
+
+enum Permission {
+	ADMIN
+	USER
+	ITEMCREATE
+	ITEMUPDATE
+	ITEMDELETE
+	PERMISSIONUPDATE
 }

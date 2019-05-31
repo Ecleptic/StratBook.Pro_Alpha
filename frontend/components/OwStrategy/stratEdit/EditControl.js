@@ -9,6 +9,7 @@ const EditControl = props => {
 	 * Point A Strat
 	 * * Future: Point A Map
 	 */
+	console.log(props.data)
 	return (
 		<form>
 			<Point subMapName={'Sub-Map Name'} />

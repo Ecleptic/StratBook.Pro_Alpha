@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { OwHeroes } from '../../../configs/Overwatch/OwData'
 import DraftEditor from '../../Draft'
-const EditCP = props => {
+const EditAssault = props => {
 	/**
 	 * Attack / Defend
 	 * Point A Heroes
@@ -17,9 +17,9 @@ const EditCP = props => {
 	)
 }
 
-EditCP.propTypes = {}
+EditAssault.propTypes = {}
 
-export default EditCP
+export default EditAssault
 
 const Point = ({ pointType }) => (
 	<>

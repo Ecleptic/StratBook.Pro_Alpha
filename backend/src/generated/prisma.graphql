@@ -1,5 +1,5 @@
 # source: https://us1.prisma.sh/cameron-green-fec414/stratbook/dev
-# timestamp: Wed Dec 05 2018 19:21:57 GMT-0600 (Central Standard Time)
+# timestamp: Fri May 31 2019 11:59:22 GMT-0500 (Central Daylight Time)
 
 type AggregateOwHeroType {
   count: Int!
@@ -35,10 +35,16 @@ type Mutation {
   createOwHeroType(data: OwHeroTypeCreateInput!): OwHeroType!
   createOwStrategy(data: OwStrategyCreateInput!): OwStrategy!
   createUser(data: UserCreateInput!): User!
+  updateOwMapType(data: OwMapTypeUpdateInput!, where: OwMapTypeWhereUniqueInput!): OwMapType
+  updateOwHeroType(data: OwHeroTypeUpdateInput!, where: OwHeroTypeWhereUniqueInput!): OwHeroType
   updateOwStrategy(data: OwStrategyUpdateInput!, where: OwStrategyWhereUniqueInput!): OwStrategy
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
+  deleteOwMapType(where: OwMapTypeWhereUniqueInput!): OwMapType
+  deleteOwHeroType(where: OwHeroTypeWhereUniqueInput!): OwHeroType
   deleteOwStrategy(where: OwStrategyWhereUniqueInput!): OwStrategy
   deleteUser(where: UserWhereUniqueInput!): User
+  upsertOwMapType(where: OwMapTypeWhereUniqueInput!, create: OwMapTypeCreateInput!, update: OwMapTypeUpdateInput!): OwMapType!
+  upsertOwHeroType(where: OwHeroTypeWhereUniqueInput!, create: OwHeroTypeCreateInput!, update: OwHeroTypeUpdateInput!): OwHeroType!
   upsertOwStrategy(where: OwStrategyWhereUniqueInput!, create: OwStrategyCreateInput!, update: OwStrategyUpdateInput!): OwStrategy!
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
   updateManyOwMapTypes(data: OwMapTypeUpdateManyMutationInput!, where: OwMapTypeWhereInput): BatchPayload!
@@ -85,6 +91,7 @@ enum OwHero {
   Ana
   Ashe
   Bastion
+  Baptiste
   Brigitte
   Doomfist
   Dva
@@ -119,11 +126,14 @@ enum OwHeroPosition {
   Tank
 }
 
-type OwHeroType {
+type OwHeroType implements Node {
+  id: ID!
   heroName: OwHero!
   position: OwHeroPosition!
   pixelImageUrl: String
   iconImageUrl: String
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 """A connection to a list of items."""
@@ -137,6 +147,7 @@ type OwHeroTypeConnection {
 }
 
 input OwHeroTypeCreateInput {
+  id: ID
   heroName: OwHero!
   position: OwHeroPosition!
   pixelImageUrl: String
@@ -153,6 +164,8 @@ type OwHeroTypeEdge {
 }
 
 enum OwHeroTypeOrderByInput {
+  id_ASC
+  id_DESC
   heroName_ASC
   heroName_DESC
   position_ASC
@@ -161,19 +174,20 @@ enum OwHeroTypeOrderByInput {
   pixelImageUrl_DESC
   iconImageUrl_ASC
   iconImageUrl_DESC
-  id_ASC
-  id_DESC
-  updatedAt_ASC
-  updatedAt_DESC
   createdAt_ASC
   createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
 }
 
 type OwHeroTypePreviousValues {
+  id: ID!
   heroName: OwHero!
   position: OwHeroPosition!
   pixelImageUrl: String
   iconImageUrl: String
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 type OwHeroTypeSubscriptionPayload {
@@ -193,9 +207,7 @@ input OwHeroTypeSubscriptionWhereInput {
   """Logical NOT on all given filters combined by AND."""
   NOT: [OwHeroTypeSubscriptionWhereInput!]
 
-  """
-  The subscription event gets dispatched when it's listed in mutation_in
-  """
+  """The subscription event gets dispatched when it's listed in mutation_in"""
   mutation_in: [MutationType!]
 
   """
@@ -215,6 +227,13 @@ input OwHeroTypeSubscriptionWhereInput {
   node: OwHeroTypeWhereInput
 }
 
+input OwHeroTypeUpdateInput {
+  heroName: OwHero
+  position: OwHeroPosition
+  pixelImageUrl: String
+  iconImageUrl: String
+}
+
 input OwHeroTypeUpdateManyMutationInput {
   heroName: OwHero
   position: OwHeroPosition
@@ -231,6 +250,46 @@ input OwHeroTypeWhereInput {
 
   """Logical NOT on all given filters combined by AND."""
   NOT: [OwHeroTypeWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
   heroName: OwHero
 
   """All values that are not equal to given value."""
@@ -331,6 +390,54 @@ input OwHeroTypeWhereInput {
 
   """All values not ending with the given string."""
   iconImageUrl_not_ends_with: String
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+}
+
+input OwHeroTypeWhereUniqueInput {
+  id: ID
 }
 
 enum OwMap {
@@ -368,10 +475,13 @@ enum OwMapMode {
   Escort
 }
 
-type OwMapType {
+type OwMapType implements Node {
+  id: ID!
   mapName: OwMap!
   mapType: OwMapMode!
   subMaps: [OwControlSubMap!]!
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 """A connection to a list of items."""
@@ -385,6 +495,7 @@ type OwMapTypeConnection {
 }
 
 input OwMapTypeCreateInput {
+  id: ID
   mapName: OwMap!
   mapType: OwMapMode!
   subMaps: OwMapTypeCreatesubMapsInput
@@ -404,22 +515,25 @@ type OwMapTypeEdge {
 }
 
 enum OwMapTypeOrderByInput {
+  id_ASC
+  id_DESC
   mapName_ASC
   mapName_DESC
   mapType_ASC
   mapType_DESC
-  id_ASC
-  id_DESC
-  updatedAt_ASC
-  updatedAt_DESC
   createdAt_ASC
   createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
 }
 
 type OwMapTypePreviousValues {
+  id: ID!
   mapName: OwMap!
   mapType: OwMapMode!
   subMaps: [OwControlSubMap!]!
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 type OwMapTypeSubscriptionPayload {
@@ -439,9 +553,7 @@ input OwMapTypeSubscriptionWhereInput {
   """Logical NOT on all given filters combined by AND."""
   NOT: [OwMapTypeSubscriptionWhereInput!]
 
-  """
-  The subscription event gets dispatched when it's listed in mutation_in
-  """
+  """The subscription event gets dispatched when it's listed in mutation_in"""
   mutation_in: [MutationType!]
 
   """
@@ -459,6 +571,12 @@ input OwMapTypeSubscriptionWhereInput {
   """
   updatedFields_contains_some: [String!]
   node: OwMapTypeWhereInput
+}
+
+input OwMapTypeUpdateInput {
+  mapName: OwMap
+  mapType: OwMapMode
+  subMaps: OwMapTypeUpdatesubMapsInput
 }
 
 input OwMapTypeUpdateManyMutationInput {
@@ -480,6 +598,46 @@ input OwMapTypeWhereInput {
 
   """Logical NOT on all given filters combined by AND."""
   NOT: [OwMapTypeWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
   mapName: OwMap
 
   """All values that are not equal to given value."""
@@ -500,6 +658,54 @@ input OwMapTypeWhereInput {
 
   """All values that are not contained in given list."""
   mapType_not_in: [OwMapMode!]
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+}
+
+input OwMapTypeWhereUniqueInput {
+  id: ID
 }
 
 enum OwRank {
@@ -525,6 +731,8 @@ type OwStrategy implements Node {
   strategyName: String!
   expectedRank: OwRank
   subMap: OwControlSubMap
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 """A connection to a list of items."""
@@ -542,6 +750,7 @@ input OwStrategyCreatedefenseHeroesInput {
 }
 
 input OwStrategyCreateInput {
+  id: ID
   mapName: OwMap!
   mapMode: OwMapMode!
   defenseStrats: String
@@ -584,10 +793,10 @@ enum OwStrategyOrderByInput {
   expectedRank_DESC
   subMap_ASC
   subMap_DESC
-  updatedAt_ASC
-  updatedAt_DESC
   createdAt_ASC
   createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
 }
 
 type OwStrategyPreviousValues {
@@ -601,6 +810,8 @@ type OwStrategyPreviousValues {
   strategyName: String!
   expectedRank: OwRank
   subMap: OwControlSubMap
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 type OwStrategySubscriptionPayload {
@@ -620,9 +831,7 @@ input OwStrategySubscriptionWhereInput {
   """Logical NOT on all given filters combined by AND."""
   NOT: [OwStrategySubscriptionWhereInput!]
 
-  """
-  The subscription event gets dispatched when it's listed in mutation_in
-  """
+  """The subscription event gets dispatched when it's listed in mutation_in"""
   mutation_in: [MutationType!]
 
   """
@@ -884,6 +1093,50 @@ input OwStrategyWhereInput {
 
   """All values that are not contained in given list."""
   subMap_not_in: [OwControlSubMap!]
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
   creatorName: UserWhereInput
 }
 
@@ -920,6 +1173,8 @@ type Query {
   owHeroTypes(where: OwHeroTypeWhereInput, orderBy: OwHeroTypeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [OwHeroType]!
   owStrategies(where: OwStrategyWhereInput, orderBy: OwStrategyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [OwStrategy]!
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
+  owMapType(where: OwMapTypeWhereUniqueInput!): OwMapType
+  owHeroType(where: OwHeroTypeWhereUniqueInput!): OwHeroType
   owStrategy(where: OwStrategyWhereUniqueInput!): OwStrategy
   user(where: UserWhereUniqueInput!): User
   owMapTypesConnection(where: OwMapTypeWhereInput, orderBy: OwMapTypeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): OwMapTypeConnection!
@@ -942,9 +1197,9 @@ type Subscription {
 }
 
 type User implements Node {
+  id: ID!
   createdAt: DateTime!
   updatedAt: DateTime!
-  id: ID!
   name: String!
   email: String
   password: String!
@@ -965,12 +1220,13 @@ type UserConnection {
 }
 
 input UserCreateInput {
+  id: ID
   name: String!
   email: String
   password: String!
   resetToken: String
   resetTokenExpiry: Float
-  isPro: Boolean
+  isPro: Boolean!
   permissions: UserCreatepermissionsInput
 }
 
@@ -993,12 +1249,12 @@ type UserEdge {
 }
 
 enum UserOrderByInput {
+  id_ASC
+  id_DESC
   createdAt_ASC
   createdAt_DESC
   updatedAt_ASC
   updatedAt_DESC
-  id_ASC
-  id_DESC
   name_ASC
   name_DESC
   email_ASC
@@ -1014,9 +1270,9 @@ enum UserOrderByInput {
 }
 
 type UserPreviousValues {
+  id: ID!
   createdAt: DateTime!
   updatedAt: DateTime!
-  id: ID!
   name: String!
   email: String
   password: String!
@@ -1043,9 +1299,7 @@ input UserSubscriptionWhereInput {
   """Logical NOT on all given filters combined by AND."""
   NOT: [UserSubscriptionWhereInput!]
 
-  """
-  The subscription event gets dispatched when it's listed in mutation_in
-  """
+  """The subscription event gets dispatched when it's listed in mutation_in"""
   mutation_in: [MutationType!]
 
   """
@@ -1120,6 +1374,46 @@ input UserWhereInput {
 
   """Logical NOT on all given filters combined by AND."""
   NOT: [UserWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
   createdAt: DateTime
 
   """All values that are not equal to given value."""
@@ -1164,46 +1458,6 @@ input UserWhereInput {
 
   """All values greater than or equal the given value."""
   updatedAt_gte: DateTime
-  id: ID
-
-  """All values that are not equal to given value."""
-  id_not: ID
-
-  """All values that are contained in given list."""
-  id_in: [ID!]
-
-  """All values that are not contained in given list."""
-  id_not_in: [ID!]
-
-  """All values less than the given value."""
-  id_lt: ID
-
-  """All values less than or equal the given value."""
-  id_lte: ID
-
-  """All values greater than the given value."""
-  id_gt: ID
-
-  """All values greater than or equal the given value."""
-  id_gte: ID
-
-  """All values containing the given string."""
-  id_contains: ID
-
-  """All values not containing the given string."""
-  id_not_contains: ID
-
-  """All values starting with the given string."""
-  id_starts_with: ID
-
-  """All values not starting with the given string."""
-  id_not_starts_with: ID
-
-  """All values ending with the given string."""
-  id_ends_with: ID
-
-  """All values not ending with the given string."""
-  id_not_ends_with: ID
   name: String
 
   """All values that are not equal to given value."""
