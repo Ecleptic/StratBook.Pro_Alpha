@@ -2,13 +2,41 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { OwHeroes } from '../../../configs/Overwatch/OwData'
 import DraftEditor from '../../Draft'
+
+const CREATE_OW_STRATEGY_CONTROL_MUTATION = gql`
+	mutation CREATE_OW_STRATEGY_CONTROL_MUTATION(
+		$mapName: OwMap!
+		$mapMode: OwMapMode!
+		$offenseStrats: String!
+		$offenseHeroes: [OwHero!]!
+		$defenseHeroes: [OwHero!]!
+		$creatorName: String!
+		$strategyName: String!
+		$subMap: OwControlSubMap
+	) {
+		createOwStrategyControl(
+			data: {
+				mapName: $mapName
+				mapMode: $mapMode
+				strategyName: $strategyName
+				creatorName: { connect: { name: $creatorName } }
+				offenseStrats: $offenseStrats
+				offenseHeroes: { set: $offenseHeroes }
+				defenseStrats: $defenseStrats
+				defenseHeroes: { set: $defenseHeroes }
+				# subMap: $subMap
+			}
+		) {
+			id
+			creatorName {
+				name
+			}
+			mapName
+		}
+	}
+`
+
 const EditControl = props => {
-	/**
-	 * Attack / Defend
-	 * Point A Heroes
-	 * Point A Strat
-	 * * Future: Point A Map
-	 */
 	console.log(props.data)
 	return (
 		<form>
