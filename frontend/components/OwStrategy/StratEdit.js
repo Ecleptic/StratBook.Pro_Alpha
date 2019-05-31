@@ -12,10 +12,10 @@ import Signup from '../Signup_Portal'
 import User from '../User'
 
 import { OwHeroes, OwMaps, OwControlMapsData, OwMapTypes, OwMapToEnum } from '../../configs/Overwatch/OwData'
-import EditAssault from './stratEdit/EditCp'
+import EditAssault from './stratEdit/EditAssault'
 import EditHybrid from './stratEdit/EditHybrid'
 import EditControl from './stratEdit/EditControl'
-import EditEscort from './stratEdit/EditPayload'
+import EditEscort from './stratEdit/EditEscort'
 
 /**
  * Steps for strat edit.
@@ -183,46 +183,27 @@ class StratEdit extends Component {
 										subMap,
 										creatorName
 									} = data.owStrategies[0]
-									console.log({ data }, this.state)
-
-									return <div id="hello">hi</div>
-									// return (
-									// 	<Mutation mutation={CREATE_OW_STRATEGY_MUTATION} variables={this.state}>
-									// 		{response => {
-									// 			console.log(response)
-									// 			return (
-									// 				<div id="hi">
-									// 					<there />
-									// 				</div>
-									// 			)
-									// 		}}
-									// 		{/* {(createOwStrategy, { loading, error }) => {
-									// 			return (
-									// 				<div id="hi">
-									// 					<there />
-									// 				</div>
-									// 			)
-									// 			// switch (data.mapMode) {
-									// 			// 	// case 'Control':
-									// 			// 	// 	return <EditControl data={data} />
-									// 			// 	// 	break
-									// 			// 	// case 'Assault':
-									// 			// 	// 	return <EditAssault data={data} />
-									// 			// 	// 	break
-									// 			// 	// case 'Hybrid':
-									// 			// 	// 	return <EditHybrid data={data} />
-									// 			// 	// 	break
-									// 			// 	// case 'Escort':
-									// 			// 	// 	return <EditEscort data={data} />
-									// 			// 	// 	break
-									// 			// 	default:
-									// 			// 		return <Error error="incorrect map mode" />
-									// 			// 		break
-									// 			// }
-									// 		}} */}
-									// 		}
-									// 	</Mutation>
-									// )
+									// console.log({ data }, this.state)
+									return (
+										<Mutation mutation={CREATE_OW_STRATEGY_MUTATION} variables={this.state}>
+											{(createOwStrategy, { loading, error }) => {
+												switch (data.owStrategies[0].mapMode) {
+													case 'Control':
+														return <EditControl data={data} />
+													case 'Assault':
+														return <EditAssault data={data} />
+													case 'Hybrid':
+														return <EditHybrid data={data} />
+													case 'Escort':
+														return <EditEscort data={data} />
+													default:
+														// return <h4>Hello {data.owStrategies[0].mapMode}</h4>
+														return <Error error="incorrect map mode" />
+														break
+												}
+											}}
+										</Mutation>
+									)
 								}}
 							</Query>
 						)
