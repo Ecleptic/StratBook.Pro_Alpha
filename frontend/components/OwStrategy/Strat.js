@@ -33,7 +33,6 @@ class Strat extends Component {
 				: type === 'checkbox'
 				? checked
 				: value
-		// console.log(name, type, value)
 		this.setState({ [name]: val })
 	}
 	render() {
@@ -52,15 +51,6 @@ class Strat extends Component {
 							/>
 						</label>
 					)}
-					{/* <ul>
-                        <li>
-                            Edit Boolean:{' '}
-                            {this.state.editBool ? 'True' : 'False'}
-                        </li>
-                        <li>Username Prop: {this.props.userName}</li>
-                        <li>Username Me: {this.props.me.name}</li>
-                    </ul> */}
-
 					{this.state.editBool ||
 					(!this.props.me && !this.props.userName) ? (
 						// TODO: Almost everything should end up here.
@@ -72,8 +62,8 @@ class Strat extends Component {
 			)
 		} else {
 			// TODO: if not a known map, it's  probably a username. maybe have a user profile listing all their games and maps?
-			//  NO. I want that to be stratbook.pro/user/{username}
-			return <h2>Sorry this map is not a known Overwatch Map</h2>
+			// TODO: NO. I want that to be stratbook.pro/user/{username}
+			return <h2>Sorry this map is not a known Overwatch map</h2>
 		}
 	}
 }

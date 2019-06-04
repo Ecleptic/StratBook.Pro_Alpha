@@ -15,7 +15,11 @@ type Mutation {
 	signin(email: String!, password: String!): User!
 	signout: SuccessMessage
 	requestReset(email: String!): SuccessMessage
-	resetPassword(resetToken: String!, password: String!, confirmPassword: String!): User!
+	resetPassword(
+		resetToken: String!
+		password: String!
+		confirmPassword: String!
+	): User!
 	updatePermissions(permissions: [Permission], userId: ID!): User
 }
 
@@ -31,13 +35,13 @@ type Query {
 	): [OwStrategy]!
 	me: User
 	users: [User]!
-	subMaps(
-		where: OwStrategyWhereInput
-		orderBy: OwStrategyOrderByInput
+	owMapTypes(
+		where: OwMapTypeWhereInput
+		orderBy: OwMapTypeOrderByInput
 		skip: Int
 		after: String
 		before: String
 		first: Int
 		last: Int
-	): OwControlSubMap
+	): [OwMapType]!
 }

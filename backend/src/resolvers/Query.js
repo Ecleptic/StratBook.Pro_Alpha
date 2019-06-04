@@ -2,8 +2,7 @@ const { forwardTo } = require('prisma-binding')
 
 const Query = {
 	owStrategies: forwardTo('db'),
-	subMaps: forwardTo('db'),
-
+	owMapTypes: forwardTo('db'),
 	//  Example:
 	// async owStrategies(parent, args, ctx, info) {
 	//     const strats = await ctx.db.query.owStrategies()

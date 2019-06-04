@@ -3,11 +3,17 @@ import PropTypes from 'prop-types'
 import { OwHeroes } from '../../../configs/Overwatch/OwData'
 import DraftEditor from '../../Draft'
 import gql from 'graphql-tag'
+import { Query } from 'react-apollo'
 
 const GET_CONTROL_SUBMAPS_QUERY = gql`
-query GET_CONTROL_SUBMAPS_QUERY($subMap:string){
-
-}
+	query GET_CONTROL_SUBMAPS_QUERY($mapName: OwMap!) {
+		owMapTypes(where: { mapName: $mapName }) {
+			id
+			mapName
+			mapType
+			subMaps
+		}
+	}
 `
 
 const CREATE_OW_STRATEGY_CONTROL_MUTATION = gql`
@@ -45,12 +51,23 @@ const CREATE_OW_STRATEGY_CONTROL_MUTATION = gql`
 
 const EditControl = props => {
 	console.log(props.data)
+	const { mapMode, mapName } = props.data.owStrategies[0]
 	return (
-		<form>
-			<Point subMapName={'Sub-Map Name'} />
-			<Point subMapName={'Sub-Map Name'} />
-			<Point subMapName={'Sub-Map Name'} />
-		</form>
+		<Query query={GET_CONTROL_SUBMAPS_QUERY} variables={{ mapName }}>
+			{({ data, loading, error }) => {
+				if (loading) return 'Loading'
+				if (error) return <p>Errors: {`${error}`}</p>
+				const { subMaps } = data.owMapTypes[0]
+				return (
+					<form>
+						{subMaps.map(map => (
+							<Point subMapName={map} key={map} />
+						))}
+
+					</form>
+				)
+			}}
+		</Query>
 	)
 }
 
