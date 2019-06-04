@@ -11,10 +11,10 @@ type User {
 	isPro: Boolean!
 }
 
-type OwMapType {
+type OwMapInfo {
 	id: ID! @id
 	mapName: OwMap!
-	mapType: OwMapMode!
+	mapMode: OwMapMode!
 	subMaps: [OwControlSubMap!] @scalarList(strategy: RELATION)
 
 	createdAt: DateTime! @createdAt

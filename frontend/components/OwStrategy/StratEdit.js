@@ -11,13 +11,7 @@ import Signup from '../Signup_Portal'
 // import TextEditor from './textEditor'
 import User from '../User'
 
-import {
-	OwHeroes,
-	OwMaps,
-	OwControlMapsData,
-	OwMapTypes,
-	OwMapToEnum
-} from '../../configs/Overwatch/OwData'
+import { OwHeroes, OwMaps, OwControlMapsData, OwMapTypes, OwMapToEnum } from '../../configs/Overwatch/OwData'
 import EditAssault from './stratEdit/EditAssault'
 import EditHybrid from './stratEdit/EditHybrid'
 import EditControl from './stratEdit/EditControl'
@@ -65,14 +59,11 @@ const CREATE_OW_STRATEGY_MUTATION = gql`
 `
 const GET_STRATEGIES_QUERY = gql`
 	query GET_STRATEGIES_QUERY($userName: String!, $mapName: OwMap!) {
-		owStrategies(
-			where: {
-				AND: [
-					{ creatorName: { name: $userName } }
-					{ mapName: $mapName }
-				]
-			}
-		) {
+		owMapInfoes(where: { mapName: $mapName }, first: 1) {
+			mapMode
+			subMaps
+		}
+		owStrategies(where: { AND: [{ creatorName: { name: $userName } }, { mapName: $mapName }] }) {
 			id
 			mapName
 			defenseStrats
@@ -180,8 +171,8 @@ class StratEdit extends Component {
 							>
 								{({ data, loading, error, userName }) => {
 									if (loading) return 'Loading'
-									if (error)
-										return <p>Errors: {`${error}`}</p>
+									if (error) return <p>Errors: {`${error}`}</p>
+									if (!data.owMapInfoes[0].mapMode) return 'No Map Mode'
 									console.log({ data })
 									// if (data.owStrategies.length < 1)
 									// 	return <p>No Data</p>
@@ -200,11 +191,7 @@ class StratEdit extends Component {
 									// 	creatorName
 									// } = data.owStrategies[0]
 
-									// console.log({ data }, this.state)
-									// return (
-									// <Mutation mutation={CREATE_OW_STRATEGY_MUTATION} variables={this.state}>
-									// 	{(createOwStrategy, { loading, error }) => {
-									switch (data) {
+									switch (data.owMapInfoes[0].mapMode) {
 										case 'Control':
 											return <EditControl data={data} />
 										case 'Assault':
@@ -215,9 +202,7 @@ class StratEdit extends Component {
 											return <EditEscort data={data} />
 										default:
 											// return <h4>Hello {data.owStrategies[0].mapMode}</h4>
-											return (
-												<Error error="incorrect map mode" />
-											)
+											return <Error error={{ message: 'incorrect map mode' }} />
 											break
 									}
 									// 	}}

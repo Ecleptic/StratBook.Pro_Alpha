@@ -1,11 +1,11 @@
 # source: https://us1.prisma.sh/cameron-green-fec414/stratbook/dev
-# timestamp: Fri May 31 2019 11:59:22 GMT-0500 (Central Daylight Time)
+# timestamp: Tue Jun 04 2019 15:59:55 GMT-0500 (Central Daylight Time)
 
 type AggregateOwHeroType {
   count: Int!
 }
 
-type AggregateOwMapType {
+type AggregateOwMapInfo {
   count: Int!
 }
 
@@ -31,27 +31,27 @@ Long can represent values between -(2^63) and 2^63 - 1.
 scalar Long
 
 type Mutation {
-  createOwMapType(data: OwMapTypeCreateInput!): OwMapType!
+  createOwMapInfo(data: OwMapInfoCreateInput!): OwMapInfo!
   createOwHeroType(data: OwHeroTypeCreateInput!): OwHeroType!
   createOwStrategy(data: OwStrategyCreateInput!): OwStrategy!
   createUser(data: UserCreateInput!): User!
-  updateOwMapType(data: OwMapTypeUpdateInput!, where: OwMapTypeWhereUniqueInput!): OwMapType
+  updateOwMapInfo(data: OwMapInfoUpdateInput!, where: OwMapInfoWhereUniqueInput!): OwMapInfo
   updateOwHeroType(data: OwHeroTypeUpdateInput!, where: OwHeroTypeWhereUniqueInput!): OwHeroType
   updateOwStrategy(data: OwStrategyUpdateInput!, where: OwStrategyWhereUniqueInput!): OwStrategy
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
-  deleteOwMapType(where: OwMapTypeWhereUniqueInput!): OwMapType
+  deleteOwMapInfo(where: OwMapInfoWhereUniqueInput!): OwMapInfo
   deleteOwHeroType(where: OwHeroTypeWhereUniqueInput!): OwHeroType
   deleteOwStrategy(where: OwStrategyWhereUniqueInput!): OwStrategy
   deleteUser(where: UserWhereUniqueInput!): User
-  upsertOwMapType(where: OwMapTypeWhereUniqueInput!, create: OwMapTypeCreateInput!, update: OwMapTypeUpdateInput!): OwMapType!
+  upsertOwMapInfo(where: OwMapInfoWhereUniqueInput!, create: OwMapInfoCreateInput!, update: OwMapInfoUpdateInput!): OwMapInfo!
   upsertOwHeroType(where: OwHeroTypeWhereUniqueInput!, create: OwHeroTypeCreateInput!, update: OwHeroTypeUpdateInput!): OwHeroType!
   upsertOwStrategy(where: OwStrategyWhereUniqueInput!, create: OwStrategyCreateInput!, update: OwStrategyUpdateInput!): OwStrategy!
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
-  updateManyOwMapTypes(data: OwMapTypeUpdateManyMutationInput!, where: OwMapTypeWhereInput): BatchPayload!
+  updateManyOwMapInfoes(data: OwMapInfoUpdateManyMutationInput!, where: OwMapInfoWhereInput): BatchPayload!
   updateManyOwHeroTypes(data: OwHeroTypeUpdateManyMutationInput!, where: OwHeroTypeWhereInput): BatchPayload!
   updateManyOwStrategies(data: OwStrategyUpdateManyMutationInput!, where: OwStrategyWhereInput): BatchPayload!
   updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
-  deleteManyOwMapTypes(where: OwMapTypeWhereInput): BatchPayload!
+  deleteManyOwMapInfoes(where: OwMapInfoWhereInput): BatchPayload!
   deleteManyOwHeroTypes(where: OwHeroTypeWhereInput): BatchPayload!
   deleteManyOwStrategies(where: OwStrategyWhereInput): BatchPayload!
   deleteManyUsers(where: UserWhereInput): BatchPayload!
@@ -468,90 +468,83 @@ enum OwMap {
   Watchpoint_Gibraltar
 }
 
-enum OwMapMode {
-  Assault
-  Control
-  Hybrid
-  Escort
-}
-
-type OwMapType implements Node {
+type OwMapInfo implements Node {
   id: ID!
   mapName: OwMap!
-  mapType: OwMapMode!
+  mapMode: OwMapMode!
   subMaps: [OwControlSubMap!]!
   createdAt: DateTime!
   updatedAt: DateTime!
 }
 
 """A connection to a list of items."""
-type OwMapTypeConnection {
+type OwMapInfoConnection {
   """Information to aid in pagination."""
   pageInfo: PageInfo!
 
   """A list of edges."""
-  edges: [OwMapTypeEdge]!
-  aggregate: AggregateOwMapType!
+  edges: [OwMapInfoEdge]!
+  aggregate: AggregateOwMapInfo!
 }
 
-input OwMapTypeCreateInput {
+input OwMapInfoCreateInput {
   id: ID
   mapName: OwMap!
-  mapType: OwMapMode!
-  subMaps: OwMapTypeCreatesubMapsInput
+  mapMode: OwMapMode!
+  subMaps: OwMapInfoCreatesubMapsInput
 }
 
-input OwMapTypeCreatesubMapsInput {
+input OwMapInfoCreatesubMapsInput {
   set: [OwControlSubMap!]
 }
 
 """An edge in a connection."""
-type OwMapTypeEdge {
+type OwMapInfoEdge {
   """The item at the end of the edge."""
-  node: OwMapType!
+  node: OwMapInfo!
 
   """A cursor for use in pagination."""
   cursor: String!
 }
 
-enum OwMapTypeOrderByInput {
+enum OwMapInfoOrderByInput {
   id_ASC
   id_DESC
   mapName_ASC
   mapName_DESC
-  mapType_ASC
-  mapType_DESC
+  mapMode_ASC
+  mapMode_DESC
   createdAt_ASC
   createdAt_DESC
   updatedAt_ASC
   updatedAt_DESC
 }
 
-type OwMapTypePreviousValues {
+type OwMapInfoPreviousValues {
   id: ID!
   mapName: OwMap!
-  mapType: OwMapMode!
+  mapMode: OwMapMode!
   subMaps: [OwControlSubMap!]!
   createdAt: DateTime!
   updatedAt: DateTime!
 }
 
-type OwMapTypeSubscriptionPayload {
+type OwMapInfoSubscriptionPayload {
   mutation: MutationType!
-  node: OwMapType
+  node: OwMapInfo
   updatedFields: [String!]
-  previousValues: OwMapTypePreviousValues
+  previousValues: OwMapInfoPreviousValues
 }
 
-input OwMapTypeSubscriptionWhereInput {
+input OwMapInfoSubscriptionWhereInput {
   """Logical AND on all given filters."""
-  AND: [OwMapTypeSubscriptionWhereInput!]
+  AND: [OwMapInfoSubscriptionWhereInput!]
 
   """Logical OR on all given filters."""
-  OR: [OwMapTypeSubscriptionWhereInput!]
+  OR: [OwMapInfoSubscriptionWhereInput!]
 
   """Logical NOT on all given filters combined by AND."""
-  NOT: [OwMapTypeSubscriptionWhereInput!]
+  NOT: [OwMapInfoSubscriptionWhereInput!]
 
   """The subscription event gets dispatched when it's listed in mutation_in"""
   mutation_in: [MutationType!]
@@ -570,34 +563,34 @@ input OwMapTypeSubscriptionWhereInput {
   The subscription event gets only dispatched when some of the field names included in this list have been updated
   """
   updatedFields_contains_some: [String!]
-  node: OwMapTypeWhereInput
+  node: OwMapInfoWhereInput
 }
 
-input OwMapTypeUpdateInput {
+input OwMapInfoUpdateInput {
   mapName: OwMap
-  mapType: OwMapMode
-  subMaps: OwMapTypeUpdatesubMapsInput
+  mapMode: OwMapMode
+  subMaps: OwMapInfoUpdatesubMapsInput
 }
 
-input OwMapTypeUpdateManyMutationInput {
+input OwMapInfoUpdateManyMutationInput {
   mapName: OwMap
-  mapType: OwMapMode
-  subMaps: OwMapTypeUpdatesubMapsInput
+  mapMode: OwMapMode
+  subMaps: OwMapInfoUpdatesubMapsInput
 }
 
-input OwMapTypeUpdatesubMapsInput {
+input OwMapInfoUpdatesubMapsInput {
   set: [OwControlSubMap!]
 }
 
-input OwMapTypeWhereInput {
+input OwMapInfoWhereInput {
   """Logical AND on all given filters."""
-  AND: [OwMapTypeWhereInput!]
+  AND: [OwMapInfoWhereInput!]
 
   """Logical OR on all given filters."""
-  OR: [OwMapTypeWhereInput!]
+  OR: [OwMapInfoWhereInput!]
 
   """Logical NOT on all given filters combined by AND."""
-  NOT: [OwMapTypeWhereInput!]
+  NOT: [OwMapInfoWhereInput!]
   id: ID
 
   """All values that are not equal to given value."""
@@ -648,16 +641,16 @@ input OwMapTypeWhereInput {
 
   """All values that are not contained in given list."""
   mapName_not_in: [OwMap!]
-  mapType: OwMapMode
+  mapMode: OwMapMode
 
   """All values that are not equal to given value."""
-  mapType_not: OwMapMode
+  mapMode_not: OwMapMode
 
   """All values that are contained in given list."""
-  mapType_in: [OwMapMode!]
+  mapMode_in: [OwMapMode!]
 
   """All values that are not contained in given list."""
-  mapType_not_in: [OwMapMode!]
+  mapMode_not_in: [OwMapMode!]
   createdAt: DateTime
 
   """All values that are not equal to given value."""
@@ -704,8 +697,15 @@ input OwMapTypeWhereInput {
   updatedAt_gte: DateTime
 }
 
-input OwMapTypeWhereUniqueInput {
+input OwMapInfoWhereUniqueInput {
   id: ID
+}
+
+enum OwMapMode {
+  Assault
+  Control
+  Hybrid
+  Escort
 }
 
 enum OwRank {
@@ -1169,15 +1169,15 @@ enum Permission {
 }
 
 type Query {
-  owMapTypes(where: OwMapTypeWhereInput, orderBy: OwMapTypeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [OwMapType]!
+  owMapInfoes(where: OwMapInfoWhereInput, orderBy: OwMapInfoOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [OwMapInfo]!
   owHeroTypes(where: OwHeroTypeWhereInput, orderBy: OwHeroTypeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [OwHeroType]!
   owStrategies(where: OwStrategyWhereInput, orderBy: OwStrategyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [OwStrategy]!
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
-  owMapType(where: OwMapTypeWhereUniqueInput!): OwMapType
+  owMapInfo(where: OwMapInfoWhereUniqueInput!): OwMapInfo
   owHeroType(where: OwHeroTypeWhereUniqueInput!): OwHeroType
   owStrategy(where: OwStrategyWhereUniqueInput!): OwStrategy
   user(where: UserWhereUniqueInput!): User
-  owMapTypesConnection(where: OwMapTypeWhereInput, orderBy: OwMapTypeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): OwMapTypeConnection!
+  owMapInfoesConnection(where: OwMapInfoWhereInput, orderBy: OwMapInfoOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): OwMapInfoConnection!
   owHeroTypesConnection(where: OwHeroTypeWhereInput, orderBy: OwHeroTypeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): OwHeroTypeConnection!
   owStrategiesConnection(where: OwStrategyWhereInput, orderBy: OwStrategyOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): OwStrategyConnection!
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
@@ -1190,7 +1190,7 @@ type Query {
 }
 
 type Subscription {
-  owMapType(where: OwMapTypeSubscriptionWhereInput): OwMapTypeSubscriptionPayload
+  owMapInfo(where: OwMapInfoSubscriptionWhereInput): OwMapInfoSubscriptionPayload
   owHeroType(where: OwHeroTypeSubscriptionWhereInput): OwHeroTypeSubscriptionPayload
   owStrategy(where: OwStrategySubscriptionWhereInput): OwStrategySubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
