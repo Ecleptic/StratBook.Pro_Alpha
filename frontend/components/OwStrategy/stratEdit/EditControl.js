@@ -54,6 +54,7 @@ const EditControl = props => {
 	const { subMaps } = props.data.owMapInfoes[0]
 	const [currentMap, setCurrentMap] = useState(subMaps[0])
 	const [rank, setRank] = useState()
+	const [stratName, setStratName] = useState()
 	return (
 		<>
 			<label htmlFor="ExpectedRankSelect">
@@ -74,6 +75,18 @@ const EditControl = props => {
 				)
 			})}
 			<form>
+				<label htmlFor="strategyName">
+					Strategy Name
+					<input
+						id="strategyName"
+						name="strategyName"
+						placeholder="Name your Strategy"
+						required
+						type="text"
+						value={stratName}
+						onChange={setStratName(e.target.value)}
+					/>
+				</label>
 				<Point subMapName={currentMap} />
 			</form>
 		</>
@@ -122,18 +135,3 @@ const Point = ({ subMapName }) => {
 		</>
 	)
 }
-
-// ;<li key={index}>
-// 	<select
-// 		name={`offenseHeroes`}
-// 		id={`offenseHeroes${index}`}
-// 		data-index={index}
-// 		// selected={index}
-// 		onChange={this.handleSelectChange}
-// 	>
-// 		<option />
-// 		{OwHeroes.map(hero => (
-// 			<option key={hero}>{hero}</option>
-// 		))}
-// 	</select>
-// </li>
