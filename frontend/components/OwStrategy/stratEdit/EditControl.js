@@ -60,6 +60,7 @@ const EditControl = props => {
 				Expected Rank
 				<select name="expectedRank" id="expectedRankSelect" onChange={e => setRank(e.target.value)} value={rank}>
 					<option />
+					{/* TODO: Probably should be put in a config or get from DB */}
 					{['Bronze', 'Silver', 'Gold', 'Platinum', 'Diamond', 'Master', 'Grand Master', 'Top 500'].map(rank => (
 						<option key={rank}>{rank}</option>
 					))}
@@ -67,11 +68,9 @@ const EditControl = props => {
 			</label>
 			{subMaps.map(map => {
 				return (
-					<>
-						<button onClick={() => setCurrentMap(map)} key={map}>
-							{map}
-						</button>
-					</>
+					<button onClick={() => setCurrentMap(map)} key={map}>
+						{map}
+					</button>
 				)
 			})}
 			<form>
@@ -88,15 +87,11 @@ export default EditControl
 const Point = ({ subMapName }) => {
 	const [markdown, setMarkdown] = useState('')
 	const [heroes, setHeroes] = useState([])
-	// const [selectedHero1, setSelectedHero1] = useState('')
-	// const [selectedHero2, setSelectedHero2] = useState('')
-	// const [selectedHero3, setSelectedHero3] = useState('')
-	// const [selectedHero4, setSelectedHero4] = useState('')
-	// const [selectedHero5, setSelectedHero5] = useState('')
-	// const [selectedHero6, setSelectedHero6] = useState('')
 
 	function handleHeroSelect(e, index) {
-		console.log(e.target.value, { index })
+		const newHeroes = [...heroes]
+		newHeroes[index] = e.target.value
+		setHeroes(newHeroes)
 	}
 
 	return (
