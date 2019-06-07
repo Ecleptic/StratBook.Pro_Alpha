@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { OwHeroes } from '../../../configs/Overwatch/OwData'
 import DraftEditor from '../../Draft'
@@ -52,13 +52,32 @@ const CREATE_OW_STRATEGY_CONTROL_MUTATION = gql`
 const EditControl = props => {
 	// console.log(props.data.owStrategies)
 	const { subMaps } = props.data.owMapInfoes[0]
-
+	const [currentMap, setCurrentMap] = useState(subMaps[0])
+	const [rank, setRank] = useState()
 	return (
-		<form>
-			{subMaps.map(map => (
-				<Point subMapName={map} key={map} />
-			))}
-		</form>
+		<>
+			<label htmlFor="ExpectedRankSelect">
+				Expected Rank
+				<select name="expectedRank" id="expectedRankSelect" onChange={e => setRank(e.target.value)} value={rank}>
+					<option />
+					{['Bronze', 'Silver', 'Gold', 'Platinum', 'Diamond', 'Master', 'Grand Master', 'Top 500'].map(rank => (
+						<option key={rank}>{rank}</option>
+					))}
+				</select>
+			</label>
+			{subMaps.map(map => {
+				return (
+					<>
+						<button onClick={() => setCurrentMap(map)} key={map}>
+							{map}
+						</button>
+					</>
+				)
+			})}
+			<form>
+				<Point subMapName={currentMap} />
+			</form>
+		</>
 	)
 }
 
@@ -66,24 +85,60 @@ EditControl.propTypes = {}
 
 export default EditControl
 
-const Point = ({ subMapName }) => (
-	<>
-		<h4>Point {subMapName}</h4>
-		{[0, 1, 2, 3, 4, 5].map(index => {
-			return (
-				<li key={index}>
-					<select name="PointA" id={`PointA${index}`}>
-						{OwHeroes.map(hero => (
-							<option key={hero}>{hero}</option>
-						))}
-					</select>
-				</li>
-			)
-		})}
-		<DraftEditor
-			updateMD={e => {
-				console.log(e)
-			}}
-		/>
-	</>
-)
+const Point = ({ subMapName }) => {
+	const [markdown, setMarkdown] = useState('')
+	const [heroes, setHeroes] = useState([])
+	// const [selectedHero1, setSelectedHero1] = useState('')
+	// const [selectedHero2, setSelectedHero2] = useState('')
+	// const [selectedHero3, setSelectedHero3] = useState('')
+	// const [selectedHero4, setSelectedHero4] = useState('')
+	// const [selectedHero5, setSelectedHero5] = useState('')
+	// const [selectedHero6, setSelectedHero6] = useState('')
+
+	function handleHeroSelect(e, index) {
+		console.log(e.target.value, { index })
+	}
+
+	return (
+		<>
+			<h4>Point {subMapName}</h4>
+			{[0, 1, 2, 3, 4, 5].map(index => {
+				return (
+					<li key={index}>
+						<select
+							name={`${subMapName}`}
+							id={`${subMapName}${index}`}
+							onChange={e => handleHeroSelect(e, index)}
+							// value={selectedHero[index]}
+						>
+							<option />
+							{OwHeroes.map(hero => (
+								<option key={hero}>{hero}</option>
+							))}
+						</select>
+					</li>
+				)
+			})}
+			<DraftEditor
+				updateMD={e => {
+					console.log(e)
+				}}
+			/>
+		</>
+	)
+}
+
+// ;<li key={index}>
+// 	<select
+// 		name={`offenseHeroes`}
+// 		id={`offenseHeroes${index}`}
+// 		data-index={index}
+// 		// selected={index}
+// 		onChange={this.handleSelectChange}
+// 	>
+// 		<option />
+// 		{OwHeroes.map(hero => (
+// 			<option key={hero}>{hero}</option>
+// 		))}
+// 	</select>
+// </li>
