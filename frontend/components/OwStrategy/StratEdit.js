@@ -70,10 +70,8 @@ const GET_STRATEGIES_QUERY = gql`
 			defenseHeroes
 			offenseStrats
 			offenseHeroes
-			mapMode
 			strategyName
 			expectedRank
-			subMap
 			creatorName {
 				name
 			}

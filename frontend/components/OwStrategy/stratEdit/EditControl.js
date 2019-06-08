@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { OwHeroes } from '../../../configs/Overwatch/OwData'
 import DraftEditor from '../../Draft'
@@ -49,27 +49,72 @@ const CREATE_OW_STRATEGY_CONTROL_MUTATION = gql`
 	}
 `
 
+const possibleControlMapData = {
+	mapName: '',
+	strategyName: '',
+	expectedRank: '',
+	creatorName: '',
+	submapHeroes: {
+		// submap1: ['h1', 'h2'],
+		// submap2: ['h4', 'h6']
+	},
+	submapParagraph: {
+		// TODO: fix that terrible naming
+		// submap1: '## Win! ',
+		// submap2: "#Don't Lose"
+	}
+}
+
 const EditControl = props => {
 	// console.log(props.data.owStrategies)
 	const { subMaps } = props.data.owMapInfoes[0]
-	const [currentMap, setCurrentMap] = useState(subMaps[0])
+	const [currentSubMap, setCurrentSubMap] = useState(subMaps[0])
 	const [rank, setRank] = useState()
 	const [stratName, setStratName] = useState()
+	const [submap1Heroes, setSubmap1Heroes] = useState()
+	const [submap2Heroes, setSubmap2Heroes] = useState()
+	const [submap3Heroes, setSubmap3Heroes] = useState()
+
+	const [allMapInfo, setAllMapInfo] = useState(possibleControlMapData)
+
+	const setMapHeroes = heroes => {
+		console.log({ currentMap: currentSubMap, heroes })
+
+		const newMapInfo = { ...allMapInfo }
+		newMapInfo.submapHeroes[currentSubMap] = heroes
+		setAllMapInfo(newMapInfo)
+		console.log(allMapInfo)
+	}
+
 	return (
 		<>
 			<label htmlFor="ExpectedRankSelect">
 				Expected Rank
-				<select name="expectedRank" id="expectedRankSelect" onChange={e => setRank(e.target.value)} value={rank}>
+				<select
+					name="expectedRank"
+					id="expectedRankSelect"
+					onChange={e => setRank(e.target.value)}
+					value={rank}
+				>
 					<option />
 					{/* TODO: Probably should be put in a config or get from DB */}
-					{['Bronze', 'Silver', 'Gold', 'Platinum', 'Diamond', 'Master', 'Grand Master', 'Top 500'].map(rank => (
+					{[
+						'Bronze',
+						'Silver',
+						'Gold',
+						'Platinum',
+						'Diamond',
+						'Master',
+						'Grand Master',
+						'Top 500'
+					].map(rank => (
 						<option key={rank}>{rank}</option>
 					))}
 				</select>
 			</label>
 			{subMaps.map(map => {
 				return (
-					<button onClick={() => setCurrentMap(map)} key={map}>
+					<button onClick={() => setCurrentSubMap(map)} key={map}>
 						{map}
 					</button>
 				)
@@ -84,10 +129,18 @@ const EditControl = props => {
 						required
 						type="text"
 						value={stratName}
-						onChange={setStratName(e.target.value)}
+						onChange={e => setStratName(e.target.value)}
 					/>
 				</label>
-				<Point subMapName={currentMap} />
+				<Point subMapName={currentSubMap} setMapHeroes={setMapHeroes} />
+				<button
+					type="button"
+					onClick={() => {
+						console.log('Save Info (log info here)')
+					}}
+				>
+					Save
+				</button>
 			</form>
 		</>
 	)
@@ -97,14 +150,19 @@ EditControl.propTypes = {}
 
 export default EditControl
 
-const Point = ({ subMapName }) => {
+const Point = ({ subMapName, setMapHeroes }) => {
 	const [markdown, setMarkdown] = useState('')
 	const [heroes, setHeroes] = useState([])
+
+	useEffect(() => {
+		setHeroes(['', '', '', '', '', ''])
+	}, [subMapName])
 
 	function handleHeroSelect(e, index) {
 		const newHeroes = [...heroes]
 		newHeroes[index] = e.target.value
 		setHeroes(newHeroes)
+		setMapHeroes(newHeroes)
 	}
 
 	return (
@@ -114,10 +172,8 @@ const Point = ({ subMapName }) => {
 				return (
 					<li key={index}>
 						<select
-							name={`${subMapName}`}
-							id={`${subMapName}${index}`}
 							onChange={e => handleHeroSelect(e, index)}
-							// value={selectedHero[index]}
+							value={heroes[index]}
 						>
 							<option />
 							{OwHeroes.map(hero => (
@@ -128,8 +184,9 @@ const Point = ({ subMapName }) => {
 				)
 			})}
 			<DraftEditor
-				updateMD={e => {
-					console.log(e)
+				updateMD={md => {
+					setMarkdown(md)
+					console.log({md})
 				}}
 			/>
 		</>
