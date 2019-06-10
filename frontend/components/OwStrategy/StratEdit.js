@@ -62,6 +62,7 @@ const GET_STRATEGIES_QUERY = gql`
 		owMapInfoes(where: { mapName: $mapName }, first: 1) {
 			mapMode
 			subMaps
+			mapName
 		}
 		owStrategies(where: { AND: [{ creatorName: { name: $userName } }, { mapName: $mapName }] }) {
 			id

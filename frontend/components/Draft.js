@@ -2,74 +2,80 @@
 
 import React, { Component } from 'react'
 import { mdToDraftjs, draftjsToMd } from 'draftjs-md-converter'
-import Draft, { Editor, EditorState, RichUtils, convertToRaw } from 'draft-js'
+import Draft, {
+	Editor,
+	EditorState,
+	RichUtils,
+	convertToRaw,
+	ContentState
+} from 'draft-js'
 
 import styled from 'styled-components'
 
-const div = styled.div`
-    .RichEditor-root {
-        background: #fff;
-        border: 1px solid #ddd;
-        font-family: 'Georgia', serif;
-        font-size: 14px;
-        padding: 15px;
-    }
+const Div = styled.div`
+	.RichEditor-root {
+		background: #fff;
+		border: 1px solid #ddd;
+		font-family: 'Georgia', serif;
+		font-size: 14px;
+		padding: 15px;
+	}
 
-    .RichEditor-editor {
-        border-top: 1px solid #ddd;
-        cursor: text;
-        font-size: 16px;
-        margin-top: 10px;
-    }
+	.RichEditor-editor {
+		border-top: 1px solid #ddd;
+		cursor: text;
+		font-size: 16px;
+		margin-top: 10px;
+	}
 
-    .RichEditor-editor .public-DraftEditorPlaceholder-root,
-    .RichEditor-editor .public-DraftEditor-content {
-        margin: 0 -15px -15px;
-        padding: 15px;
-    }
+	.RichEditor-editor .public-DraftEditorPlaceholder-root,
+	.RichEditor-editor .public-DraftEditor-content {
+		margin: 0 -15px -15px;
+		padding: 15px;
+	}
 
-    .RichEditor-editor .public-DraftEditor-content {
-        min-height: 100px;
-    }
+	.RichEditor-editor .public-DraftEditor-content {
+		min-height: 100px;
+	}
 
-    .RichEditor-hidePlaceholder .public-DraftEditorPlaceholder-root {
-        display: none;
-    }
+	.RichEditor-hidePlaceholder .public-DraftEditorPlaceholder-root {
+		display: none;
+	}
 
-    .RichEditor-editor .RichEditor-blockquote {
-        border-left: 5px solid #eee;
-        color: #666;
-        font-family: 'Hoefler Text', 'Georgia', serif;
-        font-style: italic;
-        margin: 16px 0;
-        padding: 10px 20px;
-    }
+	.RichEditor-editor .RichEditor-blockquote {
+		border-left: 5px solid #eee;
+		color: #666;
+		font-family: 'Hoefler Text', 'Georgia', serif;
+		font-style: italic;
+		margin: 16px 0;
+		padding: 10px 20px;
+	}
 
-    .RichEditor-editor .public-DraftStyleDefault-pre {
-        background-color: rgba(0, 0, 0, 0.05);
-        font-family: 'Inconsolata', 'Menlo', 'Consolas', monospace;
-        font-size: 16px;
-        padding: 20px;
-    }
+	.RichEditor-editor .public-DraftStyleDefault-pre {
+		background-color: rgba(0, 0, 0, 0.05);
+		font-family: 'Inconsolata', 'Menlo', 'Consolas', monospace;
+		font-size: 16px;
+		padding: 20px;
+	}
 
-    .RichEditor-controls {
-        font-family: 'Helvetica', sans-serif;
-        font-size: 14px;
-        margin-bottom: 5px;
-        user-select: none;
-    }
+	.RichEditor-controls {
+		font-family: 'Helvetica', sans-serif;
+		font-size: 14px;
+		margin-bottom: 5px;
+		user-select: none;
+	}
 
-    .RichEditor-styleButton {
-        color: #999;
-        cursor: pointer;
-        margin-right: 16px;
-        padding: 2px 0;
-        display: inline-block;
-    }
+	.RichEditor-styleButton {
+		color: #999;
+		cursor: pointer;
+		margin-right: 16px;
+		padding: 2px 0;
+		display: inline-block;
+	}
 
-    .RichEditor-activeButton {
-        color: #5890ff;
-    }
+	.RichEditor-activeButton {
+		color: #5890ff;
+	}
 `
 
 export default class DraftEditor extends Component {
@@ -82,10 +88,7 @@ export default class DraftEditor extends Component {
 		this.focus = () => this.refs.editor.focus()
 		this.onChange = editorState => {
 			const contentState = editorState.getCurrentContent()
-			console.log(
-				'content state',
-				draftjsToMd(convertToRaw(contentState))
-			)
+			// console.log(draftjsToMd(convertToRaw(contentState)))
 			this.props.updateMD(
 				this.props.isDefense,
 				draftjsToMd(convertToRaw(contentState))
@@ -97,6 +100,26 @@ export default class DraftEditor extends Component {
 		this.onTab = e => this._onTab(e)
 		this.toggleBlockType = type => this._toggleBlockType(type)
 		this.toggleInlineStyle = style => this._toggleInlineStyle(style)
+	}
+
+	componentDidUpdate(prevProps) {
+		// console.log(prevProps, this.props)
+		if (prevProps.mapName !== this.props.mapName) {
+			// console.log(prevProps, this.props)
+			this.resetState()
+		}
+	}
+	resetState() {
+		console.log('props', this.props)
+		const newText = this.props.markdown
+			? this.props.markdown
+			: 'Old Placeholder Data'
+		// console.log(newText)
+		const editorState = EditorState.push(
+			this.state.editorState,
+			ContentState.createFromText(newText)
+		)
+		this.setState({ editorState })
 	}
 
 	_handleKeyCommand(command) {
@@ -145,7 +168,7 @@ export default class DraftEditor extends Component {
 		}
 
 		return (
-			<div className="RichEditor-root">
+			<Div className="RichEditor-root">
 				<BlockStyleControls
 					editorState={editorState}
 					onToggle={this.toggleBlockType}
@@ -168,7 +191,7 @@ export default class DraftEditor extends Component {
 						spellCheck={true}
 					/>
 				</div>
-			</div>
+			</Div>
 		)
 	}
 }
@@ -196,10 +219,10 @@ const styleMap = {
 
 function getBlockStyle(block) {
 	switch (block.getType()) {
-	case 'blockquote':
-		return 'RichEditor-blockquote'
-	default:
-		return null
+		case 'blockquote':
+			return 'RichEditor-blockquote'
+		default:
+			return null
 	}
 }
 
@@ -227,7 +250,7 @@ class StyleButton extends React.Component {
 }
 
 const BLOCK_TYPES = [
-	// { label: 'HOne', style: 'header-one' },
+	{ label: 'H1', style: 'header-one' },
 	{ label: 'H2', style: 'header-two' },
 	{ label: 'H3', style: 'header-three' },
 	{ label: 'H4', style: 'header-four' },
@@ -265,8 +288,8 @@ const BlockStyleControls = props => {
 var INLINE_STYLES = [
 	{ label: 'Bold', style: 'BOLD' },
 	{ label: 'Italic', style: 'ITALIC' },
-	{ label: 'Underline', style: 'UNDERLINE' },
-	{ label: 'Monospace', style: 'CODE' }
+	{ label: 'Underline', style: 'UNDERLINE' }
+	// { label: 'Monospace', style: 'CODE' }
 ]
 
 const InlineStyleControls = props => {
