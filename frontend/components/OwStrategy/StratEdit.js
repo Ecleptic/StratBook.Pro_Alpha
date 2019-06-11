@@ -173,22 +173,6 @@ class StratEdit extends Component {
 									if (error) return <p>Errors: {`${error}`}</p>
 									if (!data.owMapInfoes[0].mapMode) return 'No Map Mode'
 									console.log({ data })
-									// if (data.owStrategies.length < 1)
-									// 	return <p>No Data</p>
-
-									// const {
-									// 	id,
-									// 	mapName,
-									// 	defenseStrats,
-									// 	defenseHeroes,
-									// 	offenseStrats,
-									// 	offenseHeroes,
-									// 	mapMode,
-									// 	strategyName,
-									// 	expectedRank,
-									// 	subMap,
-									// 	creatorName
-									// } = data.owStrategies[0]
 
 									switch (data.owMapInfoes[0].mapMode) {
 										case 'Control':

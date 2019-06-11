@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { OwHeroes } from '../../../configs/Overwatch/OwData'
 import DraftEditor from '../../Draft'
 
+const owRanks = ['Bronze', 'Silver', 'Gold', 'Platinum', 'Diamond', 'Master', 'Grand Master', 'Top 500']
 const possibleControlMapData = {
 	mapName: '',
 	strategyName: '',
@@ -15,7 +16,7 @@ const possibleControlMapData = {
 	],
 
 	submaps: [['heroes'], ['details']],
-	// option2Info: {
+	// option2Info: { // *! Probably going to go with option 2 here. They're enums so _shouldn't_ change
 	// 	submap1Name: { Heroes, details },
 	// 	submap2Name: { Heroes, details },
 	// 	submap3Name: { Heroes, details }
@@ -39,8 +40,6 @@ const EditControl = props => {
 	const [currentSubMap, setCurrentSubMap] = useState(subMaps[0])
 	const [rank, setRank] = useState()
 	const [stratName, setStratName] = useState('')
-	// const [submapHeroes, setSubMapHeroes] = useState({})
-	// const [submapMarkdown, setSubmapMarkdown] = useState({})
 
 	const [allMapInfo, setAllMapInfo] = useState(possibleControlMapData)
 
@@ -50,7 +49,6 @@ const EditControl = props => {
 		newMapInfo.SubmapInfo[subMapIndex].heroes = heroes
 		newMapInfo.SubmapInfo[subMapIndex].name = currentSubMap
 		setAllMapInfo(newMapInfo)
-		// accumulateHeroes(newSubmapHeroes)
 	}
 	const setMapMarkdown = markdown => {
 		const subMapIndex = subMaps.findIndex(map => map === currentSubMap)
@@ -78,35 +76,17 @@ const EditControl = props => {
 				{/* TODO: orchestrator */}
 				<label htmlFor="ExpectedRankSelect">
 					Expected Rank
-					<select
-						name="expectedRank"
-						id="expectedRankSelect"
-						onChange={e => setRank(e.target.value)}
-						value={rank}
-					>
+					<select name="expectedRank" id="expectedRankSelect" onChange={e => setRank(e.target.value)} value={rank}>
 						<option />
 						{/* TODO: Probably should be put in a config or get from DB */}
-						{[
-							'Bronze',
-							'Silver',
-							'Gold',
-							'Platinum',
-							'Diamond',
-							'Master',
-							'Grand Master',
-							'Top 500'
-						].map(rank => (
+						{owRanks.map(rank => (
 							<option key={rank}>{rank}</option>
 						))}
 					</select>
 				</label>
 				{subMaps.map(map => {
 					return (
-						<button
-							type="button"
-							onClick={() => setCurrentSubMap(map)}
-							key={map}
-						>
+						<button type="button" onClick={() => setCurrentSubMap(map)} key={map}>
 							{map}
 						</button>
 					)
@@ -142,47 +122,7 @@ EditControl.propTypes = {}
 
 export default EditControl
 
-
-
-const Point = ({
-	subMapName,
-	setMapHeroes,
-	setMapMarkdown,
-	allMapInfo,
-	subMaps
-}) => {
-	// const [markdown, setMarkdown] = useState('Write Strategy Details Here')
-	// const [heroes, setHeroes] = useState([])
-	// TODO: Point shouldn't have any state or useEffects...
-
-	// useEffect(() => {
-	// 	// console.log(markdown)
-	// })
-
-	// useEffect(() => {
-	// 	const subMapIndex = subMaps.findIndex(map => map === subMapName)
-	// 	setMarkdown(allMapInfo.SubmapInfo[subMapIndex].markdown)
-	// 	setHeroes(allMapInfo.SubmapInfo[subMapIndex].heroes)
-	// 	console.log('markdown for ', markdown)
-	// 	return () => {
-	// 		// console.log('unmounting', allMapInfo)
-	// 		const subMapIndex = subMaps.findIndex(map => map === subMapName)
-	// 		setMarkdown(allMapInfo.SubmapInfo[subMapIndex].markdown)
-	// 		setHeroes(allMapInfo.SubmapInfo[subMapIndex].heroes)
-	// 	}
-	// }, [subMapName])
-
-	function handleHeroSelect(e, index) {
-		// TODO:FIXME: Push this into the state in the major body component
-		const newHeroes = [...heroes]
-		newHeroes[index] = e.target.value
-		setHeroes(newHeroes)
-		setMapHeroes(newHeroes)
-	}
-	function handleMarkdownSelect(markdown) {
-		// TODO:FIXME: Push this into the state in the major body component
-	}
-
+const Point = ({ subMapName, setMapHeroes, setMapMarkdown, allMapInfo, subMaps, handleHeroSelect }) => {
 	return (
 		<>
 			<h4>Point {subMapName}</h4>
@@ -190,8 +130,11 @@ const Point = ({
 				return (
 					<li key={index}>
 						<select
-							onChange={e => handleHeroSelect(e, index)}
-							value={heroes[index]}
+							onChange={e => {
+								//  handleHeroSelect(e, index)
+								handleHeroSelect(e, index, subMapName)
+							}}
+							// value={heroes[index]}
 						>
 							<option />
 							{OwHeroes.map(hero => (
@@ -205,8 +148,9 @@ const Point = ({
 				markdown={markdown}
 				mapName={subMapName}
 				updateMD={(isDefense, md) => {
-					setMarkdown(md)
-					setMapMarkdown(md)
+					// setMarkdown(md)
+					// setMapMarkdown(md)
+					handleMarkdownChange(md, subMapName)
 				}}
 			/>
 		</>
