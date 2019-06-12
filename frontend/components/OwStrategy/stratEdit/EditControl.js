@@ -9,33 +9,10 @@ const possibleControlMapData = {
 	strategyName: '',
 	expectedRank: '',
 	creatorName: '',
-	SubmapInfo: [
-		{ heroes: ['', '', '', '', '', ''], details: ' ', name: 'meka' },
-		{ heroes: ['', '', '', '', '', ''], details: ' ', name: '' },
-		{ heroes: ['', '', '', '', '', ''], details: ' ', name: '' }
-	],
-
-	submaps: [['heroes'], ['details']],
-	// option2Info: { // *! Probably going to go with option 2 here. They're enums so _shouldn't_ change
-	// 	submap1Name: { Heroes, details },
-	// 	submap2Name: { Heroes, details },
-	// 	submap3Name: { Heroes, details }
-	// },
-	option3Heroes: {
-		Sanctuary: ['Ana', 'Zen'],
-		submap2: ['h4', 'h6']
-	},
-	option3mapInfo: {
-		// TODO: fix that terrible naming
-		submap1: '## Win! ',
-		submap2: "#Don't Lose"
-	},
-	option4Heroes: [['Ana', 'Zen'], ['h4', 'h6']],
-	option4mapInfo: ['## Win! ', "#Don't Lose"]
+	subMapInfo: {}
 }
 
 const EditControl = props => {
-	// // console.log(props.data.owStrategies[0])
 	const { subMaps, mapName } = props.data.owMapInfoes[0]
 	const [currentSubMap, setCurrentSubMap] = useState(subMaps[0])
 	const [rank, setRank] = useState()
@@ -43,37 +20,29 @@ const EditControl = props => {
 
 	const [allMapInfo, setAllMapInfo] = useState(possibleControlMapData)
 
-	const accumulateHeroes = heroes => {
-		const subMapIndex = subMaps.findIndex(map => map === currentSubMap)
-		const newMapInfo = { ...allMapInfo }
-		newMapInfo.SubmapInfo[subMapIndex].heroes = heroes
-		newMapInfo.SubmapInfo[subMapIndex].name = currentSubMap
+	const handleHeroesChange = (e, index) => {
+		let newMapInfo = { ...allMapInfo }
+		if (!newMapInfo.subMapInfo[currentSubMap]) newMapInfo.subMapInfo[currentSubMap] = {}
+		newMapInfo.subMapInfo[currentSubMap].heroes = heroes
+		console.log({ newMapInfo })
 		setAllMapInfo(newMapInfo)
 	}
-	const setMapMarkdown = markdown => {
-		const subMapIndex = subMaps.findIndex(map => map === currentSubMap)
-		const newMapInfo = { ...allMapInfo }
-		newMapInfo.SubmapInfo[subMapIndex].markdown = markdown
-		newMapInfo.SubmapInfo[subMapIndex].name = currentSubMap
+	const handleMarkdownChange = markdown => {
+		let newMapInfo = { ...allMapInfo }
+		if (!newMapInfo.subMapInfo[currentSubMap]) newMapInfo.subMapInfo[currentSubMap] = {}
+		newMapInfo.subMapInfo[currentSubMap].markdown = markdown
+		console.log({ newMapInfo })
 		setAllMapInfo(newMapInfo)
 	}
 
-	/**
-	 * TODO:
-	 * Get all data from state, put it in the allmapinfo, and then push that to the DB.
-	 */
 	const saveForm = () => {
-		// console.log('saving')
-		// console.log({ allMapInfo })
-
-		const data = {}
+		console.log('saving')
 	}
 
 	return (
 		<>
 			<h2>{mapName}</h2>
 			<form onSubmit={e => e.preventDefault()}>
-				{/* TODO: orchestrator */}
 				<label htmlFor="ExpectedRankSelect">
 					Expected Rank
 					<select name="expectedRank" id="expectedRankSelect" onChange={e => setRank(e.target.value)} value={rank}>
@@ -105,8 +74,8 @@ const EditControl = props => {
 				</label>
 				<Point
 					subMapName={currentSubMap}
-					setMapHeroes={accumulateHeroes}
-					setMapMarkdown={setMapMarkdown}
+					handleHeroesChange={handleHeroesChange}
+					handleMarkdownChange={handleMarkdownChange}
 					allMapInfo={allMapInfo}
 					subMaps={subMaps}
 				/>
@@ -122,7 +91,7 @@ EditControl.propTypes = {}
 
 export default EditControl
 
-const Point = ({ subMapName, setMapHeroes, setMapMarkdown, allMapInfo, subMaps, handleHeroSelect }) => {
+const Point = ({ subMapName, handleHeroesChange, handleMarkdownChange }) => {
 	return (
 		<>
 			<h4>Point {subMapName}</h4>
@@ -132,7 +101,7 @@ const Point = ({ subMapName, setMapHeroes, setMapMarkdown, allMapInfo, subMaps, 
 						<select
 							onChange={e => {
 								//  handleHeroSelect(e, index)
-								handleHeroSelect(e, index, subMapName)
+								handleHeroesChange(e, index)
 							}}
 							// value={heroes[index]}
 						>
@@ -145,12 +114,12 @@ const Point = ({ subMapName, setMapHeroes, setMapMarkdown, allMapInfo, subMaps, 
 				)
 			})}
 			<DraftEditor
-				markdown={markdown}
+				// markdown={markdown}
 				mapName={subMapName}
 				updateMD={(isDefense, md) => {
 					// setMarkdown(md)
 					// setMapMarkdown(md)
-					handleMarkdownChange(md, subMapName)
+					handleMarkdownChange(md)
 				}}
 			/>
 		</>
