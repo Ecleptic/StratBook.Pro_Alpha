@@ -91,7 +91,7 @@ EditControl.propTypes = {}
 
 export default EditControl
 
-const Point = ({ subMapName, handleHeroesChange, handleMarkdownChange }) => {
+const Point = ({ subMapName, handleHeroesChange, handleMarkdownChange, allMapInfo }) => {
 	return (
 		<>
 			<h4>Point {subMapName}</h4>
@@ -103,7 +103,7 @@ const Point = ({ subMapName, handleHeroesChange, handleMarkdownChange }) => {
 								//  handleHeroSelect(e, index)
 								handleHeroesChange(e, index)
 							}}
-							// value={heroes[index]}
+							value={allMapInfo.subMapInfo[subMapName].heroes[index]}
 						>
 							<option />
 							{OwHeroes.map(hero => (
