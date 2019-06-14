@@ -1,11 +1,9 @@
-<h1 align="center">Welcome to strat-book-frontend 👋</h1>
+<h1 align="center">Welcome to strat-book-backend 👋</h1>
 <p>
   <img src="https://img.shields.io/badge/version-1.0.0-blue.svg?cacheSeconds=2592000" />
 </p>
 
-> A StratBook for video game pros
-
-### 🏠 [Homepage](Https://localhost:42069)
+> the backend of stratbook.pro
 
 ## Install
 
