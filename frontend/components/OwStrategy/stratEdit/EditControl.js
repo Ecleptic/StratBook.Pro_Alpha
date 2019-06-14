@@ -19,12 +19,22 @@ const EditControl = props => {
 	const [stratName, setStratName] = useState('')
 
 	const [allMapInfo, setAllMapInfo] = useState(possibleControlMapData)
-
+	useEffect(() => {
+		console.log({ currentSubMap })
+		if (!allMapInfo.subMapInfo[currentSubMap].heroes) {
+			console.log('no heroes! ')
+			allMapInfo.subMapInfo[currentSubMap].heroes = []
+		}
+	}, [])
 	const handleHeroesChange = (e, index) => {
+		// TODO: look into Object.Assign instead?
 		let newMapInfo = { ...allMapInfo }
 		if (!newMapInfo.subMapInfo[currentSubMap]) newMapInfo.subMapInfo[currentSubMap] = {}
-		newMapInfo.subMapInfo[currentSubMap].heroes = heroes
-		console.log({ newMapInfo })
+		if (!newMapInfo.subMapInfo[currentSubMap].heroes) newMapInfo.subMapInfo[currentSubMap].heroes = ['', '', '', '', '', '']
+		const newHeroes = [...newMapInfo.subMapInfo[currentSubMap].heroes]
+		newHeroes[index] = e.target.value
+
+		newMapInfo.subMapInfo[currentSubMap].heroes = newHeroes
 		setAllMapInfo(newMapInfo)
 	}
 	const handleMarkdownChange = markdown => {
@@ -73,7 +83,7 @@ const EditControl = props => {
 					/>
 				</label>
 				<Point
-					subMapName={currentSubMap}
+					currentSubMap={currentSubMap}
 					handleHeroesChange={handleHeroesChange}
 					handleMarkdownChange={handleMarkdownChange}
 					allMapInfo={allMapInfo}
@@ -91,10 +101,13 @@ EditControl.propTypes = {}
 
 export default EditControl
 
-const Point = ({ subMapName, handleHeroesChange, handleMarkdownChange, allMapInfo }) => {
+const Point = ({ currentSubMap, handleHeroesChange, handleMarkdownChange, allMapInfo }) => {
+	useEffect(() => {
+		console.log(allMapInfo.subMapInfo[currentSubMap])
+	}, [])
 	return (
 		<>
-			<h4>Point {subMapName}</h4>
+			<h4>Point {currentSubMap}</h4>
 			{[0, 1, 2, 3, 4, 5].map(index => {
 				return (
 					<li key={index}>
@@ -103,7 +116,7 @@ const Point = ({ subMapName, handleHeroesChange, handleMarkdownChange, allMapInf
 								//  handleHeroSelect(e, index)
 								handleHeroesChange(e, index)
 							}}
-							value={allMapInfo.subMapInfo[subMapName].heroes[index]}
+							// value={allMapInfo.subMapInfo[currentSubMap].heroes[index]}
 						>
 							<option />
 							{OwHeroes.map(hero => (
@@ -115,7 +128,7 @@ const Point = ({ subMapName, handleHeroesChange, handleMarkdownChange, allMapInf
 			})}
 			<DraftEditor
 				// markdown={markdown}
-				mapName={subMapName}
+				mapName={currentSubMap}
 				updateMD={(isDefense, md) => {
 					// setMarkdown(md)
 					// setMapMarkdown(md)

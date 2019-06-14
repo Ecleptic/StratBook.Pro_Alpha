@@ -5,15 +5,15 @@ import NProgress from 'nprogress'
 import Nav from './Nav'
 
 Router.onRouteChangeStart = () => {
-    NProgress.start()
+	NProgress.start()
 }
 
 Router.onRouteChangeComplete = () => {
-    NProgress.done()
+	NProgress.done()
 }
 
 Router.onRouteChangeError = () => {
-    NProgress.done()
+	NProgress.done()
 }
 
 const Logo = styled.h1`
@@ -59,16 +59,17 @@ const StyledHeader = styled.header`
 `
 
 const Header = () => (
-    <StyledHeader>
-        <div className="bar">
-            <Logo>
-                <Link href="/">
-                    <a>StratBook.Pro</a>
-                </Link>
-            </Logo>
-            <Nav />
-        </div>
-    </StyledHeader>
+	<StyledHeader>
+		<div className="bar">
+			<Logo>
+				<Link href="/">
+					{/* <a>StratBook.Pro</a> */}
+					<a>Uber Important!</a>
+				</Link>
+			</Logo>
+			<Nav />
+		</div>
+	</StyledHeader>
 )
 
 export default Header

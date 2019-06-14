@@ -135,14 +135,14 @@ class StratEdit extends Component {
 		}
 	}
 
-	updateMD = (isDefense, md) => {
-		console.log(isDefense, md)
-		if (isDefense) {
-			this.setState({ defenseStrats: md })
-		} else {
-			this.setState({ offenseStrats: md })
-		}
-	}
+	// updateMD = (isDefense, md) => {
+	// 	// console.log(isDefense, md)
+	// 	if (isDefense) {
+	// 		this.setState({ defenseStrats: md })
+	// 	} else {
+	// 		this.setState({ offenseStrats: md })
+	// 	}
+	// }
 
 	render() {
 		const { mapName, userName } = this.props
@@ -150,7 +150,7 @@ class StratEdit extends Component {
 		return (
 			<User>
 				{({ data: { me } }) => {
-					console.log({ me })
+					// console.log({ me })
 					if (!me) {
 						return (
 							<div>
@@ -172,7 +172,7 @@ class StratEdit extends Component {
 									if (loading) return 'Loading'
 									if (error) return <p>Errors: {`${error}`}</p>
 									if (!data.owMapInfoes[0].mapMode) return 'No Map Mode'
-									console.log({ data })
+									// console.log({ data })
 
 									switch (data.owMapInfoes[0].mapMode) {
 										case 'Control':
