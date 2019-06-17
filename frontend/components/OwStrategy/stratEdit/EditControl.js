@@ -109,13 +109,17 @@ export default EditControl
 
 const Point = ({ currentSubMap, handleHeroesChange, handleMarkdownChange, allMapInfo }) => {
 	const [heroes, setHeroes] = useState(['', '', '', '', '', ''])
-	const hi = '# Hello Markdown'
-
+	const [markdown, setMarkdown] = useState('')
 	useEffect(() => {
 		console.log(allMapInfo.subMapInfo[currentSubMap])
 	}, [])
 	useEffect(() => {
-		setHeroes(['', '', '', '', '', ''])
+		if (allMapInfo && allMapInfo.subMapInfo[currentSubMap]) {
+			if (allMapInfo.subMapInfo[currentSubMap].heroes) setHeroes(allMapInfo.subMapInfo[currentSubMap].heroes)
+			else setHeroes(['', '', '', '', '', ''])
+			if (allMapInfo.subMapInfo[currentSubMap].markdown) setMarkdown(allMapInfo.subMapInfo[currentSubMap].markdown)
+			else setMarkdown('')
+		}
 	}, [currentSubMap])
 
 	const heroesChange = (e, index) => {
@@ -147,11 +151,9 @@ const Point = ({ currentSubMap, handleHeroesChange, handleMarkdownChange, allMap
 				)
 			})}
 			<DraftEditor
-				markdown={hi}
+				markdown={markdown}
 				mapName={currentSubMap}
 				updateMD={(isDefense, md) => {
-					// setMarkdown(md)
-					// setMapMarkdown(md)
 					handleMarkdownChange(md)
 				}}
 			/>
