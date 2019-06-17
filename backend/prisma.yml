@@ -1,7 +1,8 @@
-endpoint: ${env:PRISMA_ENDPOINT}
+#endpoint: ${env:PRISMA_ENDPOINT}
+endpoint: https://stratbook-prod-c08130a1b5.herokuapp.com/stratbook/prod
 datamodel: datamodel.prisma
-# secret: ${env:PRISMA_SECRET}
+secret: ${env:PRISMA_SECRET}
 
 hooks:
-    post-deploy:
-        - graphql get-schema -p prisma
+  post-deploy:
+    - graphql get-schema -p prisma
