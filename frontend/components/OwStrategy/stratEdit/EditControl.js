@@ -21,11 +21,17 @@ const EditControl = props => {
 	const [allMapInfo, setAllMapInfo] = useState(possibleControlMapData)
 	useEffect(() => {
 		console.log({ currentSubMap })
+		if (!allMapInfo.subMapInfo[currentSubMap]) {
+			allMapInfo.subMapInfo[currentSubMap] = {}
+		}
 		if (!allMapInfo.subMapInfo[currentSubMap].heroes) {
 			console.log('no heroes! ')
 			allMapInfo.subMapInfo[currentSubMap].heroes = []
 		}
 	}, [])
+	useEffect(() => {
+		console.log({ allMapInfo })
+	}, [allMapInfo])
 	const handleHeroesChange = (e, index) => {
 		// TODO: look into Object.Assign instead?
 		let newMapInfo = { ...allMapInfo }
@@ -102,9 +108,23 @@ EditControl.propTypes = {}
 export default EditControl
 
 const Point = ({ currentSubMap, handleHeroesChange, handleMarkdownChange, allMapInfo }) => {
+	const [heroes, setHeroes] = useState(['', '', '', '', '', ''])
+	const hi = '# Hello Markdown'
+
 	useEffect(() => {
 		console.log(allMapInfo.subMapInfo[currentSubMap])
 	}, [])
+	useEffect(() => {
+		setHeroes(['', '', '', '', '', ''])
+	}, [currentSubMap])
+
+	const heroesChange = (e, index) => {
+		const newHeroes = [...heroes]
+		newHeroes[index] = e.target.value
+		setHeroes(newHeroes)
+		handleHeroesChange(e, index)
+	}
+
 	return (
 		<>
 			<h4>Point {currentSubMap}</h4>
@@ -114,9 +134,9 @@ const Point = ({ currentSubMap, handleHeroesChange, handleMarkdownChange, allMap
 						<select
 							onChange={e => {
 								//  handleHeroSelect(e, index)
-								handleHeroesChange(e, index)
+								heroesChange(e, index)
 							}}
-							// value={allMapInfo.subMapInfo[currentSubMap].heroes[index]}
+							value={heroes[index]}
 						>
 							<option />
 							{OwHeroes.map(hero => (
@@ -127,7 +147,7 @@ const Point = ({ currentSubMap, handleHeroesChange, handleMarkdownChange, allMap
 				)
 			})}
 			<DraftEditor
-				// markdown={markdown}
+				markdown={hi}
 				mapName={currentSubMap}
 				updateMD={(isDefense, md) => {
 					// setMarkdown(md)

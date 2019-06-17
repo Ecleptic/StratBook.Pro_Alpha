@@ -1,15 +1,9 @@
 'use strict'
 
+import Draft, { convertFromRaw, convertToRaw, Editor, EditorState, RichUtils } from 'draft-js'
+import { stateFromMarkdown } from 'draft-js-import-markdown'
+import { draftjsToMd, mdToDraftjs } from 'draftjs-md-converter'
 import React, { Component } from 'react'
-import { mdToDraftjs, draftjsToMd } from 'draftjs-md-converter'
-import Draft, {
-	Editor,
-	EditorState,
-	RichUtils,
-	convertToRaw,
-	ContentState
-} from 'draft-js'
-
 import styled from 'styled-components'
 
 const Div = styled.div`
@@ -89,10 +83,7 @@ export default class DraftEditor extends Component {
 		this.onChange = editorState => {
 			const contentState = editorState.getCurrentContent()
 			// console.log(draftjsToMd(convertToRaw(contentState)))
-			this.props.updateMD(
-				this.props.isDefense,
-				draftjsToMd(convertToRaw(contentState))
-			)
+			this.props.updateMD(this.props.isDefense, draftjsToMd(convertToRaw(contentState)))
 			this.setState({ editorState })
 		}
 
@@ -112,13 +103,10 @@ export default class DraftEditor extends Component {
 	resetState() {
 		console.log('props', this.props)
 		const newText = this.props.markdown
-			? this.props.markdown
-			: 'Old Placeholder Data'
-		// console.log(newText)
-		const editorState = EditorState.push(
-			this.state.editorState,
-			ContentState.createFromText(newText)
-		)
+		console.log(newText, convertFromRaw(mdToDraftjs(newText)))
+		// const editorState = EditorState.push(this.state.editorState, ContentState.createFromText(newText))
+
+		const editorState = EditorState.push(this.state.editorState, stateFromMarkdown(newText))
 		this.setState({ editorState })
 	}
 
@@ -138,15 +126,11 @@ export default class DraftEditor extends Component {
 	}
 
 	_toggleBlockType(blockType) {
-		this.onChange(
-			RichUtils.toggleBlockType(this.state.editorState, blockType)
-		)
+		this.onChange(RichUtils.toggleBlockType(this.state.editorState, blockType))
 	}
 
 	_toggleInlineStyle(inlineStyle) {
-		this.onChange(
-			RichUtils.toggleInlineStyle(this.state.editorState, inlineStyle)
-		)
+		this.onChange(RichUtils.toggleInlineStyle(this.state.editorState, inlineStyle))
 	}
 
 	render() {
@@ -169,14 +153,8 @@ export default class DraftEditor extends Component {
 
 		return (
 			<Div className="RichEditor-root">
-				<BlockStyleControls
-					editorState={editorState}
-					onToggle={this.toggleBlockType}
-				/>
-				<InlineStyleControls
-					editorState={editorState}
-					onToggle={this.toggleInlineStyle}
-				/>
+				<BlockStyleControls editorState={editorState} onToggle={this.toggleBlockType} />
+				<InlineStyleControls editorState={editorState} onToggle={this.toggleInlineStyle} />
 				<div className={className} onClick={this.focus}>
 					<Editor
 						editorKey="editor"
@@ -273,13 +251,7 @@ const BlockStyleControls = props => {
 	return (
 		<div className="RichEditor-controls">
 			{BLOCK_TYPES.map(type => (
-				<StyleButton
-					key={type.label}
-					active={type.style === blockType}
-					label={type.label}
-					onToggle={props.onToggle}
-					style={type.style}
-				/>
+				<StyleButton key={type.label} active={type.style === blockType} label={type.label} onToggle={props.onToggle} style={type.style} />
 			))}
 		</div>
 	)
