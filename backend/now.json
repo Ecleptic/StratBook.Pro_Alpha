@@ -1,0 +1,5 @@
+{
+	"version": 2,
+	"name": "stratbook-backend",
+	"builds": [{ "src": "package.json", "use": "@now/node@latest", "config": { "distDir": "public" } }]
+}

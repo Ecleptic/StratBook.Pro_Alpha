@@ -2,4 +2,4 @@
 export const endpoint = `http://localhost:4444`
 export const perPage = 4
 
-// export const prodEndpoint = `https://sickfits-yoga-prod.herokuapp.com/`
+export const prodEndpoint = `https://stratbook-prod.herokuapp.com/`
