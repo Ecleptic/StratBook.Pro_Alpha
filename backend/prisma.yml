@@ -1,5 +1,5 @@
-#endpoint: ${env:PRISMA_ENDPOINT}
-endpoint: https://stratbook-prod-c08130a1b5.herokuapp.com/stratbook/prod
+endpoint: ${env:PRISMA_DEV_ENDPOINT}
+# endpoint: ${PRISMA_PROD_ENDPOINT}
 datamodel: datamodel.prisma
 secret: ${env:PRISMA_SECRET}
 
