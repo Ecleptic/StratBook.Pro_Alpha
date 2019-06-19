@@ -169,10 +169,10 @@ class StratEdit extends Component {
 								}}
 							>
 								{({ data, loading, error, userName }) => {
+									console.log({ data })
 									if (loading) return 'Loading'
 									if (error) return <p>Errors: {`${error}`}</p>
-									if (!data.owMapInfoes[0].mapMode) return 'No Map Mode'
-									// console.log({ data })
+									if (!data.owMapInfoes[0] || !data.owMapInfoes[0].mapMode) return 'No Map Mode'
 
 									switch (data.owMapInfoes[0].mapMode) {
 										case 'Control':

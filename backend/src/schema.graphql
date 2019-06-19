@@ -11,7 +11,7 @@ type Mutation {
 	createOwStrategyHybrid(data: OwStrategyCreateInput!): OwStrategy
 	createOwStrategyEscort(data: OwStrategyCreateInput!): OwStrategy
 	createUser(data: UserCreateInput!): User!
-	signup(email: String!, password: String!, name: String!): User!
+	signup(email: String!, password: String!, name: String!, isPro: Boolean!): User!
 	signin(email: String!, password: String!): User!
 	signout: SuccessMessage
 	requestReset(email: String!): SuccessMessage
