@@ -1,0 +1,394 @@
+# Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
+version: v1.13.5
+ignore: {}
+# patches apply the minimum changes required to fix a vulnerability
+patch:
+  SNYK-JS-LODASH-450202:
+    - ory-editor > ory-editor-plugins-image > ory-editor-core > dnd-core > redux > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - next > webpackbar > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - next > write-file-webpack-plugin > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - next > autodll-webpack-plugin > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - next > @babel/core > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - next > @babel/core > @babel/traverse > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - react-textarea-markdown > babel-eslint > @babel/types > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-slate > slate-react > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-slate > slate > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-ui > react-color > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-core > dnd-core > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-ui > device.js > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-core > react-hotkeys > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-core > react-dnd-html5-backend > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-core > redux > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-core > react-dnd > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - next > webpackbar > table > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - next > webpackbar > consola > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - next > styled-jsx > babel-types > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - next > autodll-webpack-plugin > webpack-merge > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-ui > react-dnd > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-default-native > ory-editor-core > react-dnd > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-spacer > ory-editor-core > react-dnd > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-renderer > ory-editor-core > dnd-core > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-video > ory-editor-core > dnd-core > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - next > @babel/preset-env > @babel/plugin-proposal-unicode-property-regex > @babel/helper-regex > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-video > ory-editor-ui > device.js > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-spacer > ory-editor-ui > device.js > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-slate > ory-editor-ui > device.js > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-parallax-background > ory-editor-ui > device.js > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-image > ory-editor-ui > device.js > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-slate > ory-editor-core > react-dnd > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-renderer > ory-editor-core > react-hotkeys > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-video > ory-editor-core > react-hotkeys > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-spacer > ory-editor-core > react-hotkeys > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-spacer > ory-editor-core > dnd-core > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-slate > ory-editor-core > react-hotkeys > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-parallax-background > ory-editor-core > react-hotkeys > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-image > ory-editor-core > react-hotkeys > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-slate > ory-editor-core > dnd-core > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-parallax-background > ory-editor-core > dnd-core > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-ui > ory-editor-core > react-hotkeys > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-image > ory-editor-core > dnd-core > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-ui > ory-editor-core > dnd-core > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-divider > ory-editor-core > dnd-core > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-default-native > ory-editor-core > dnd-core > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-ui > react-dnd > dnd-core > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-divider > ory-editor-core > react-hotkeys > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-default-native > ory-editor-core > react-hotkeys > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-parallax-background > ory-editor-core > react-dnd > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-renderer > ory-editor-core > react-dnd-html5-backend > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-core > react-dnd > dnd-core > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - react-textarea-markdown > babel-eslint > @babel/traverse > @babel/types > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-renderer > ory-editor-core > redux > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-video > ory-editor-core > react-dnd-html5-backend > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-spacer > ory-editor-core > react-dnd-html5-backend > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-slate > ory-editor-core > react-dnd-html5-backend > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-parallax-background > ory-editor-core > react-dnd-html5-backend > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-image > ory-editor-core > react-dnd-html5-backend > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-ui > ory-editor-core > react-dnd-html5-backend > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-video > ory-editor-core > redux > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-spacer > ory-editor-core > redux > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-slate > ory-editor-core > redux > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-parallax-background > ory-editor-core > redux > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-image > ory-editor-core > redux > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-ui > ory-editor-core > redux > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-divider > ory-editor-core > redux > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-default-native > ory-editor-core > redux > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-video > ory-editor-core > react-dnd > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-slate > redux-undo > redux > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-core > redux-undo > redux > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-core > dnd-core > redux > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-renderer > ory-editor-core > react-dnd > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-video > ory-editor-ui > react-color > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-image > ory-editor-ui > react-dnd > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-parallax-background > ory-editor-ui > react-dnd > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-slate > ory-editor-ui > react-dnd > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-spacer > ory-editor-ui > react-dnd > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-spacer > ory-editor-ui > react-color > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-slate > ory-editor-ui > react-color > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-image > ory-editor-core > react-dnd > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-parallax-background > ory-editor-ui > react-color > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-image > ory-editor-ui > react-color > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-divider > ory-editor-core > react-dnd-html5-backend > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-default-native > ory-editor-core > react-dnd-html5-backend > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-ui > react-color > reactcss > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-ui > ory-editor-core > react-dnd > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-divider > ory-editor-core > react-dnd > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-video > ory-editor-ui > react-dnd > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-video > ory-editor-ui > ory-editor-core > redux > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - next > @babel/preset-env > @babel/plugin-transform-classes > @babel/helper-replace-supers > @babel/traverse > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - react-textarea-markdown > babel-eslint > @babel/traverse > @babel/helper-split-export-declaration > @babel/types > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-core > react-dnd > dnd-core > redux > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-ui > react-dnd > dnd-core > redux > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-default-native > ory-editor-core > dnd-core > redux > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-divider > ory-editor-core > dnd-core > redux > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-ui > ory-editor-core > dnd-core > redux > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - enzyme > cheerio > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-parallax-background > ory-editor-core > dnd-core > redux > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-slate > ory-editor-core > dnd-core > redux > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-spacer > ory-editor-core > dnd-core > redux > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-video > ory-editor-core > dnd-core > redux > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-renderer > ory-editor-core > dnd-core > redux > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-default-native > ory-editor-core > redux-undo > redux > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-divider > ory-editor-core > redux-undo > redux > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-ui > ory-editor-core > redux-undo > redux > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-image > ory-editor-core > redux-undo > redux > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-parallax-background > ory-editor-core > redux-undo > redux > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-slate > ory-editor-core > redux-undo > redux > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-spacer > ory-editor-core > redux-undo > redux > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-video > ory-editor-core > redux-undo > redux > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-renderer > ory-editor-core > redux-undo > redux > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-image > ory-editor-ui > ory-editor-core > react-dnd-html5-backend > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-parallax-background > ory-editor-ui > ory-editor-core > react-dnd-html5-backend > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-image > ory-editor-ui > ory-editor-core > redux > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-parallax-background > ory-editor-ui > ory-editor-core > redux > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-slate > ory-editor-ui > ory-editor-core > redux > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-spacer > ory-editor-ui > ory-editor-core > redux > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-slate > ory-editor-ui > ory-editor-core > react-dnd-html5-backend > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-spacer > ory-editor-ui > ory-editor-core > react-dnd-html5-backend > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-video > ory-editor-ui > ory-editor-core > react-dnd-html5-backend > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-default-native > ory-editor-core > react-dnd > dnd-core > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-divider > ory-editor-core > react-dnd > dnd-core > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-ui > ory-editor-core > react-dnd > dnd-core > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-image > ory-editor-core > react-dnd > dnd-core > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-parallax-background > ory-editor-core > react-dnd > dnd-core > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-slate > ory-editor-core > react-dnd > dnd-core > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-spacer > ory-editor-core > react-dnd > dnd-core > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-video > ory-editor-core > react-dnd > dnd-core > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-renderer > ory-editor-core > react-dnd > dnd-core > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-image > ory-editor-ui > react-dnd > dnd-core > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-parallax-background > ory-editor-ui > react-dnd > dnd-core > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-slate > ory-editor-ui > react-dnd > dnd-core > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-spacer > ory-editor-ui > react-dnd > dnd-core > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-video > ory-editor-ui > react-dnd > dnd-core > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-image > ory-editor-ui > ory-editor-core > react-hotkeys > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-parallax-background > ory-editor-ui > ory-editor-core > react-hotkeys > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-slate > ory-editor-ui > ory-editor-core > react-hotkeys > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-image > ory-editor-ui > ory-editor-core > dnd-core > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-parallax-background > ory-editor-ui > ory-editor-core > dnd-core > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-slate > ory-editor-ui > ory-editor-core > dnd-core > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-spacer > ory-editor-ui > ory-editor-core > dnd-core > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-video > ory-editor-ui > ory-editor-core > dnd-core > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-spacer > ory-editor-ui > ory-editor-core > react-hotkeys > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-video > ory-editor-ui > ory-editor-core > react-hotkeys > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-image > ory-editor-ui > react-color > reactcss > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-parallax-background > ory-editor-ui > react-color > reactcss > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-slate > ory-editor-ui > react-color > reactcss > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-spacer > ory-editor-ui > react-color > reactcss > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-video > ory-editor-ui > react-color > reactcss > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-image > ory-editor-ui > ory-editor-core > react-dnd > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-parallax-background > ory-editor-ui > ory-editor-core > react-dnd > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-slate > ory-editor-ui > ory-editor-core > react-dnd > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-spacer > ory-editor-ui > ory-editor-core > react-dnd > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-video > ory-editor-ui > ory-editor-core > react-dnd > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - next > @babel/preset-env > @babel/plugin-transform-function-name > @babel/helper-function-name > @babel/helper-get-function-arity > @babel/types > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-divider > ory-editor-core > react-dnd > dnd-core > redux > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-image > ory-editor-ui > ory-editor-core > redux-undo > redux > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-parallax-background > ory-editor-ui > ory-editor-core > redux-undo > redux > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-slate > ory-editor-ui > ory-editor-core > redux-undo > redux > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-spacer > ory-editor-ui > ory-editor-core > redux-undo > redux > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-video > ory-editor-ui > ory-editor-core > redux-undo > redux > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - react-textarea-markdown > babel-eslint > @babel/traverse > @babel/helper-function-name > @babel/helper-get-function-arity > @babel/types > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-image > ory-editor-ui > ory-editor-core > react-dnd > dnd-core > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-parallax-background > ory-editor-ui > ory-editor-core > react-dnd > dnd-core > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-slate > ory-editor-ui > ory-editor-core > react-dnd > dnd-core > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-spacer > ory-editor-ui > ory-editor-core > react-dnd > dnd-core > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-video > ory-editor-ui > ory-editor-core > react-dnd > dnd-core > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-default-native > ory-editor-core > react-dnd > dnd-core > redux > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-ui > ory-editor-core > react-dnd > dnd-core > redux > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-image > ory-editor-core > react-dnd > dnd-core > redux > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-parallax-background > ory-editor-core > react-dnd > dnd-core > redux > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-slate > ory-editor-core > react-dnd > dnd-core > redux > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-spacer > ory-editor-core > react-dnd > dnd-core > redux > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-video > ory-editor-core > react-dnd > dnd-core > redux > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-renderer > ory-editor-core > react-dnd > dnd-core > redux > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-image > ory-editor-ui > react-dnd > dnd-core > redux > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-parallax-background > ory-editor-ui > react-dnd > dnd-core > redux > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-slate > ory-editor-ui > react-dnd > dnd-core > redux > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-spacer > ory-editor-ui > react-dnd > dnd-core > redux > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-video > ory-editor-ui > react-dnd > dnd-core > redux > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-image > ory-editor-ui > ory-editor-core > dnd-core > redux > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-parallax-background > ory-editor-ui > ory-editor-core > dnd-core > redux > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-slate > ory-editor-ui > ory-editor-core > dnd-core > redux > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-spacer > ory-editor-ui > ory-editor-core > dnd-core > redux > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-video > ory-editor-ui > ory-editor-core > dnd-core > redux > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-video > ory-editor-ui > ory-editor-core > react-dnd > dnd-core > redux > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - next > @babel/plugin-proposal-class-properties > @babel/helper-replace-supers > @babel/traverse > @babel/helper-function-name > @babel/helper-get-function-arity > @babel/types > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-slate > ory-editor-ui > ory-editor-core > react-dnd > dnd-core > redux > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-parallax-background > ory-editor-ui > ory-editor-core > react-dnd > dnd-core > redux > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-image > ory-editor-ui > ory-editor-core > react-dnd > dnd-core > redux > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - ory-editor > ory-editor-plugins-spacer > ory-editor-ui > ory-editor-core > react-dnd > dnd-core > redux > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - next > @babel/preset-env > @babel/plugin-transform-async-to-generator > @babel/helper-remap-async-to-generator > @babel/helper-wrap-function > @babel/traverse > @babel/generator > @babel/types > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
+    - next > @babel/preset-env > @babel/plugin-transform-exponentiation-operator > @babel/helper-builder-binary-assignment-operator-visitor > @babel/helper-explode-assignable-expression > @babel/traverse > @babel/helper-function-name > @babel/template > @babel/types > lodash:
+        patched: '2019-07-04T02:30:46.840Z'
