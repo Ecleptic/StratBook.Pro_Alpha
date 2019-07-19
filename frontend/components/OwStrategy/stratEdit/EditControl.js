@@ -3,16 +3,7 @@ import PropTypes from 'prop-types'
 import { OwHeroes } from '../../../configs/Overwatch/OwData'
 import DraftEditor from '../../Draft'
 
-const owRanks = [
-	'Bronze',
-	'Silver',
-	'Gold',
-	'Platinum',
-	'Diamond',
-	'Master',
-	'Grand Master',
-	'Top 500'
-]
+const owRanks = ['Bronze', 'Silver', 'Gold', 'Platinum', 'Diamond', 'Master', 'Grand Master', 'Top 500']
 const possibleControlMapData = {
 	mapName: '',
 	strategyName: '',
@@ -44,17 +35,8 @@ const EditControl = props => {
 	const handleHeroesChange = (e, index) => {
 		// TODO: look into Object.Assign instead?
 		let newMapInfo = { ...allMapInfo }
-		if (!newMapInfo.subMapInfo[currentSubMap])
-			newMapInfo.subMapInfo[currentSubMap] = {}
-		if (!newMapInfo.subMapInfo[currentSubMap].heroes)
-			newMapInfo.subMapInfo[currentSubMap].heroes = [
-				'',
-				'',
-				'',
-				'',
-				'',
-				''
-			]
+		if (!newMapInfo.subMapInfo[currentSubMap]) newMapInfo.subMapInfo[currentSubMap] = {}
+		if (!newMapInfo.subMapInfo[currentSubMap].heroes) newMapInfo.subMapInfo[currentSubMap].heroes = ['', '', '', '', '', '']
 		const newHeroes = [...newMapInfo.subMapInfo[currentSubMap].heroes]
 		newHeroes[index] = e.target.value
 
@@ -63,8 +45,7 @@ const EditControl = props => {
 	}
 	const handleMarkdownChange = markdown => {
 		let newMapInfo = { ...allMapInfo }
-		if (!newMapInfo.subMapInfo[currentSubMap])
-			newMapInfo.subMapInfo[currentSubMap] = {}
+		if (!newMapInfo.subMapInfo[currentSubMap]) newMapInfo.subMapInfo[currentSubMap] = {}
 		newMapInfo.subMapInfo[currentSubMap].markdown = markdown
 		console.log({ newMapInfo })
 		setAllMapInfo(newMapInfo)
@@ -80,12 +61,7 @@ const EditControl = props => {
 			<form onSubmit={e => e.preventDefault()}>
 				<label htmlFor="ExpectedRankSelect">
 					Expected Rank
-					<select
-						name="expectedRank"
-						id="expectedRankSelect"
-						onChange={e => setRank(e.target.value)}
-						value={rank}
-					>
+					<select name="expectedRank" id="expectedRankSelect" onChange={e => setRank(e.target.value)} value={rank}>
 						<option />
 						{/* TODO: Probably should be put in a config or get from DB */}
 						{owRanks.map(rank => (
@@ -95,11 +71,7 @@ const EditControl = props => {
 				</label>
 				{subMaps.map(map => {
 					return (
-						<button
-							type="button"
-							onClick={() => setCurrentSubMap(map)}
-							key={map}
-						>
+						<button type="button" onClick={() => setCurrentSubMap(map)} key={map}>
 							{map}
 						</button>
 					)
@@ -135,12 +107,7 @@ EditControl.propTypes = {}
 
 export default EditControl
 
-const Point = ({
-	currentSubMap,
-	handleHeroesChange,
-	handleMarkdownChange,
-	allMapInfo
-}) => {
+const Point = ({ currentSubMap, handleHeroesChange, handleMarkdownChange, allMapInfo }) => {
 	const [heroes, setHeroes] = useState(['', '', '', '', '', ''])
 	const [markdown, setMarkdown] = useState('')
 	useEffect(() => {
@@ -148,11 +115,9 @@ const Point = ({
 	}, [])
 	useEffect(() => {
 		if (allMapInfo && allMapInfo.subMapInfo[currentSubMap]) {
-			if (allMapInfo.subMapInfo[currentSubMap].heroes)
-				setHeroes(allMapInfo.subMapInfo[currentSubMap].heroes)
+			if (allMapInfo.subMapInfo[currentSubMap].heroes) setHeroes(allMapInfo.subMapInfo[currentSubMap].heroes)
 			else setHeroes(['', '', '', '', '', ''])
-			if (allMapInfo.subMapInfo[currentSubMap].markdown)
-				setMarkdown(allMapInfo.subMapInfo[currentSubMap].markdown)
+			if (allMapInfo.subMapInfo[currentSubMap].markdown) setMarkdown(allMapInfo.subMapInfo[currentSubMap].markdown)
 			else setMarkdown('')
 		}
 	}, [currentSubMap])
@@ -185,14 +150,16 @@ const Point = ({
 					</li>
 				)
 			})}
-			<DraftEditor
+			<textarea cols={40} rows={10} />
+
+			{/* <DraftEditor
 				// This still isn't showing props correctly here..
 				markdown={markdown}
 				mapName={currentSubMap}
 				updateMD={(isDefense, md) => {
 					handleMarkdownChange(md)
 				}}
-			/>
+			/> */}
 		</>
 	)
 }

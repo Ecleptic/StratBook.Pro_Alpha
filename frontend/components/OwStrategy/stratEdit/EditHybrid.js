@@ -36,10 +36,12 @@ const Point = ({ pointType }) => (
 				</li>
 			)
 		})}
-		<DraftEditor
+		<textarea cols={40} rows={10} />
+
+		{/* <DraftEditor
 			updateMD={e => {
 				console.log(e)
 			}}
-		/>
+		/> */}
 	</>
 )
